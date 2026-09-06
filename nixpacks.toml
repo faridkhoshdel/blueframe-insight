@@ -1,0 +1,21 @@
+# Railway/Nixpacks configuration
+# Only build the backend, ignore frontend dependencies
+
+[phases.setup]
+nixPkgs = ["nodejs_20", "npm-9_x"]
+
+[phases.install]
+cmds = [
+  "cd apps/backend",
+  "npm install --legacy-peer-deps",
+  "npx prisma generate"
+]
+
+[phases.build]
+cmds = [
+  "cd apps/backend",
+  "npm run build"
+]
+
+[start]
+cmd = "cd apps/backend && npm run start:prod"
