@@ -1,0 +1,178 @@
+
+model MediaAnalysis {
+  id              String   @id @default(uuid())
+  type            String   // voice, image, long_text
+  title           String
+  originalText    String? 
+  summary         String? 
+  sentiment       Float
+  sentimentLabel  String
+  emotions        String?  // JSON
+  language        String   @default("fa")
+  duration        Int?     // seconds for voice
+  metadata        String?  // JSON
+  createdAt       DateTime @default(now())
+  
+  @@index([type, createdAt])
+}
+
+
+model AgentLog {
+  id          String   @id @default(uuid())
+  agentType   String
+  agentName   String
+  targetId    String
+  targetType  String
+  action      String
+  status      String
+  reasoning   String
+  outcome     String?
+  metrics     String?
+  createdAt   DateTime @default(now())
+  
+  @@index([agentType, createdAt])
+  @@index([targetId])
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  sku         String   @unique
+  description String?
+  price       Float
+  cost        Float?
+  stock       Int      @default(0)
+  minStock    Int      @default(5)
+  category    String?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  feedbacks   Feedback[]
+  movements   InventoryMovement[]
+  dealItems   DealItem[]
+}
+
+model InventoryMovement {
+  id          String   @id @default(uuid())
+  productId   String
+  type        String
+  quantity    Int
+  reason      String?
+  warehouse   String   @default("main")
+  createdAt   DateTime @default(now())
+  product     Product  @relation(fields: [productId], references: [id])
+}
+
+
+model Activity {
+  id          String   @id @default(uuid())
+  customerId  String
+  type        String
+  title       String
+  description String?
+  metadata    String?
+  createdAt   DateTime @default(now())
+  
+  customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+}
+
+
+model Relationship {
+  id          String   @id @default(uuid())
+  sourceId    String
+  targetId    String
+  type        String
+  strength    Float    @default(0.5)
+  description String?
+  createdAt   DateTime @default(now())
+  
+  source      Customer @relation("SourceRelationships", fields: [sourceId], references: [id], onDelete: Cascade)
+  target      Customer @relation("TargetRelationships", fields: [targetId], references: [id], onDelete: Cascade)
+  
+  @@index([sourceId, targetId])
+  @@unique([sourceId, targetId, type])
+}
+
+model Customer {
+  id            String   @id @default(uuid())
+  name          String
+  email         String?
+  phone         String?
+  company       String?
+  ltv           Float    @default(0)
+  loyaltyStatus String   @default("regular")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  // AI & Predictive Fields
+  leadScore         Int      @default(0)
+  churnRisk         Float    @default(0)
+  engagementScore   Float    @default(0)
+  lastInteraction   DateTime?
+  interactionCount  Int      @default(0)
+  negativeSignals   Int      @default(0)
+  aiInsights        String?
+  deals         Deal[]
+  activities    Activity[]
+  sourceRelations    Relationship[] @relation("SourceRelationships")
+  targetRelations    Relationship[] @relation("TargetRelationships")
+}
+
+model Deal {
+  id                String   @id @default(uuid())
+  title             String
+  customerId        String
+  value             Float
+  stage             String   @default("LEAD")
+  probability       Int      @default(10)
+  expectedCloseDate DateTime?
+  notes             String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  customer          Customer @relation(fields: [customerId], references: [id])
+  items             DealItem[]
+}
+
+model DealItem {
+  id        String   @id @default(uuid())
+  dealId    String
+  productId String
+  quantity  Int
+  unitPrice Float
+  createdAt DateTime @default(now())
+  deal      Deal     @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Feedback {
+  id          String   @id @default(uuid())
+  text        String
+  sentiment   Float
+  emotion     String?
+  isProcessed Boolean  @default(false)
+  productId   String?
+  createdAt   DateTime @default(now())
+  product     Product? @relation(fields: [productId], references: [id])
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password      String
+  name          String
+  role          String   @default("SALES")
+  isActive      Boolean  @default(true)
+  lastLoginAt   DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@index([email])
+}

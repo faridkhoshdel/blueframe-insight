@@ -1,0 +1,12 @@
+onlyBuiltDependencies:
+  - prisma
+  - '@prisma/client'
+  - '@prisma/engines'
+  - esbuild
+  - '@parcel/watcher'
+  - workerd
+  - msgpackr-extract
+  - unrs-resolver
+  - '@scarf/scarf'
+  - '@oxlint/binding-linux-arm64-gnu'
+  - '@rolldown/binding-linux-arm64-gnu'

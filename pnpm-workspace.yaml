@@ -1,0 +1,23 @@
+packages:
+  - 'apps/*'
+
+allowBuilds:
+  '@parcel/watcher': set this to true or false
+  '@prisma/client': set this to true or false
+  '@prisma/engines': set this to true or false
+  '@scarf/scarf': set this to true or false
+  prisma: set this to true or false
+  unrs-resolver: set this to true or false
+
+onlyBuiltDependencies:
+  - prisma
+  - '@prisma/client'
+  - '@prisma/engines'
+  - esbuild
+  - '@parcel/watcher'
+  - workerd
+  - msgpackr-extract
+  - unrs-resolver
+  - '@scarf/scarf'
+  - '@oxlint/binding-linux-arm64-gnu'
+  - '@rolldown/binding-linux-arm64-gnu'

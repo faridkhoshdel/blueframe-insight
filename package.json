@@ -1,0 +1,36 @@
+{
+  "name": "blueframe-insight",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Enterprise AI Operations & Sentiment Platform",
+  "author": "Farid Khoshdel",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "turbo": "^1.13.3"
+  },
+  "packageManager": "pnpm@12.1.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "prisma",
+      "@prisma/client",
+      "@prisma/engines",
+      "@parcel/watcher",
+      "@scarf/scarf",
+      "unrs-resolver",
+      "esbuild",
+      "msgpackr-extract",
+      "@oxlint/binding-linux-arm64-gnu",
+      "@rolldown/binding-linux-arm64-gnu"
+    ]
+  }
+}
