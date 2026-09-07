@@ -14,7 +14,7 @@ async function bootstrap() {
   
   // گوش دادن به PORT از environment
   const port = parseInt(process.env.PORT || '3000', 10);
-  await app.listen(port, '0.0.0.0');
+  await app.listen(parseInt(process.env.PORT || '3000', 10), '0.0.0.0');
   
   console.log(`🚀 Server running on port ${port}`);
   console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
