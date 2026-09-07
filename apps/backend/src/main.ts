@@ -3,6 +3,13 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
+  console.log('🔍 Environment check:');
+  console.log('  NODE_ENV:', process.env.NODE_ENV);
+  console.log('  PORT:', process.env.PORT);
+  console.log('  DATABASE_URL exists:', !!process.env.DATABASE_URL);
+  console.log('  DATABASE_URL prefix:', process.env.DATABASE_URL ? process.env.DATABASE_URL.substring(0, 20) : 'UNDEFINED');
+  console.log('  JWT_SECRET exists:', !!process.env.JWT_SECRET);
+  
   const app = await NestFactory.create(AppModule);
   
   app.enableCors({
