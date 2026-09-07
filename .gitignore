@@ -10,3 +10,4 @@ uploads/*
 .DS_Store
 *.log
 coverage/
+CHEATSHEET.md
