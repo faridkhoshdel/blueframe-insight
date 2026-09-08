@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { API_URL } from '@/lib/api';
 
 const STAGES = [
   { key: "LEAD", name: "Lead اولیه", color: "bg-gray-100 border-gray-300" },
@@ -19,9 +20,9 @@ export default function SalesPage() {
 
   const loadData = async () => {
     const [dRes, sRes, cRes] = await Promise.all([
-      fetch("${process.env.NEXT_PUBLIC_API_URL}/crm/deals/grouped"),
-      fetch("${process.env.NEXT_PUBLIC_API_URL}/crm/pipeline/stats"),
-      fetch("${process.env.NEXT_PUBLIC_API_URL}/crm/customers"),
+      fetch(`${API_URL}/crm/deals/grouped`),
+      fetch(`${API_URL}/crm/pipeline/stats`),
+      fetch(`${API_URL}/crm/customers`),
     ]);
     setGroupedDeals(await dRes.json());
     setStats(await sRes.json());
@@ -31,7 +32,7 @@ export default function SalesPage() {
   useEffect(() => { loadData(); }, []);
 
   const handleCreateDeal = async () => {
-    await fetch("${process.env.NEXT_PUBLIC_API_URL}/crm/deals", {
+    await fetch(`${API_URL}/crm/deals`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newDeal),
@@ -42,7 +43,7 @@ export default function SalesPage() {
   };
 
   const moveDeal = async (dealId: string, newStage: string) => {
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/crm/deals/${dealId}/stage`, {
+    await fetch(`${API_URL}/crm/deals/${dealId}/stage`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ stage: newStage }),

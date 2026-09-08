@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { API_URL } from '@/lib/api';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;

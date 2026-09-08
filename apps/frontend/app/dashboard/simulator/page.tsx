@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { API_URL } from '@/lib/api';
 
 const BarChart = dynamic(() => import("recharts").then(mod => mod.BarChart), { ssr: false });
 const Bar = dynamic(() => import("recharts").then(mod => mod.Bar), { ssr: false });
@@ -32,7 +33,7 @@ export default function SimulatorPage() {
 
   const loadCustomers = async () => {
     try {
-      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/crm/customers");
+      const res = await fetch(`${API_URL}/crm/customers`);
       setCustomers(await res.json());
     } catch (e) { console.error(e); }
   };
@@ -59,11 +60,11 @@ export default function SimulatorPage() {
     setLoading(true); setResult(null);
     try {
       let endpoint = "", body = {};
-      if (activeTab === "price") { endpoint = "${process.env.NEXT_PUBLIC_API_URL}/simulator/price-change"; body = { percent: pricePercent }; }
+      if (activeTab === "price") { endpoint = `${API_URL}/simulator/price-change`; body = { percent: pricePercent }; }
       else if (activeTab === "customer_loss") {
         if (!selectedCustomerId) { alert("لطفاً یک مشتری انتخاب کنید"); setLoading(false); return; }
-        endpoint = "${process.env.NEXT_PUBLIC_API_URL}/simulator/customer-loss/" + selectedCustomerId;
-      } else if (activeTab === "marketing") { endpoint = "${process.env.NEXT_PUBLIC_API_URL}/simulator/marketing-campaign"; body = { segment: campaignSegment, budget: campaignBudget }; }
+        endpoint = `${API_URL}/simulator/customer-loss/` + selectedCustomerId;
+      } else if (activeTab === "marketing") { endpoint = `${API_URL}/simulator/marketing-campaign`; body = { segment: campaignSegment, budget: campaignBudget }; }
       const res = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       const data = await res.json();
       setResult(data);
@@ -75,7 +76,7 @@ export default function SimulatorPage() {
   const runComparison = async () => {
     setLoading(true); setCompareResult(null);
     try {
-      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/simulator/compare", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ scenarios: compareScenarios }) });
+      const res = await fetch(`${API_URL}/simulator/compare`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ scenarios: compareScenarios }) });
       const data = await res.json();
       setCompareResult(data);
       saveToHistory({ type: "compare", result: data });

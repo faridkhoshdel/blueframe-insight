@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { API_URL } from '@/lib/api';
 
 export default function SentimentPage() {
   const [text, setText] = useState("");
@@ -17,7 +18,7 @@ export default function SentimentPage() {
     setError("");
     setResult(null);
     try {
-      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/sentiment/analyze", {
+      const res = await fetch(`${API_URL}/sentiment/analyze`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
