@@ -13,7 +13,8 @@ import { ExecutiveModule } from './executive/executive.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [SentimentModule, InventoryModule, CrmModule, SeedModule, GraphModule, SimulatorModule, AgentsModule, MultimodalModule, AuthModule, ExecutiveModule],
+  imports: [TestModule, SentimentModule, InventoryModule, CrmModule, SeedModule, GraphModule, SimulatorModule, AgentsModule, MultimodalModule, AuthModule, ExecutiveModule],
+import { TestModule } from './test.module';
   controllers: [AppController],
   providers: [AppService],
 })
