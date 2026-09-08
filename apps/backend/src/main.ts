@@ -5,12 +5,9 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-  // CORS کامل برای همه دامنه‌ها
+  // CORS کامل با آرایه origin
   app.enableCors({
-    origin: (origin, callback) => {
-      // اجازه به همه origin ها
-      callback(null, true);
-    },
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
