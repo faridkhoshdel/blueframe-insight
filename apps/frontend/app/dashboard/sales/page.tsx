@@ -19,9 +19,9 @@ export default function SalesPage() {
 
   const loadData = async () => {
     const [dRes, sRes, cRes] = await Promise.all([
-      fetch("http://localhost:50001/crm/deals/grouped"),
-      fetch("http://localhost:50001/crm/pipeline/stats"),
-      fetch("http://localhost:50001/crm/customers"),
+      fetch("${process.env.NEXT_PUBLIC_API_URL}/crm/deals/grouped"),
+      fetch("${process.env.NEXT_PUBLIC_API_URL}/crm/pipeline/stats"),
+      fetch("${process.env.NEXT_PUBLIC_API_URL}/crm/customers"),
     ]);
     setGroupedDeals(await dRes.json());
     setStats(await sRes.json());
@@ -31,7 +31,7 @@ export default function SalesPage() {
   useEffect(() => { loadData(); }, []);
 
   const handleCreateDeal = async () => {
-    await fetch("http://localhost:50001/crm/deals", {
+    await fetch("${process.env.NEXT_PUBLIC_API_URL}/crm/deals", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newDeal),
@@ -42,7 +42,7 @@ export default function SalesPage() {
   };
 
   const moveDeal = async (dealId: string, newStage: string) => {
-    await fetch(`http://localhost:50001/crm/deals/${dealId}/stage`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/crm/deals/${dealId}/stage`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ stage: newStage }),

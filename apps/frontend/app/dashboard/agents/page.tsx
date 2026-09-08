@@ -25,8 +25,8 @@ export default function AgentsPage() {
   const loadData = async () => {
     try {
       const [statsRes, logsRes] = await Promise.all([
-        fetch("http://localhost:50001/agents/stats"),
-        fetch("http://localhost:50001/agents/logs?limit=30"),
+        fetch("${process.env.NEXT_PUBLIC_API_URL}/agents/stats"),
+        fetch("${process.env.NEXT_PUBLIC_API_URL}/agents/logs?limit=30"),
       ]);
       setStats(await statsRes.json());
       setLogs(await logsRes.json());
@@ -37,7 +37,7 @@ export default function AgentsPage() {
     setRunningAgent(type);
     try {
       const endpoint = type === "ALL" ? "/agents/run-all" : `/agents/${type.toLowerCase().replace("_", "-")}`;
-      await fetch("http://localhost:50001" + endpoint, { method: "POST" });
+      await fetch("${process.env.NEXT_PUBLIC_API_URL}" + endpoint, { method: "POST" });
       await loadData();
     } catch (e) { console.error(e); alert("خطا در اجرای Agent"); }
     finally { setRunningAgent(null); }

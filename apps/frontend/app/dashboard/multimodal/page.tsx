@@ -25,7 +25,7 @@ export default function MultimodalPage() {
 
   const loadHistory = async () => {
     try {
-      const res = await fetch("http://localhost:50001/multimodal/all?limit=20");
+      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/multimodal/all?limit=20");
       setHistory(await res.json());
     } catch (e) { console.error(e); }
   };
@@ -34,7 +34,7 @@ export default function MultimodalPage() {
     if (!text.trim()) { alert("لطفاً متنی وارد کنید"); return; }
     setLoading(true); setResult(null);
     try {
-      const res = await fetch("http://localhost:50001/multimodal/text", {
+      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/multimodal/text", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text, title: textTitle || "بدون عنوان" }),
@@ -52,7 +52,7 @@ export default function MultimodalPage() {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const res = await fetch(`http://localhost:50001/multimodal/${type}`, { method: "POST", body: formData });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/multimodal/${type}`, { method: "POST", body: formData });
       const data = await res.json();
       setResult(data);
       loadHistory();

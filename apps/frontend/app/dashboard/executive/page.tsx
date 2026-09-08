@@ -29,7 +29,7 @@ export default function ExecutiveDashboard() {
 
   const loadData = async () => {
     try {
-      const res = await fetch("http://localhost:50001/executive/overview");
+      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/executive/overview");
       if (!res.ok) throw new Error("خطا در دریافت داده‌ها");
       const json = await res.json();
       setData(json);

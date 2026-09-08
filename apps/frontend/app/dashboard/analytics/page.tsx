@@ -22,7 +22,7 @@ export default function AnalyticsPage() {
 
   const loadStageData = async () => {
     try {
-      const res = await fetch("http://localhost:50001/crm/deals/grouped");
+      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/crm/deals/grouped");
       const data = await res.json();
       const stageNames: Record<string, string> = {
         LEAD: "Lead اولیه",
@@ -43,7 +43,7 @@ export default function AnalyticsPage() {
 
   const loadStockData = async () => {
     try {
-      const res = await fetch("http://localhost:50001/inventory/products");
+      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/inventory/products");
       const products = await res.json();
       const inStock = products.filter((p: any) => p.stock > p.minStock * 2).length;
       const warning = products.filter((p: any) => p.stock > p.minStock && p.stock <= p.minStock * 2).length;
@@ -58,7 +58,7 @@ export default function AnalyticsPage() {
 
   const loadTrendData = async () => {
     try {
-      const res = await fetch("http://localhost:50001/crm/deals");
+      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/crm/deals");
       const deals = await res.json();
       const months: Record<string, number> = {};
       deals.forEach((deal: any) => {

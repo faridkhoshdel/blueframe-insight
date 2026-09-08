@@ -11,7 +11,7 @@ export default function InventoryPage() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:50001/inventory/products");
+      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/inventory/products");
       setProducts(await res.json());
     } catch (e) { console.error(e); }
     finally { setLoading(false); }
@@ -20,7 +20,7 @@ export default function InventoryPage() {
   useEffect(() => { fetchProducts(); }, []);
 
   const handleAddProduct = async () => {
-    await fetch("http://localhost:50001/inventory/products", {
+    await fetch("${process.env.NEXT_PUBLIC_API_URL}/inventory/products", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newProduct),
@@ -31,7 +31,7 @@ export default function InventoryPage() {
   };
 
   const handleStockUpdate = async (productId: string, type: "IN" | "OUT", qty: number) => {
-    await fetch("http://localhost:50001/inventory/movements", {
+    await fetch("${process.env.NEXT_PUBLIC_API_URL}/inventory/movements", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ productId, type, quantity: qty }),

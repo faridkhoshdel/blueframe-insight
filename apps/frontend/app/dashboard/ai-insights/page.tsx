@@ -11,7 +11,7 @@ export default function AIInsightsPage() {
 
   const loadCustomers = async () => {
     try {
-      const res = await fetch("http://localhost:50001/crm/customers");
+      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/crm/customers");
       setCustomers(await res.json());
     } catch (e) { console.error(e); }
     finally { setLoading(false); }
@@ -21,8 +21,8 @@ export default function AIInsightsPage() {
     setAnalyzing(true);
     try {
       const [leadRes, churnRes] = await Promise.all([
-        fetch(`http://localhost:50001/crm/ai/lead-score/${customerId}`, { method: "POST" }),
-        fetch(`http://localhost:50001/crm/ai/churn-risk/${customerId}`, { method: "POST" }),
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/crm/ai/lead-score/${customerId}`, { method: "POST" }),
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/crm/ai/churn-risk/${customerId}`, { method: "POST" }),
       ]);
       const leadData = await leadRes.json();
       const churnData = await churnRes.json();
@@ -34,7 +34,7 @@ export default function AIInsightsPage() {
   const analyzeAll = async () => {
     setAnalyzing(true);
     try {
-      await fetch("http://localhost:50001/crm/ai/analyze-all", { method: "POST" });
+      await fetch("${process.env.NEXT_PUBLIC_API_URL}/crm/ai/analyze-all", { method: "POST" });
       alert("تحلیل همه مشتریان با موفقیت انجام شد");
       loadCustomers();
     } catch (e) { console.error(e); }

@@ -40,7 +40,7 @@ export default function GraphPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("http://localhost:50001/graph/full");
+      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/graph/full");
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       
@@ -102,7 +102,7 @@ export default function GraphPage() {
     setSelectedNode(node);
     setLoadingNetwork(true);
     try {
-      const res = await fetch(`http://localhost:50001/graph/customer/${node.id}/network`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/graph/customer/${node.id}/network`);
       const data = await res.json();
       setNodeNetwork(data);
     } catch (e) {
