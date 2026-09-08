@@ -33,7 +33,7 @@ export default function AgentsPage() {
     } catch (e) { console.error(e); }
   };
 
-  const runAgent = async (type) => {
+  const runAgent = async (type: string) => {
     setRunningAgent(type);
     try {
       const endpoint = type === "ALL" ? "/agents/run-all" : `/agents/${type.toLowerCase().replace("_", "-")}`;
