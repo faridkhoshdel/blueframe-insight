@@ -5,12 +5,18 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-  // CORS کامل با آرایه origin
+  // CORS با origin های دقیق (نه wildcard)
   app.enableCors({
-    origin: '*',
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:50002',
+      'https://blueframe-frontend.onrender.com',
+      'https://blueframe-backend.onrender.com',
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
+    exposedHeaders: ['Authorization'],
   });
   
   app.useGlobalPipes(new ValidationPipe({ 
