@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { API_URL } from '@/lib/api';
-
 const STAGES = [
   { key: "LEAD", name: "Lead اولیه", color: "bg-gray-100 border-gray-300" },
   { key: "CONTACTED", name: "تماس گرفته", color: "bg-blue-50 border-blue-300" },

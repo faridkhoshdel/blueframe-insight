@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { API_URL } from '@/lib/api';
-
 export default function AIInsightsPage() {
   const [customers, setCustomers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

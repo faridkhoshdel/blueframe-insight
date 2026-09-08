@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { API_URL } from '@/lib/api';
-
 const TYPE_CONFIG = {
   voice: { name: "صوت", icon: "🎙️", color: "red" },
   image: { name: "تصویر", icon: "📸", color: "blue" },

@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import {
-import { API_URL } from '@/lib/api';
-  LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
+LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ResponsiveContainer, AreaChart, Area
 } from "recharts";
+import { API_URL } from '@/lib/api';
 
 const STOCK_COLORS = ["#10B981", "#F59E0B", "#EF4444"];
 

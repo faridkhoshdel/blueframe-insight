@@ -1,3 +1,4 @@
+import { API_URL } from '@/lib/api';
 // URL بک‌اند - ساده و مطمئن
 // اگر در localhost هستیم (development) از localhost استفاده کن
 // در غیر این صورت (production) از Render backend استفاده کن

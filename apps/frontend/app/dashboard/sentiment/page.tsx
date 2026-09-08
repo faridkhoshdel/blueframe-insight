@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { API_URL } from '@/lib/api';
-
 export default function SentimentPage() {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);

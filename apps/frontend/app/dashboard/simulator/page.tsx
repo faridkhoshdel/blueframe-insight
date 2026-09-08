@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { API_URL } from '@/lib/api';
-
 const BarChart = dynamic(() => import("recharts").then(mod => mod.BarChart), { ssr: false });
 const Bar = dynamic(() => import("recharts").then(mod => mod.Bar), { ssr: false });
 const XAxis = dynamic(() => import("recharts").then(mod => mod.XAxis), { ssr: false });

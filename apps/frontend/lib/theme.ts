@@ -1,6 +1,5 @@
 "use client";
 import { API_URL } from '@/lib/api';
-
 export function applyTheme(theme: 'light' | 'dark') {
   if (theme === 'dark') {
     document.documentElement.classList.add('dark');

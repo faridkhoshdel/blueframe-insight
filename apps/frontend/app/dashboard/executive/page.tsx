@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { API_URL } from '@/lib/api';
-
 // Dynamic imports for Recharts (SSR: false)
 const LineChart = dynamic(() => import("recharts").then(m => m.LineChart), { ssr: false });
 const BarChart = dynamic(() => import("recharts").then(m => m.BarChart), { ssr: false });

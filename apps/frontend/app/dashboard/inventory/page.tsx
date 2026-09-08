@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { API_URL } from '@/lib/api';
-
 export default function InventoryPage() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

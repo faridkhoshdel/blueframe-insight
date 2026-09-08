@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { API_URL } from '@/lib/api';
-
 // بارگذاری داینامیک با ssr: false
 const ForceGraph2D = dynamic(
   () => import("react-force-graph-2d").then(mod => mod.default),

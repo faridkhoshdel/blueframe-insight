@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { API_URL } from '@/lib/api';
-
 const AGENT_CONFIG = {
   "RETENTION": { name: "Retention Agent", icon: "🛡️", color: "red", desc: "حفظ مشتریان در معرض خطر" },
   "NURTURE": { name: "Nurture Agent", icon: "🌱", color: "green", desc: "پرورش Lead های سرد" },
