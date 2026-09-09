@@ -1,3 +1,4 @@
+import { DemoSeederService } from './seed/demo/demo-seeder.service';
 import { Controller, Get } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
@@ -55,5 +56,48 @@ export class TestController {
     } catch (e: any) {
       return { success: false, error: e.message };
     }
+  }
+
+  @Get('demo/seed')
+  async seedDemo() {
+    if (process.env.DEMO_MODE !== 'true') {
+      return { error: 'Demo seeding only available in demo mode' };
+    }
+    try {
+      const seeder = new DemoSeederService();
+      const result = await seeder.seedDemoData();
+      return { success: true, message: 'Demo data seeded', stats: result };
+    } catch (e: any) {
+      return { success: false, error: e.message };
+    }
+  }
+
+  @Get('demo/clear')
+  async clearDemo() {
+    if (process.env.DEMO_MODE !== 'true') {
+      return { error: 'Demo clear only available in demo mode' };
+    }
+    try {
+      const seeder = new DemoSeederService();
+      await seeder.clearDemoData();
+      return { success: true, message: 'Demo data cleared' };
+    } catch (e: any) {
+      return { success: false, error: e.message };
+    }
+  }
+
+  @Get('demo/info')
+  async demoInfo() {
+    return {
+      demoMode: process.env.DEMO_MODE === 'true',
+      message: process.env.DEMO_MODE === 'true'
+        ? '🎭 This is a demo instance - All data is synthetic and resets every 24 hours'
+        : 'Production instance',
+      features: {
+        watermark: process.env.DEMO_MODE === 'true',
+        readOnly: process.env.DEMO_MODE === 'true',
+        aiAlgorithmsHidden: process.env.DEMO_MODE === 'true',
+      },
+    };
   }
 }
