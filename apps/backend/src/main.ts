@@ -11,6 +11,7 @@ async function bootstrap() {
       'http://localhost:3000',
       'http://localhost:50002',
       'https://blueframe-frontend.onrender.com',
+        'https://blueframe-frontend-demo.onrender.com',
       'https://blueframe-backend.onrender.com',
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],

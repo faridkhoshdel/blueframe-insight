@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import { DEMO_CUSTOMERS, DEMO_PRODUCTS, DEMO_USERS, DEMO_DEAL_STAGES } from "./demo-data";
 
 export class DemoSeederService {
@@ -19,7 +19,7 @@ export class DemoSeederService {
             password: await bcrypt.hash(user.password, 10),
             role: user.role as any,
           }});
-          stats.users++;
+          stats.users++; console.log("USER CREATED:", user.email);
         } catch (e: any) { console.log("user err:", e.message); }
       }
     }
@@ -64,7 +64,7 @@ export class DemoSeederService {
           await (this.prisma as any).inventoryMovement.create({ data: {
             type: Math.random() > 0.5 ? "IN" : "OUT",
             quantity: Math.floor(Math.random() * 50) + 1,
-            notes: "Demo movement",
+            reason: "جابجایی دمو", warehouse: "انبار اصلی",
             productId: prodIds[Math.floor(Math.random() * prodIds.length)],
           }});
           stats.movements++;
