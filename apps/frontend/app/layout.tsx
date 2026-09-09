@@ -1,3 +1,5 @@
+import { DemoProvider } from '@/lib/demo/DemoContext';
+import { Watermark, DemoBanner } from '@/lib/demo/Watermark';
 import { Vazirmatn } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/lib/auth';
@@ -42,7 +44,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
       <body className={vazir.className + ' antialiased'}>
+        <DemoProvider>
+          <Watermark />
+          <DemoBanner />
         <AuthProvider>{children}<InstallBanner /></AuthProvider>
+              </DemoProvider>
       </body>
     </html>
   );
