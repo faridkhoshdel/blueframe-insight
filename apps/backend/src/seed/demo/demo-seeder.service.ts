@@ -30,7 +30,7 @@ export class DemoSeederService {
           company: c.company, status: c.status as any,
         }});
         custIds.push(created.id); stats.customers++;
-      } catch (e: any) { console.log("ERR:", e.message); }
+      } catch (e: any) { console.error("ERR:", JSON.stringify({code: e.code, message: e.message, meta: e.meta}) || String(e)); }
     }
     const prodIds: string[] = [];
     for (const p of DEMO_PRODUCTS) {
@@ -40,7 +40,7 @@ export class DemoSeederService {
           price: p.price, stock: p.stock, minStock: p.minStock,
         }});
         prodIds.push(created.id); stats.products++;
-      } catch (e: any) { console.log("ERR:", e.message); }
+      } catch (e: any) { console.error("ERR:", JSON.stringify({code: e.code, message: e.message, meta: e.meta}) || String(e)); }
     }
     if (custIds.length > 0) {
       for (let i = 0; i < 30; i++) {
@@ -53,7 +53,7 @@ export class DemoSeederService {
             customerId: custIds[Math.floor(Math.random() * custIds.length)],
           }});
           stats.deals++;
-        } catch (e: any) { console.log("ERR:", e.message); }
+        } catch (e: any) { console.error("ERR:", JSON.stringify({code: e.code, message: e.message, meta: e.meta}) || String(e)); }
       }
     }
     if (prodIds.length > 0) {
@@ -66,7 +66,7 @@ export class DemoSeederService {
             productId: prodIds[Math.floor(Math.random() * prodIds.length)],
           }});
           stats.movements++;
-        } catch (e: any) { console.log("ERR:", e.message); }
+        } catch (e: any) { console.error("ERR:", JSON.stringify({code: e.code, message: e.message, meta: e.meta}) || String(e)); }
       }
     }
     console.log("Seeding done:", stats);
