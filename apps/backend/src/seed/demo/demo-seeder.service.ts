@@ -8,6 +8,7 @@ export class DemoSeederService {
 
   async seedDemoData() {
     console.log("Starting demo seeding...");
+    await this.clearDemoData();
     const stats = { users: 0, customers: 0, products: 0, deals: 0, movements: 0 };
     for (const user of DEMO_USERS) {
       const ex = await this.prisma.user.findUnique({ where: { email: user.email } });
@@ -27,8 +28,9 @@ export class DemoSeederService {
       try {
         const created = await this.prisma.customer.create({ data: {
           name: c.name, email: c.email, phone: c.phone,
-          company: c.company, status: c.status as any,
-        }});
+          loyaltyStatus: c.loyaltyStatus || "SILVER",
+          ltv: c.ltv || 10000000,
+        } as any});
         custIds.push(created.id); stats.customers++;
       } catch (e: any) { console.error("ERR:", JSON.stringify({code: e.code, message: e.message, meta: e.meta}) || String(e)); }
     }
