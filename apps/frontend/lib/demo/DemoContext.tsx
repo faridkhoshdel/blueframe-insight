@@ -1,4 +1,5 @@
 "use client";
+import { API_URL } from "@/lib/api";
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 interface DemoContextType {

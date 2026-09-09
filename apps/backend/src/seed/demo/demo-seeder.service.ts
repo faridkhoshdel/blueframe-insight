@@ -1,4 +1,4 @@
-import { PrismaClient, Role } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import * as bcrypt from "bcrypt";
 import { DEMO_CUSTOMERS, DEMO_PRODUCTS, DEMO_USERS, DEMO_DEAL_STAGES } from "./demo-data";
 
@@ -23,7 +23,7 @@ export class DemoSeederService {
             email: user.email,
             name: user.name,
             password: hashedPassword,
-            role: user.role as Role,
+            role: user.role as any,
           },
         });
         console.log(`  ✓ User: ${user.email} (${user.role})`);
