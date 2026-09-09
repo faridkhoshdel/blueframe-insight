@@ -44,6 +44,7 @@ datasource db {
 }
 
 model Product {
+  invoiceItems InvoiceItem[]
   id          String   @id @default(uuid())
   name        String
   sku         String   @unique
@@ -103,6 +104,8 @@ model Relationship {
 }
 
 model Customer {
+  invoices    Invoice[]
+  routeStops  RouteStop[]
   id            String   @id @default(uuid())
   name          String
   email         String?
@@ -164,6 +167,7 @@ model Feedback {
 }
 
 model User {
+  issuedInvoices Invoice[] @relation("InvoiceIssuer")
   id            String   @id @default(uuid())
   email         String   @unique
   password      String
@@ -175,4 +179,106 @@ model User {
   updatedAt     DateTime @updatedAt
   
   @@index([email])
+}
+
+
+// ══════════════════════════════════════════════════════════
+// ماژول توزیع و فاکتور (Distribution & Invoicing)
+// ══════════════════════════════════════════════════════════
+
+model Distributor {
+  id          String    @id @default(uuid())
+  name        String
+  company     String?
+  phone       String
+  email       String?   @unique
+  address     String?
+  territory   String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  routes      Route[]
+  invoices    Invoice[]
+}
+
+model Route {
+  id              String        @id @default(uuid())
+  name            String
+  code            String        @unique
+  distributorId   String
+  distributor     Distributor   @relation(fields: [distributorId], references: [id])
+  status          String        @default("PLANNED")
+  totalStops      Int           @default(0)
+  scheduledDate   DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  stops           RouteStop[]
+  invoices        Invoice[]
+}
+
+model RouteStop {
+  id          String    @id @default(uuid())
+  routeId     String
+  route       Route     @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  customerId  String
+  customer    Customer  @relation(fields: [customerId], references: [id])
+  orderIndex  Int
+  status      String    @default("PENDING")
+  visitTime   DateTime?
+  notes       String?
+  createdAt   DateTime  @default(now())
+}
+
+model Invoice {
+  id              String            @id @default(uuid())
+  invoiceNumber   String            @unique
+  customerId      String
+  customer        Customer          @relation(fields: [customerId], references: [id])
+  issuerId        String
+  issuer          User              @relation("InvoiceIssuer", fields: [issuerId], references: [id])
+  distributorId   String?
+  distributor     Distributor?      @relation(fields: [distributorId], references: [id])
+  routeId         String?
+  route           Route?            @relation(fields: [routeId], references: [id])
+  status          String            @default("DRAFT")
+  subtotal        Float             @default(0)
+  tax             Float             @default(0)
+  discount        Float             @default(0)
+  total           Float             @default(0)
+  currency        String            @default("IRR")
+  verifyToken     String            @unique @default(uuid())
+  verifiedAt      DateTime?
+  verifiedBy      String?
+  notes           String?
+  issuedAt        DateTime          @default(now())
+  dueDate         DateTime?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  items           InvoiceItem[]
+  feedbacks       InvoiceFeedback[]
+}
+
+model InvoiceItem {
+  id          String    @id @default(uuid())
+  invoiceId   String
+  invoice     Invoice   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product   @relation(fields: [productId], references: [id])
+  quantity    Int
+  unitPrice   Float
+  discount    Float     @default(0)
+  total       Float
+  createdAt   DateTime  @default(now())
+}
+
+model InvoiceFeedback {
+  id          String    @id @default(uuid())
+  invoiceId   String
+  invoice     Invoice   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  rating      Int
+  comment     String?
+  isApproved  Boolean   @default(false)
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime  @default(now())
 }
