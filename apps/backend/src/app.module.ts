@@ -15,6 +15,7 @@ import { ExecutiveModule } from './executive/executive.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { RouteModule } from './route/route.module';
 import { DistributorModule } from './distributor/distributor.module';
+import { CustomerAuthModule } from './customer-auth/customer-auth.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { DistributorModule } from './distributor/distributor.module';
     InvoiceModule,
     RouteModule,
     DistributorModule,
+    CustomerAuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -104,6 +104,7 @@ model Relationship {
 }
 
 model Customer {
+  nationalId    String?   @unique
   invoices    Invoice[]
   routeStops  RouteStop[]
   id            String   @id @default(uuid())
@@ -281,4 +282,13 @@ model InvoiceFeedback {
   ipAddress   String?
   userAgent   String?
   createdAt   DateTime  @default(now())
+}
+
+model OtpCode {
+  id        String   @id @default(uuid())
+  phone     String
+  code      String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
 }
