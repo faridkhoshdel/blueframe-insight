@@ -1,7 +1,4 @@
 import { Module } from '@nestjs/common';
-import { InvoiceModule } from './invoice/invoice.module';
-import { RouteModule } from './route/route.module';
-import { DistributorModule } from './distributor/distributor.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TestModule } from './test.module';
@@ -15,6 +12,9 @@ import { AgentsModule } from './agents/agents.module';
 import { MultimodalModule } from './multimodal/multimodal.module';
 import { AuthModule } from './auth/auth.module';
 import { ExecutiveModule } from './executive/executive.module';
+import { InvoiceModule } from './invoice/invoice.module';
+import { RouteModule } from './route/route.module';
+import { DistributorModule } from './distributor/distributor.module';
 
 @Module({
   imports: [
@@ -29,7 +29,10 @@ import { ExecutiveModule } from './executive/executive.module';
     MultimodalModule,
     AuthModule,
     ExecutiveModule,
-  , InvoiceModule, RouteModule, DistributorModule],
+    InvoiceModule,
+    RouteModule,
+    DistributorModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
