@@ -71,4 +71,49 @@ export class InvoiceController {
     });
     res.send(pdfBuffer);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('generate-sample')
+  async generateSample(@Request() req) {
+    const { PrismaClient } = await import('@prisma/client');
+    const prisma = new PrismaClient();
+    
+    const customer = await prisma.customer.findFirst();
+    const product = await prisma.product.findFirst();
+    
+    if (!customer || !product) {
+      throw new Error('No customer or product found in database');
+    }
+    
+    const invoice = await prisma.invoice.create({
+      data: {
+        invoiceNumber: 'INV-TEST-' + Date.now().toString(36).toUpperCase(),
+        customerId: customer.id,
+        issuerId: req.user.id,
+        subtotal: 7500000,
+        tax: 675000,
+        discount: 0,
+        total: 8175000,
+        status: 'DRAFT',
+        notes: 'فاکتور تستی برای بررسی PDF',
+        verifyToken: require('crypto').randomUUID(),
+        items: {
+          create: [{
+            productId: product.id,
+            quantity: 5,
+            unitPrice: 1500000,
+            discount: 0,
+            total: 7500000,
+          }],
+        },
+      },
+      include: { 
+        customer: true, 
+        issuer: true, 
+        items: { include: { product: true } } 
+      },
+    });
+    
+    return invoice;
+  }
 }
