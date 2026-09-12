@@ -1,17 +1,21 @@
-import { Controller, Get, Post, Body, Param, Query, UseGuards, Request, Patch, Res, Header } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, UseGuards, Request, Patch, Res } from '@nestjs/common';
+import type { Response } from 'express';
+import { PrismaClient } from '@prisma/client';
+import { randomUUID } from 'crypto';
 import { InvoiceService } from './invoice.service';
 import { InvoicePdfService } from './invoice-pdf.service';
-import type { Response } from 'express';
-import { CreateInvoiceDto } from './dto/create-invoice.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('invoices')
 export class InvoiceController {
-  constructor(private readonly invoiceService: InvoiceService, private readonly pdfService: InvoicePdfService) {}
+  constructor(
+    private readonly invoiceService: InvoiceService,
+    private readonly pdfService: InvoicePdfService,
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Request() req, @Body() dto: CreateInvoiceDto) {
+  create(@Request() req, @Body() dto: any) {
     return this.invoiceService.create(req.user.id, dto);
   }
 
@@ -33,7 +37,6 @@ export class InvoiceController {
     return this.invoiceService.updateStatus(id, status);
   }
 
-  // Public endpoint for customer verification
   @Get('verify/:token')
   findByToken(@Param('token') token: string) {
     return this.invoiceService.findByToken(token);
@@ -42,7 +45,7 @@ export class InvoiceController {
   @Post('verify/:token')
   verifyByCustomer(
     @Param('token') token: string,
-    @Body() body: { isApproved: boolean; comment?: string; rating?: number; phone?: string; nationalId?: string },
+    @Body() body: any,
   ) {
     return this.invoiceService.verifyByCustomer(token, body.isApproved, body.comment, body.rating);
   }
@@ -70,51 +73,6 @@ export class InvoiceController {
       'Content-Length': pdfBuffer.length,
     });
     res.send(pdfBuffer);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Post('generate-sample')
-  async generateSample(@Request() req) {
-    const { PrismaClient } = await import('@prisma/client');
-    const prisma = new PrismaClient();
-    
-    const customer = await prisma.customer.findFirst();
-    const product = await prisma.product.findFirst();
-    
-    if (!customer || !product) {
-      throw new Error('No customer or product found in database');
-    }
-    
-    const invoice = await prisma.invoice.create({
-      data: {
-        invoiceNumber: 'INV-TEST-' + Date.now().toString(36).toUpperCase(),
-        customerId: customer.id,
-        issuerId: req.user.id,
-        subtotal: 7500000,
-        tax: 675000,
-        discount: 0,
-        total: 8175000,
-        status: 'DRAFT',
-        notes: 'فاکتور تستی برای بررسی PDF',
-        verifyToken: require('crypto').randomUUID(),
-        items: {
-          create: [{
-            productId: product.id,
-            quantity: 5,
-            unitPrice: 1500000,
-            discount: 0,
-            total: 7500000,
-          }],
-        },
-      },
-      include: { 
-        customer: true, 
-        issuer: true, 
-        items: { include: { product: true } } 
-      },
-    });
-    
-    return invoice;
   }
 
   @UseGuards(JwtAuthGuard)
