@@ -116,4 +116,54 @@ export class InvoiceController {
     
     return invoice;
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('generate-sample')
+  async generateSample(@Request() req) {
+    const prisma = new PrismaClient();
+    try {
+      const customer = await prisma.customer.findFirst();
+      const product = await prisma.product.findFirst();
+      const issuer = await prisma.user.findFirst();
+
+      if (!customer) return { error: 'No customer', hint: 'Call /demo/seed' };
+      if (!product) return { error: 'No product', hint: 'Call /demo/seed' };
+      if (!issuer) return { error: 'No user/issuer' };
+
+      const invoice = await prisma.invoice.create({
+        data: {
+          invoiceNumber: 'INV-TEST-' + Date.now().toString(36).toUpperCase(),
+          customer: { connect: { id: customer.id } },
+          issuer: { connect: { id: issuer.id } },
+          subtotal: 7500000,
+          tax: 675000,
+          discount: 0,
+          total: 8175000,
+          status: 'DRAFT',
+          notes: 'فاکتور تستی PDF',
+          verifyToken: randomUUID(),
+          items: {
+            create: [{
+              product: { connect: { id: product.id } },
+              quantity: 5,
+              unitPrice: 1500000,
+              discount: 0,
+              total: 7500000,
+            }],
+          },
+        },
+        include: {
+          customer: true,
+          issuer: true,
+          items: { include: { product: true } }
+        },
+      });
+
+      await prisma.$disconnect();
+      return invoice;
+    } catch (err: any) {
+      await prisma.$disconnect();
+      return { error: err.message, code: err.code, meta: err.meta };
+    }
+  }
 }
