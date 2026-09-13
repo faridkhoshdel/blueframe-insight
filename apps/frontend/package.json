@@ -23,8 +23,7 @@
     "@ant-design/icons": "^5.2.6",
     "leaflet": "^1.9.4",
     "react-leaflet": "^4.2.1",
-    "axios": "^1.6.0",
-    "react-router-dom": "^6.20.0"
+    "axios": "^1.6.0"
   },
   "devDependencies": {
     "@types/node": "^20",

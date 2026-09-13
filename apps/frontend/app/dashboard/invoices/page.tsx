@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+"use client";
+
+import { useEffect, useState } from 'react';
 import { Table, Button, Card, Tag, Typography, message, Space } from 'antd';
 import { FilePdfOutlined, EyeOutlined, PlusOutlined } from '@ant-design/icons';
-import { invoicesApi } from '../../services/api';
+import { invoicesApi } from '@/lib/api';
 
 const { Title } = Typography;
 
@@ -15,7 +17,7 @@ const STATUS_FA: any = {
   VERIFIED: 'تایید شده', PAID: 'پرداخت شده', CANCELLED: 'لغو شده',
 };
 
-export default function InvoicesList() {
+export default function InvoicesPage() {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -23,7 +25,7 @@ export default function InvoicesList() {
     setLoading(true);
     try {
       const res = await invoicesApi.list();
-      setData(res.data);
+      setData(Array.isArray(res.data) ? res.data : []);
     } catch (e) {
       message.error('خطا در دریافت');
     }
@@ -54,7 +56,7 @@ export default function InvoicesList() {
     },
     {
       title: 'مبلغ', dataIndex: 'total', key: 'total',
-      render: (t: number) => <b>{new Intl.NumberFormat('fa-IR').format(t)} ریال</b>,
+      render: (t: number) => <b>{new Intl.NumberFormat('fa-IR').format(t || 0)} ریال</b>,
     },
     {
       title: 'وضعیت', dataIndex: 'status', key: 'status',
@@ -62,7 +64,7 @@ export default function InvoicesList() {
     },
     {
       title: 'تاریخ', dataIndex: 'createdAt', key: 'date',
-      render: (d: string) => new Date(d).toLocaleDateString('fa-IR'),
+      render: (d: string) => d ? new Date(d).toLocaleDateString('fa-IR') : '-',
     },
     {
       title: 'عملیات', key: 'actions',
@@ -83,9 +85,9 @@ export default function InvoicesList() {
   ];
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-        <Title level={2}>فاکتورها</Title>
+        <Title level={2} style={{ margin: 0 }}>📋 فاکتورها</Title>
         <Button type="primary" icon={<PlusOutlined />}>فاکتور جدید</Button>
       </div>
       <Card>

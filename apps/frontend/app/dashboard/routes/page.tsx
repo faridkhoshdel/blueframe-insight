@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+"use client";
+
+import { useEffect, useState } from 'react';
 import { Table, Button, Card, Tag, Typography, message } from 'antd';
 import { PlusOutlined, EnvironmentOutlined } from '@ant-design/icons';
-import { routesApi, distributorsApi } from '../../services/api';
+import { routesApi } from '@/lib/api';
 
 const { Title } = Typography;
 
-export default function RoutesList() {
+export default function RoutesPage() {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -13,7 +15,7 @@ export default function RoutesList() {
     setLoading(true);
     try {
       const res = await routesApi.list();
-      setData(res.data);
+      setData(Array.isArray(res.data) ? res.data : []);
     } catch (e) {
       message.error('خطا در دریافت');
     }
@@ -24,7 +26,10 @@ export default function RoutesList() {
 
   const columns = [
     { title: 'نام مسیر', dataIndex: 'name', key: 'name' },
-    { title: 'کد', dataIndex: 'code', key: 'code', render: (c: string) => <Tag>{c}</Tag> },
+    {
+      title: 'کد', dataIndex: 'code', key: 'code',
+      render: (c: string) => c ? <Tag>{c}</Tag> : '-',
+    },
     {
       title: 'توزیع‌کننده', dataIndex: 'distributor', key: 'dist',
       render: (d: any) => d?.name || '-',
@@ -44,9 +49,9 @@ export default function RoutesList() {
   ];
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-        <Title level={2}>مسیرها</Title>
+        <Title level={2} style={{ margin: 0 }}>🗺️ مسیرها</Title>
         <Button type="primary" icon={<PlusOutlined />}>مسیر جدید</Button>
       </div>
       <Card>
