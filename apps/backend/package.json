@@ -44,7 +44,8 @@
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "swagger-ui-express": "^5.0.1",
-    "pdfmake": "^0.2.10"
+    "pdfmake": "^0.2.10",
+    "pdfkit": "^0.13.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^12.0.0",
