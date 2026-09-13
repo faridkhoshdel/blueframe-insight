@@ -16,6 +16,7 @@ import { InvoiceModule } from './invoice/invoice.module';
 import { RouteModule } from './route/route.module';
 import { DistributorModule } from './distributor/distributor.module';
 import { CustomerAuthModule } from './customer-auth/customer-auth.module';
+import { DiagnosticsModule } from './diagnostics/diagnostics.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { CustomerAuthModule } from './customer-auth/customer-auth.module';
     RouteModule,
     DistributorModule,
     CustomerAuthModule,
+    DiagnosticsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
