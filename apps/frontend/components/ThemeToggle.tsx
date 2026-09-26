@@ -48,7 +48,7 @@ export default function ThemeToggle() {
   return (
     <Dropdown menu={{ items, onClick, selectedKeys: [theme] }} placement="bottomRight">
       <button
-        className="p-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-700"
+        className="p-2 rounded-lg transition-colors hover:bg-gray-100:bg-gray-700"
         style={{ 
           color: 'var(--text-primary, #1f2937)',
           display: 'flex',

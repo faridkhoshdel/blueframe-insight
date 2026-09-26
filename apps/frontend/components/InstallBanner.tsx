@@ -60,23 +60,23 @@ export default function InstallBanner() {
       {/* Modal for manual install instructions */}
       {showHelp && (
         <div className="fixed inset-0 bg-black/60 z-[200] flex items-center justify-center p-4" onClick={() => setShowHelp(false)}>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
-            <h3 className="font-bold text-lg mb-4 text-gray-900 dark:text-white">📲 راهنمای نصب</h3>
+          <div className="bg-white800 rounded-2xl p-6 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
+            <h3 className="font-bold text-lg mb-4 text-gray-900">📲 راهنمای نصب</h3>
             
             {isIOS ? (
-              <div className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+              <div className="space-y-3 text-sm text-gray-700300">
                 <p>۱. روی دکمه <strong>اشتراک‌گذاری</strong> (مربع با فلش بالا) در نوار پایین سافاری کلیک کنید</p>
                 <p>۲. گزینه <strong>"Add to Home Screen"</strong> را انتخاب کنید</p>
                 <p>۳. روی <strong>"Add"</strong> کلیک کنید</p>
               </div>
             ) : (
-              <div className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+              <div className="space-y-3 text-sm text-gray-700300">
                 <p>۱. روی منوی <strong>⋮</strong> (سه نقطه) در گوشه بالا کلیک کنید</p>
                 <p>۲. گزینه <strong>"افزودن به صفحه اصلی"</strong> یا <strong>"نصب برنامه"</strong> را انتخاب کنید</p>
                 <p>۳. روی <strong>"نصب"</strong> کلیک کنید</p>
-                <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg text-xs">
-                  <p className="font-bold text-yellow-800 dark:text-yellow-300 mb-1">💡 نکته:</p>
-                  <p className="text-yellow-700 dark:text-yellow-400">
+                <div className="mt-4 p-3 bg-yellow-50900/20 rounded-lg text-xs">
+                  <p className="font-bold text-yellow-800300 mb-1">💡 نکته:</p>
+                  <p className="text-yellow-700400">
                     اگر گزینه نصب را نمی‌بینید، مطمئن شوید که صفحه را از آدرس <code>localhost:50002</code> باز کرده‌اید و از مرورگر <strong>Chrome</strong> استفاده می‌کنید.
                   </p>
                 </div>
