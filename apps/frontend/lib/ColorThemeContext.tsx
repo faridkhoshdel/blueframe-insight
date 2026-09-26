@@ -57,10 +57,11 @@ function hexToRgba(hex: string, alpha: number): string {
 export function applyPalette(p: ColorPalette) {
   if (typeof document === "undefined") return;
   const root = document.documentElement;
-  root.style.setProperty("--accent-color", p.primary);
-  root.style.setProperty("--btn-primary-bg", `linear-gradient(135deg, ${p.gradientFrom} 0%, ${p.gradientTo} 100%)`);
-  root.style.setProperty("--btn-primary-shadow", `0 4px 15px ${hexToRgba(p.primary, 0.4)}`);
-  root.style.setProperty("--table-header-bg", hexToRgba(p.primary, 0.12));
+  const imp = "important";
+  root.style.setProperty("--accent-color", p.primary, imp);
+  root.style.setProperty("--btn-primary-bg", `linear-gradient(135deg, ${p.gradientFrom} 0%, ${p.gradientTo} 100%)`, imp);
+  root.style.setProperty("--btn-primary-shadow", `0 4px 15px ${hexToRgba(p.primary, 0.4)}`, imp);
+  root.style.setProperty("--table-header-bg", hexToRgba(p.primary, 0.15), imp);
 }
 
 export function ColorThemeProvider({ children }: { children: ReactNode }) {

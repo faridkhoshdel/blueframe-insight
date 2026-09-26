@@ -128,18 +128,18 @@
 }
 
 [data-theme="dark"] {
-  --bg-primary: #0f172a !important;
-  --bg-secondary: #1e293b !important;
-  --bg-card: #1e293b !important;
-  --bg-hover: #334155 !important;
-  --text-primary: #f1f5f9 !important;
-  --text-secondary: #cbd5e1 !important;
-  --border-color: #475569 !important;
-  --btn-primary-bg: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%) !important;
-  --btn-primary-shadow: 0 4px 15px rgba(14, 165, 233, 0.5) !important;
-  --accent-color: #38bdf8 !important;
-  --table-header-bg: #1e3a5f !important;
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: #1e293b;
+  --bg-hover: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --border-color: #475569;
+  --btn-primary-bg: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+  --btn-primary-shadow: 0 4px 15px rgba(14, 165, 233, 0.5);
+  --accent-color: #38bdf8;
+  --table-header-bg: #1e3a5f;
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.6);
   color-scheme: dark !important;
 }
 
