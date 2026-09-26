@@ -17,6 +17,7 @@ export default function RoutesPage() {
   const [distributors, setDistributors] = useState<any[]>([]);
   const [customers, setCustomers] = useState<any[]>([]);
   const { theme } = useTheme();
+  const router = useRouter();
 
   const loadData = async () => {
     setLoading(true);
@@ -103,7 +104,11 @@ export default function RoutesPage() {
     },
     {
       title: 'عملیات', key: 'actions',
-      render: () => <AntButton className="theme-btn-secondary" icon={<EnvironmentOutlined />} size="small">نقشه</AntButton>,
+      render: (_: any, r: any) => (
+        <AntButton className="theme-btn-secondary" icon={<EnvironmentOutlined />} size="small" onClick={() => router.push(`/dashboard/routes/${r.id}`)}>
+          نقشه
+        </AntButton>
+      ),
     },
   ];
 
