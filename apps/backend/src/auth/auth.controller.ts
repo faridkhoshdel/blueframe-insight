@@ -54,7 +54,7 @@ export class AuthController {
 
 // ===== ENDPOINTS کمکی برای تست =====
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 const testPrisma = new PrismaClient();
 
@@ -91,7 +91,7 @@ export class TestController {
         return { success: false, error: 'DATABASE_URL not set' };
       }
       
-      const existing = await testPrisma.user.findFirst({ where: { role: 'admin' } });
+      const existing = await testPrisma.user.findFirst({ where: { role: Role.ADMIN } });
       if (existing) {
         return { success: true, message: 'Admin already exists', email: existing.email };
       }
@@ -102,7 +102,7 @@ export class TestController {
           email: 'admin@blueframe.com',
           name: 'Admin',
           password: hashedPassword,
-          role: 'admin',
+          role: Role.ADMIN,
         },
       });
 
