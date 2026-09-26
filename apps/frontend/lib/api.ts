@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://blueframe-backend-demo.onrender.com';
+// Export API_URL برای استفاده در lib/auth.tsx
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://blueframe-backend-demo.onrender.com';
 
 export const api = axios.create({
   baseURL: API_URL,
@@ -9,7 +10,7 @@ export const api = axios.create({
   },
 });
 
-// Interceptor: اضافه کردن token به همه requests
+// Interceptor: اضافه کردن token
 api.interceptors.request.use((config) => {
   if (typeof window !== 'undefined') {
     const token = localStorage.getItem('token') || localStorage.getItem('blueframe_token');
@@ -20,7 +21,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Interceptor: handle 401 (logout)
+// Interceptor: handle 401
 api.interceptors.response.use(
   (res) => res,
   (err) => {

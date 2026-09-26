@@ -4,33 +4,25 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  
-  // CORS با origin های دقیق (نه wildcard)
+
   app.enableCors({
-    origin: [
-      'http://localhost:3000',
-      'http://localhost:50002',
-      'https://blueframe-frontend.onrender.com',
-        'https://blueframe-frontend-demo.onrender.com',
-      'https://blueframe-backend.onrender.com',
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    origin: true,
     credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
-    exposedHeaders: ['Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+    exposedHeaders: ['Content-Disposition'],
   });
-  
-  app.useGlobalPipes(new ValidationPipe({ 
-    whitelist: true, 
-    transform: true 
+
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,
+    transform: true,
+    forbidNonWhitelisted: false,
   }));
-  
-  const port = parseInt(process.env.PORT || '3000', 10);
+
+  const port = process.env.PORT || 3000;
   await app.listen(port, '0.0.0.0');
-  
   console.log(`🚀 Server running on port ${port}`);
   console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🗄️  Database: ${process.env.DATABASE_URL ? 'Connected' : 'NOT SET'}`);
 }
 
 bootstrap();
