@@ -56,7 +56,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blueframe mx-auto mb-3"></div>
-          <p className="text-gray-600 text-sm">در حال بارگذاری...</p>
+          <p className="text-[var(--text-secondary)] text-sm">در حال بارگذاری...</p>
         </div>
       </div>
     );
@@ -64,13 +64,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (!isAuthenticated) return null;
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900" dir="rtl">
+    <div className="min-h-screen bg-[var(--bg-primary)]" dir="rtl">
       {/* ===== Grid Layout: دسکتاپ با grid، موبایل با drawer ===== */}
       <div className="min-h-screen md:grid md:grid-cols-[256px_1fr]">
         
         {/* ===== Sidebar Desktop (Grid Column 1) ===== */}
         <aside className="hidden md:flex md:flex-col bg-white border-l border-gray-200 sticky top-0 h-screen overflow-y-auto">
-          <div className="p-6 border-b border-gray-100 flex items-center gap-3">
+          <div className="p-6 border-b border-[var(--border-color)] flex items-center gap-3">
             <Image 
               src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png" 
               alt="Logo" 
@@ -79,7 +79,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             />
             <div>
               <span className="font-bold text-blueframe text-lg block">پنل مدیریت</span>
-              <span className="text-xs text-gray-500">blueFrame Insight</span>
+              <span className="text-xs text-[var(--text-secondary)]">blueFrame Insight</span>
             </div>
           </div>
 
@@ -93,7 +93,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                     isActive
                       ? "bg-blueframe text-white"
-                      : "text-gray-600 hover:bg-blueframe/5 hover:text-blueframe"
+                      : "text-[var(--text-secondary)] hover:bg-blueframe/5 hover:text-blueframe"
                   }`}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -105,10 +105,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             })}
           </nav>
 
-          <div className="p-4 border-t border-gray-100">
+          <div className="p-4 border-t border-[var(--border-color)]">
             <div className="px-4 py-3 bg-blueframe/5 rounded-lg">
-              <p className="text-sm font-medium text-gray-900">{user?.name || "کاربر"}</p>
-              <p className="text-xs text-gray-500">{user?.email}</p>
+              <p className="text-sm font-medium text-[var(--text-primary)]">{user?.name || "کاربر"}</p>
+              <p className="text-xs text-[var(--text-secondary)]">{user?.email}</p>
               <p className="text-xs text-blueframe mt-1">👑 {user?.role}</p>
               <Link href="/" className="mt-2 text-xs text-red-600 hover:text-red-700 font-medium inline-block">
                 خروج از پنل →
@@ -120,11 +120,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* ===== Main Content (Grid Column 2) ===== */}
         <main className="min-h-screen flex flex-col">
           {/* Mobile Header */}
-          <header className="md:hidden bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 sticky top-0 z-30 shadow-sm">
+          <header className="md:hidden bg-[var(--bg-card)] border-b border-[var(--border-color)] px-4 py-3 sticky top-0 z-30 shadow-sm">
             <div className="flex items-center justify-between">
               <button 
                 onClick={() => setSidebarOpen(true)}
-                className="p-2 hover:bg-gray-100 rounded-lg"
+                className="p-2 hover:bg-[var(--bg-hover)] rounded-lg"
                 aria-label="باز کردن منو"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -133,7 +133,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   <line x1="3" y1="18" x2="21" y2="18"/>
                 </svg>
               </button>
-              <h2 className="text-base font-bold text-gray-800 dark:text-gray-100">داشبورد مدیریتی</h2>
+              <h2 className="text-base font-bold text-[var(--text-primary)]">داشبورد مدیریتی</h2>
               <ThemeToggle />
               <div className="w-8 h-8 bg-blueframe/10 rounded-full flex items-center justify-center">
                 <span className="text-blueframe font-bold text-sm">م</span>
@@ -170,7 +170,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           ${sidebarOpen ? "translate-x-0" : "translate-x-full"}
         `}
       >
-        <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-gradient-to-l from-blueframe/5 to-transparent">
+        <div className="p-4 border-b border-[var(--border-color)] flex items-center justify-between bg-gradient-to-l from-blueframe/5 to-transparent">
           <div className="flex items-center gap-3">
             <Image 
               src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png" 
@@ -180,12 +180,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             />
             <div>
               <span className="font-bold text-blueframe text-base block">پنل مدیریت</span>
-              <span className="text-xs text-gray-500">blueFrame Insight</span>
+              <span className="text-xs text-[var(--text-secondary)]">blueFrame Insight</span>
             </div>
           </div>
           <button 
             onClick={() => setSidebarOpen(false)}
-            className="p-2 hover:bg-gray-100 rounded-lg"
+            className="p-2 hover:bg-[var(--bg-hover)] rounded-lg"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="18" y1="6" x2="6" y2="18"/>
@@ -205,7 +205,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                   isActive
                     ? "bg-blueframe text-white"
-                    : "text-gray-600 hover:bg-blueframe/5"
+                    : "text-[var(--text-secondary)] hover:bg-blueframe/5"
                 }`}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -217,10 +217,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           })}
         </nav>
 
-        <div className="p-4 border-t border-gray-100">
+        <div className="p-4 border-t border-[var(--border-color)]">
           <div className="px-4 py-3 bg-blueframe/5 rounded-lg">
-            <p className="text-sm font-medium text-gray-900">{user?.name || "کاربر"}</p>
-              <p className="text-xs text-gray-500">{user?.email}</p>
+            <p className="text-sm font-medium text-[var(--text-primary)]">{user?.name || "کاربر"}</p>
+              <p className="text-xs text-[var(--text-secondary)]">{user?.email}</p>
               <p className="text-xs text-blueframe mt-1">👑 {user?.role}</p>
             <button onClick={() => { logout(); router.push("/login"); }} className="mt-2 text-xs text-red-600 hover:text-red-700 font-medium">
               🚪 خروج از پنل

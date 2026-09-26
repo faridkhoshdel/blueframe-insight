@@ -1,25 +1,40 @@
 "use client";
-import { API_URL } from '@/lib/api';
-export function applyTheme(theme: 'light' | 'dark') {
+
+export type ThemeMode = "light" | "dark" | "glass";
+
+// ============ توابع قدیمی (برای backward compatibility) ============
+export function applyTheme(theme: 'light' | 'dark' | 'glass') {
+  if (typeof window === 'undefined') return;
+  
+  localStorage.setItem('blueframe_theme', theme);
+  document.documentElement.setAttribute('data-theme', theme);
+  
   if (theme === 'dark') {
     document.documentElement.classList.add('dark');
-    localStorage.setItem('blueframe_theme', 'dark');
   } else {
     document.documentElement.classList.remove('dark');
-    localStorage.setItem('blueframe_theme', 'light');
   }
 }
 
-export function initTheme() {
-  const saved = localStorage.getItem('blueframe_theme');
-  if (saved === 'dark') {
-    document.documentElement.classList.add('dark');
-    return 'dark';
+export function initTheme(): ThemeMode {
+  if (typeof window === 'undefined') return 'light';
+  const saved = localStorage.getItem('blueframe_theme') as ThemeMode;
+  if (saved && ['light', 'dark', 'glass'].includes(saved)) {
+    document.documentElement.setAttribute('data-theme', saved);
+    if (saved === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+    return saved;
   }
+  document.documentElement.setAttribute('data-theme', 'light');
   return 'light';
 }
 
-export function getTheme(): 'light' | 'dark' {
+export function getTheme(): ThemeMode {
   if (typeof window === 'undefined') return 'light';
-  return localStorage.getItem('blueframe_theme') === 'dark' ? 'dark' : 'light';
+  const saved = localStorage.getItem('blueframe_theme') as ThemeMode;
+  if (saved && ['light', 'dark', 'glass'].includes(saved)) {
+    return saved;
+  }
+  return 'light';
 }

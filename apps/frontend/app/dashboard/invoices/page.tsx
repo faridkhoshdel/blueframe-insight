@@ -1,22 +1,21 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { Table, Form, Input, InputNumber, Select, Space, message, Typography, Row, Col, Button as AntButton } from 'antd';
-import { FilePdfOutlined, PlusOutlined, DeleteOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import { Table, Form, Input, InputNumber, Select, Space, message, Typography, Row, Col, Button as AntButton, Modal } from 'antd';
+import { FilePdfOutlined, PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { invoicesApi, customersApi, productsApi } from '@/lib/api';
-import { GlassCard, GlassModal, GlassButton, GlassTag, PageWrapper } from '@/components/ui/GlassComponents';
+import { useTheme } from '@/lib/ThemeContext';
 
 const { Title } = Typography;
 const { TextArea } = Input;
 
-const STATUS_COLORS: any = {
-  DRAFT: 'default', ISSUED: 'blue', SENT: 'blue',
-  VERIFIED: 'success', PAID: 'success', CANCELLED: 'warning',
-};
-
-const STATUS_FA: any = {
-  DRAFT: 'پیش‌نویس', ISSUED: 'صادر شده', SENT: 'ارسال شده',
-  VERIFIED: 'تایید شده', PAID: 'پرداخت شده', CANCELLED: 'لغو شده',
+const STATUS_MAP: any = {
+  DRAFT: { fa: 'پیش‌نویس', cls: 'theme-tag-blue' },
+  ISSUED: { fa: 'صادر شده', cls: 'theme-tag-blue' },
+  SENT: { fa: 'ارسال شده', cls: 'theme-tag-blue' },
+  VERIFIED: { fa: 'تایید شده', cls: 'theme-tag-success' },
+  PAID: { fa: 'پرداخت شده', cls: 'theme-tag-success' },
+  CANCELLED: { fa: 'لغو شده', cls: 'theme-tag-warning' },
 };
 
 export default function InvoicesPage() {
@@ -27,6 +26,7 @@ export default function InvoicesPage() {
   const [form] = Form.useForm();
   const [customers, setCustomers] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
+  const { theme } = useTheme();
 
   const loadData = async () => {
     setLoading(true);
@@ -39,7 +39,7 @@ export default function InvoicesPage() {
     setLoading(false);
   };
 
-  const loadCustomersAndProducts = async () => {
+  const loadRelations = async () => {
     try {
       const [custRes, prodRes] = await Promise.all([
         customersApi.list(),
@@ -52,9 +52,9 @@ export default function InvoicesPage() {
     }
   };
 
-  useEffect(() => { 
-    loadData(); 
-    loadCustomersAndProducts();
+  useEffect(() => {
+    loadData();
+    loadRelations();
   }, []);
 
   const handleCreate = async (values: any) => {
@@ -65,7 +65,7 @@ export default function InvoicesPage() {
         tax: values.tax || 0,
         discount: values.discount || 0,
         notes: values.notes || '',
-        items: values.items.map((item: any) => ({
+        items: (values.items || []).map((item: any) => ({
           productId: item.productId,
           quantity: item.quantity,
           unitPrice: item.unitPrice,
@@ -98,85 +98,93 @@ export default function InvoicesPage() {
   };
 
   const columns = [
-    { 
-      title: 'شماره', 
-      dataIndex: 'invoiceNumber', 
+    {
+      title: 'شماره',
+      dataIndex: 'invoiceNumber',
       key: 'number',
-      render: (n: string) => <span className="font-mono text-blue-300">{n}</span>
+      render: (n: string) => <span className="font-mono" style={{ color: 'var(--accent-color)' }}>{n}</span>
     },
+    { title: 'خریدار', dataIndex: 'customer', key: 'cust', render: (c: any) => c?.name || '-' },
     {
-      title: 'خریدار', 
-      dataIndex: 'customer', 
-      key: 'cust',
-      render: (c: any) => c?.name || '-',
-    },
-    {
-      title: 'مبلغ', 
-      dataIndex: 'total', 
+      title: 'مبلغ',
+      dataIndex: 'total',
       key: 'total',
       render: (t: number) => (
-        <b className="text-green-300">
+        <b style={{ color: theme === 'dark' ? '#4ade80' : '#16a34a' }}>
           {new Intl.NumberFormat('fa-IR').format(t || 0)} ریال
         </b>
       ),
     },
     {
-      title: 'وضعیت', 
-      dataIndex: 'status', 
+      title: 'وضعیت',
+      dataIndex: 'status',
       key: 'status',
-      render: (s: string) => <GlassTag color={STATUS_COLORS[s] as any}>{STATUS_FA[s] || s}</GlassTag>,
+      render: (s: string) => {
+        const m = STATUS_MAP[s] || { fa: s, cls: 'theme-tag-blue' };
+        return <span className={`theme-tag ${m.cls}`}>{m.fa}</span>;
+      },
     },
     {
-      title: 'تاریخ', 
-      dataIndex: 'createdAt', 
+      title: 'تاریخ',
+      dataIndex: 'createdAt',
       key: 'date',
       render: (d: string) => d ? new Date(d).toLocaleDateString('fa-IR') : '-',
     },
     {
-      title: 'عملیات', 
+      title: 'عملیات',
       key: 'actions',
       render: (_: any, r: any) => (
         <Space>
-          <GlassButton 
-            type="secondary" 
+          <AntButton
+            className="theme-btn-secondary"
             icon={<FilePdfOutlined />}
             onClick={() => downloadPdf(r.id, r.invoiceNumber)}
             size="small"
           >
             PDF
-          </GlassButton>
+          </AntButton>
         </Space>
       ),
     },
   ];
 
   return (
-    <PageWrapper>
-      <div className="p-4 md:p-8">
-        <div className="flex items-center justify-between mb-6">
+    <div className="relative">
+      {theme === 'glass' && (
+        <>
+          <div className="glass-orb orb-blue" />
+          <div className="glass-orb orb-cyan" />
+        </>
+      )}
+
+      <div className="relative z-10 p-4 md:p-6 lg:p-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
-            <Title level={2} className="glass-title" style={{ margin: 0 }}>📋 فاکتورها</Title>
-            <p className="glass-subtitle text-sm mt-1">مدیریت و صدور فاکتورهای فروش</p>
+            <Title level={2} className="theme-title" style={{ margin: 0 }}>📋 فاکتورها</Title>
+            <p className="theme-subtitle text-sm mt-1">مدیریت و صدور فاکتورهای فروش</p>
           </div>
-          <GlassButton 
+          <AntButton
+            className="theme-btn-primary"
             icon={<PlusOutlined />}
             onClick={() => setModalOpen(true)}
+            size="large"
           >
             فاکتور جدید
-          </GlassButton>
+          </AntButton>
         </div>
 
-        <GlassCard className="glass-table">
-          <Table 
-            columns={columns} 
-            dataSource={data} 
-            rowKey="id" 
+        <div className="theme-card theme-table responsive-table">
+          <Table
+            columns={columns}
+            dataSource={data}
+            rowKey="id"
             loading={loading}
-            pagination={{ pageSize: 10 }}
+            pagination={{ pageSize: 10, responsive: true }}
+            scroll={{ x: 800 }}
           />
-        </GlassCard>
+        </div>
 
-        <GlassModal
+        <Modal
           open={modalOpen}
           onCancel={() => { setModalOpen(false); form.resetFields(); }}
           onOk={() => form.submit()}
@@ -184,20 +192,18 @@ export default function InvoicesPage() {
           width={800}
           confirmLoading={submitting}
           okText="صدور فاکتور"
+          cancelText="انصراف"
+          className="theme-modal"
+          centered
         >
-          <Form 
-            form={form} 
-            layout="vertical" 
-            onFinish={handleCreate}
-            className="mt-4"
-          >
-            <Form.Item 
-              name="customerId" 
-              label="خریدار" 
+          <Form form={form} layout="vertical" onFinish={handleCreate} className="theme-form mt-4">
+            <Form.Item
+              name="customerId"
+              label="خریدار"
               rules={[{ required: true, message: 'لطفا خریدار را انتخاب کنید' }]}
             >
               <Select
-                className="glass-select"
+                className="theme-select"
                 placeholder="انتخاب خریدار..."
                 showSearch
                 optionFilterProp="children"
@@ -211,36 +217,36 @@ export default function InvoicesPage() {
               </Select>
             </Form.Item>
 
-            <div className="mb-3 flex items-center justify-between">
-              <label className="text-white font-medium">اقلام فاکتور</label>
+            <div className="mb-3">
+              <label className="font-medium" style={{ color: 'var(--text-primary)' }}>اقلام فاکتور</label>
             </div>
 
             <Form.List name="items" initialValue={[{}]}>
               {(fields, { add, remove }) => (
                 <>
                   {fields.map((field, index) => (
-                    <div key={field.key} className="glass-card mb-3 p-4" style={{ background: 'rgba(255,255,255,0.05)' }}>
+                    <div key={field.key} className="theme-card mb-3" style={{ padding: '16px', background: 'var(--bg-hover)' }}>
                       <div className="flex items-center justify-between mb-3">
-                        <span className="text-white font-medium">قلم #{index + 1}</span>
+                        <span className="font-medium" style={{ color: 'var(--text-primary)' }}>قلم #{index + 1}</span>
                         {fields.length > 1 && (
-                          <AntButton 
-                            type="text" 
-                            danger 
-                            icon={<MinusCircleOutlined />} 
+                          <AntButton
+                            type="text"
+                            danger
+                            icon={<MinusCircleOutlined />}
                             onClick={() => remove(field.name)}
                             size="small"
                           />
                         )}
                       </div>
-                      <Row gutter={12}>
-                        <Col span={24}>
+                      <Row gutter={[12, 8]}>
+                        <Col xs={24}>
                           <Form.Item
                             name={[field.name, 'productId']}
                             rules={[{ required: true, message: 'محصول را انتخاب کنید' }]}
                             style={{ marginBottom: 8 }}
                           >
                             <Select
-                              className="glass-select"
+                              className="theme-select"
                               placeholder="انتخاب محصول..."
                               showSearch
                               optionFilterProp="children"
@@ -253,44 +259,44 @@ export default function InvoicesPage() {
                             </Select>
                           </Form.Item>
                         </Col>
-                        <Col span={8}>
+                        <Col xs={24} sm={8}>
                           <Form.Item
                             name={[field.name, 'quantity']}
                             label="تعداد"
                             rules={[{ required: true, message: 'تعداد' }]}
                             style={{ marginBottom: 8 }}
                           >
-                            <InputNumber className="glass-input w-full" min={1} />
+                            <InputNumber className="theme-input w-full" min={1} style={{ width: '100%' }} />
                           </Form.Item>
                         </Col>
-                        <Col span={8}>
+                        <Col xs={24} sm={8}>
                           <Form.Item
                             name={[field.name, 'unitPrice']}
                             label="قیمت واحد"
                             rules={[{ required: true, message: 'قیمت' }]}
                             style={{ marginBottom: 8 }}
                           >
-                            <InputNumber className="glass-input w-full" min={0} />
+                            <InputNumber className="theme-input w-full" min={0} style={{ width: '100%' }} />
                           </Form.Item>
                         </Col>
-                        <Col span={8}>
+                        <Col xs={24} sm={8}>
                           <Form.Item
                             name={[field.name, 'discount']}
                             label="تخفیف"
                             style={{ marginBottom: 8 }}
                           >
-                            <InputNumber className="glass-input w-full" min={0} defaultValue={0} />
+                            <InputNumber className="theme-input w-full" min={0} style={{ width: '100%' }} />
                           </Form.Item>
                         </Col>
                       </Row>
                     </div>
                   ))}
-                  <AntButton 
-                    type="dashed" 
-                    onClick={() => add()} 
-                    block 
+                  <AntButton
+                    type="dashed"
+                    onClick={() => add()}
+                    block
                     icon={<PlusOutlined />}
-                    className="glass-btn-secondary"
+                    className="theme-btn-secondary"
                   >
                     افزودن قلم جدید
                   </AntButton>
@@ -299,28 +305,24 @@ export default function InvoicesPage() {
             </Form.List>
 
             <Row gutter={16} className="mt-4">
-              <Col span={12}>
+              <Col xs={24} md={12}>
                 <Form.Item name="tax" label="مالیات (ریال)">
-                  <InputNumber className="glass-input w-full" min={0} defaultValue={0} />
+                  <InputNumber className="theme-input w-full" min={0} style={{ width: '100%' }} />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col xs={24} md={12}>
                 <Form.Item name="discount" label="تخفیف کل (ریال)">
-                  <InputNumber className="glass-input w-full" min={0} defaultValue={0} />
+                  <InputNumber className="theme-input w-full" min={0} style={{ width: '100%' }} />
                 </Form.Item>
               </Col>
             </Row>
 
             <Form.Item name="notes" label="توضیحات">
-              <TextArea 
-                className="glass-input" 
-                rows={2} 
-                placeholder="توضیحات اختیاری..."
-              />
+              <TextArea className="theme-input" rows={2} placeholder="توضیحات اختیاری..." />
             </Form.Item>
           </Form>
-        </GlassModal>
+        </Modal>
       </div>
-    </PageWrapper>
+    </div>
   );
 }
