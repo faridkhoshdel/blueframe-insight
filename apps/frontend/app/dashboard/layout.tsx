@@ -186,7 +186,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="flex items-center gap-3">
             <Image 
               src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png" 
-              alt="Logo" className="rounded-xl" style={{{ background: "#1e3a8a", padding: 4 }} 
+              alt="Logo" className="rounded-xl" style={{ background: "#1e3a8a", padding: 4 }}
               width={36} 
               height={36} 
             />
