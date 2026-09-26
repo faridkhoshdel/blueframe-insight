@@ -45,18 +45,20 @@
     "rxjs": "^7.8.1",
     "swagger-ui-express": "^5.0.1",
     "pdfmake": "^0.2.10",
-    "pdfkit": "^0.13.0"
+    "pdfkit": "^0.13.0",
+    "typescript": "^6.0.2",
+    "ts-node": "^10.9.2",
+    "@types/node": "^24.0.0",
+    "@nestjs/cli": "^12.0.0",
+    "@nestjs/schematics": "^12.0.0"
   },
   "devDependencies": {
-    "@nestjs/cli": "^12.0.0",
     "@nestjs/mau": "^0.2.6",
-    "@nestjs/schematics": "^12.0.0",
     "@nestjs/testing": "^12.0.1",
     "@types/bcrypt": "^6.0.0",
     "@types/bcryptjs": "^3.0.0",
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.0.0",
     "@types/passport-jwt": "^4.0.1",
     "@types/supertest": "^7.0.0",
     "jest": "^30.0.0",
@@ -67,9 +69,7 @@
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
     "ts-loader": "^9.5.2",
-    "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "^6.0.2"
+    "tsconfig-paths": "^4.2.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
