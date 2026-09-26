@@ -76,7 +76,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="p-6 border-b border-[var(--border-color)] flex items-center gap-3">
             <Image 
               src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png" 
-              alt="Logo" 
+              alt="Logo" className="rounded-xl" style={ background: "#1e3a8a", padding: 4 } 
               width={40} 
               height={40} 
             />
@@ -141,7 +141,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               </button>
               <h2 className="text-base font-bold text-[var(--text-primary)]">داشبورد مدیریتی</h2>
               <ThemeToggle />
-              <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 border" style={{ borderColor: "var(--border-color)", background: "var(--bg-hover)" }}>
+              <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 border" style={ borderColor: "#1e3a8a", background: "#1e3a8a", padding: 4 }>
                 <Image
                   src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png"
                   alt="blueFrame logo"
@@ -186,7 +186,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="flex items-center gap-3">
             <Image 
               src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png" 
-              alt="Logo" 
+              alt="Logo" className="rounded-xl" style={ background: "#1e3a8a", padding: 4 } 
               width={36} 
               height={36} 
             />
