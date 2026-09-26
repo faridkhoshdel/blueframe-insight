@@ -131,7 +131,7 @@ export default function AnalyticsPage() {
               <XAxis dataKey="month" fontSize={12} />
               <YAxis fontSize={12} tickFormatter={(v) => `${v / 1000000}M`} />
               <Tooltip formatter={(value: number) => [`${formatPrice(value)} ﷼`, "ارزش"]} />
-              <Area type="monotone" dataKey="value" stroke="#10B981" fill="#D1FAE5" />
+              <Area type="monotone" dataKey="value" stroke="var(--chart-2)" fill="#D1FAE5" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
@@ -146,8 +146,8 @@ export default function AnalyticsPage() {
             <YAxis fontSize={12} />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="positive" name="نظرات مثبت" stroke="#10B981" strokeWidth={3} dot={{ r: 5 }} />
-            <Line type="monotone" dataKey="negative" name="نظرات منفی" stroke="#EF4444" strokeWidth={3} dot={{ r: 5 }} />
+            <Line type="monotone" dataKey="positive" name="نظرات مثبت" stroke="var(--chart-2)" strokeWidth={3} dot={{ r: 5 }} />
+            <Line type="monotone" dataKey="negative" name="نظرات منفی" stroke="var(--chart-4)" strokeWidth={3} dot={{ r: 5 }} />
           </LineChart>
         </ResponsiveContainer>
       </div>

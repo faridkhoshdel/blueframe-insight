@@ -170,7 +170,7 @@ export default function ExecutiveDashboard() {
                 <XAxis dataKey="month" fontSize={11} />
                 <YAxis fontSize={11} tickFormatter={(v) => formatCurrency(v)} />
                 <Tooltip formatter={(value) => [formatCurrency(value as number) + " ﷼", "درآمد"]} />
-                <Area type="monotone" dataKey="revenue" name="درآمد" stroke="#3B82F6" fill="url(#colorRevenue)" strokeWidth={2} />
+                <Area type="monotone" dataKey="revenue" name="درآمد" stroke="var(--chart-1)" fill="url(#colorRevenue)" strokeWidth={2} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -190,8 +190,8 @@ export default function ExecutiveDashboard() {
                 <YAxis fontSize={11} />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="deals" name="معاملات" fill="#10B981" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="customers" name="مشتریان" fill="#8B5CF6" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="deals" name="معاملات" fill="var(--chart-2)" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="customers" name="مشتریان" fill="var(--chart-5)" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
