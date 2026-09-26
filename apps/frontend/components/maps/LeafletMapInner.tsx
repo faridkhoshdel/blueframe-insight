@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from "react-leaflet";
+import {
+  MapContainer, TileLayer, Marker, Popup, Polyline, useMap, LayersControl,
+} from "react-leaflet";
 import L from "leaflet";
 import type { MapStop } from "./RouteMap";
 
-// حل مشکل آیکون default Leaflet در Next.js
+const { BaseLayer } = LayersControl;
+
 const makeIcon = (color: string, label?: string) => {
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="48" viewBox="0 0 36 48">
@@ -40,26 +43,39 @@ function FitBounds({ stops }: { stops: MapStop[] }) {
 }
 
 export default function LeafletMapInner({ stops, darkMode }: { stops: MapStop[]; darkMode: boolean }) {
-  const sorted = useMemo(
-    () => [...stops].sort((a, b) => a.order - b.order),
-    [stops]
-  );
-
+  const sorted = useMemo(() => [...stops].sort((a, b) => a.order - b.order), [stops]);
   const path = sorted.map((s) => [s.lat, s.lng] as [number, number]);
-
-  const tileUrl = darkMode
-    ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-    : "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
-
-  const tileAttribution = '&copy; <a href="https://www.openstreetmap.org/">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>';
-
-  const center: [number, number] =
-    sorted.length > 0 ? [sorted[0].lat, sorted[0].lng] : [35.6892, 51.389];
+  const center: [number, number] = sorted.length > 0 ? [sorted[0].lat, sorted[0].lng] : [35.6892, 51.389];
 
   return (
-    <div dir="ltr" style={{ height: 500, width: "100%" }}>
+    <div
+      dir="ltr"
+      className={darkMode ? "leaflet-dark-tiles" : ""}
+      style={{ height: 500, width: "100%" }}
+    >
       <MapContainer center={center} zoom={12} style={{ height: "100%", width: "100%" }}>
-        <TileLayer url={tileUrl} attribution={tileAttribution} />
+        <LayersControl position="topright">
+          <BaseLayer checked name="نقشه شهری (فارسی)">
+            <TileLayer
+              url="https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+              subdomains={["0", "1", "2", "3"]}
+              attribution="&copy; Google"
+            />
+          </BaseLayer>
+          <BaseLayer name="ماهواره‌ای">
+            <TileLayer
+              url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+              attribution="&copy; Esri"
+            />
+          </BaseLayer>
+          <BaseLayer name="OpenStreetMap">
+            <TileLayer
+              url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution="&copy; OpenStreetMap"
+            />
+          </BaseLayer>
+        </LayersControl>
+
         <FitBounds stops={sorted} />
 
         {sorted.map((s, i) => {
@@ -67,7 +83,7 @@ export default function LeafletMapInner({ stops, darkMode }: { stops: MapStop[];
           return (
             <Marker key={s.id} position={[s.lat, s.lng]} icon={icon}>
               <Popup>
-                <div dir="rtl" style={{ fontSize: 13, fontFamily: "inherit" }}>
+                <div dir="rtl" style={{ fontSize: 13 }}>
                   <b>{s.name}</b>
                   <br />
                   <span>ترتیب: {s.order}</span>
