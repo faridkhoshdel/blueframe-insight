@@ -26,7 +26,7 @@ export default function InstallBanner() {
 
   return (
     <>
-      <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-sm bg-gradient-to-l from-blueframe to-blue-600 text-white rounded-2xl shadow-2xl p-4 z-[100] animate-slide-up">
+      <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-sm grad-card grad-blueframe text-white rounded-2xl shadow-2xl p-4 z-[100] animate-slide-up">
         <div className="flex items-start gap-3">
           <div className="text-3xl flex-shrink-0">📲</div>
           <div className="flex-1">
@@ -36,7 +36,7 @@ export default function InstallBanner() {
               <button 
                 onClick={handleInstall} 
                 disabled={installing}
-                className="px-3 py-1.5 bg-white text-blueframe rounded-lg text-xs font-bold hover:bg-blue-50 disabled:opacity-50"
+                className="px-3 py-1.5 bg-[var(--bg-card)] text-blueframe rounded-lg text-xs font-bold hover:bg-blue-50 disabled:opacity-50"
               >
                 {installing ? "⏳ در حال نصب..." : "📥 نصب اپ"}
               </button>

@@ -99,7 +99,7 @@ export default function SimulatorPage() {
 
   const formatCurrency = (n) => new Intl.NumberFormat("fa-IR").format(Math.round(n));
   const formatMillions = (n) => (n / 1000000).toFixed(1) + "M";
-  const getRiskColor = (level) => ({ "LOW": "text-green-600 bg-green-50 border-green-200", "MEDIUM": "text-yellow-600 bg-yellow-50 border-yellow-200", "HIGH": "text-orange-600 bg-orange-50 border-orange-200", "CRITICAL": "text-red-600 bg-red-50 border-red-200" }[level] || "text-gray-600 bg-gray-50 border-gray-200");
+  const getRiskColor = (level) => ({ "LOW": "text-green-600 bg-green-50 border-green-200", "MEDIUM": "text-yellow-600 bg-yellow-50 border-yellow-200", "HIGH": "text-orange-600 bg-orange-50 border-orange-200", "CRITICAL": "text-red-600 bg-red-50 border-red-200" }[level] || "text-[var(--text-secondary)] bg-gray-50 border-[var(--border-color)]");
   const getRiskLabel = (level) => ({ "LOW": "پایین", "MEDIUM": "متوسط", "HIGH": "بالا", "CRITICAL": "بحرانی" }[level] || level);
   const getTypeLabel = (type) => ({ "price": "تغییر قیمت", "customer_loss": "از دست دادن", "marketing": "کمپین", "compare": "مقایسه" }[type] || type);
 
@@ -110,27 +110,27 @@ export default function SimulatorPage() {
       {/* Header */}
       <div className="space-y-2">
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-blueframe">🧪 Digital Twin Simulator</h1>
-        <p className="text-gray-600 text-xs sm:text-sm">شبیه‌ساز تصمیم‌گیری سازمانی با مقایسه سناریوها</p>
+        <p className="text-[var(--text-secondary)] text-xs sm:text-sm">شبیه‌ساز تصمیم‌گیری سازمانی با مقایسه سناریوها</p>
       </div>
 
       {/* Info Cards - Responsive Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
-        <div className="bg-blue-50 p-3 sm:p-4 rounded-xl border border-blue-200">
+        <div className="bg-blue-50 p-3 sm:p-4 rounded-xl">
           <p className="text-xs text-blue-700 font-bold">🧠 مبتنی بر AI</p>
-          <p className="text-xs text-gray-700 mt-1 hidden sm:block">ترکیب Knowledge Graph + Churn</p>
+          <p className="text-xs text-[var(--text-primary)] mt-1 hidden sm:block">ترکیب Knowledge Graph + Churn</p>
         </div>
-        <div className="bg-purple-50 p-3 sm:p-4 rounded-xl border border-purple-200">
+        <div className="bg-purple-50 p-3 sm:p-4 rounded-xl">
           <p className="text-xs text-purple-700 font-bold">🔍 Explainable</p>
-          <p className="text-xs text-gray-700 mt-1 hidden sm:block">توضیح کامل علت هر پیش‌بینی</p>
+          <p className="text-xs text-[var(--text-primary)] mt-1 hidden sm:block">توضیح کامل علت هر پیش‌بینی</p>
         </div>
         <div className="bg-green-50 p-3 sm:p-4 rounded-xl border border-green-200">
           <p className="text-xs text-green-700 font-bold">✅ Actionable</p>
-          <p className="text-xs text-gray-700 mt-1 hidden sm:block">پیشنهادات عملی برای هر سناریو</p>
+          <p className="text-xs text-[var(--text-primary)] mt-1 hidden sm:block">پیشنهادات عملی برای هر سناریو</p>
         </div>
       </div>
 
       {/* Tabs Card */}
-      <div className="bg-white rounded-xl shadow border overflow-hidden">
+      <div className="bg-[var(--bg-card)] rounded-xl shadow border overflow-hidden">
         {/* Tabs - Scrollable در موبایل */}
         <div className="flex border-b overflow-x-auto scrollbar-hide">
           {[
@@ -167,7 +167,7 @@ export default function SimulatorPage() {
                 onChange={(e) => setPricePercent(Number(e.target.value))} 
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" 
               />
-              <div className="flex justify-between text-xs text-gray-500">
+              <div className="flex justify-between text-xs text-[var(--text-secondary)]">
                 <span>-50%</span>
                 <span>0</span>
                 <span>+100%</span>
@@ -223,7 +223,7 @@ export default function SimulatorPage() {
                   onChange={(e) => setCampaignBudget(Number(e.target.value))} 
                   className="w-full h-2 bg-gray-200 rounded-lg" 
                 />
-                <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <div className="flex justify-between text-xs text-[var(--text-secondary)] mt-1">
                   <span>1M</span>
                   <span>100M</span>
                 </div>
@@ -234,9 +234,9 @@ export default function SimulatorPage() {
           {/* Compare Tab */}
           {activeTab === "compare" && (
             <div className="space-y-4">
-              <div className="bg-gradient-to-l from-blueframe/10 to-blue-50 p-4 rounded-lg border border-blueframe/20">
+              <div className="grad-card grad-blueframe p-4 rounded-lg">
                 <p className="text-sm font-bold text-blueframe mb-1">⚖️ مقایسه همزمان سناریوها</p>
-                <p className="text-xs text-gray-700">تا ۴ سناریو را مقایسه کنید</p>
+                <p className="text-xs text-[var(--text-primary)]">تا ۴ سناریو را مقایسه کنید</p>
               </div>
 
               {compareScenarios.map((scenario, index) => (
@@ -298,7 +298,7 @@ export default function SimulatorPage() {
               {compareScenarios.length < 4 && (
                 <button 
                   onClick={addCompareScenario} 
-                  className="w-full py-2 border-2 border-dashed border-gray-300 rounded-lg text-sm text-gray-600 hover:border-blueframe hover:text-blueframe"
+                  className="w-full py-2 border-2 border-dashed border-gray-300 rounded-lg text-sm text-[var(--text-secondary)] hover:border-blueframe hover:text-blueframe"
                 >
                   + افزودن سناریو ({compareScenarios.length}/4)
                 </button>
@@ -319,11 +319,11 @@ export default function SimulatorPage() {
       {/* Compare Results */}
       {activeTab === "compare" && compareResult && (
         <div className="space-y-4 sm:space-y-6">
-          <div className="bg-white rounded-xl shadow border p-4 sm:p-6">
+          <div className="bg-[var(--bg-card)] rounded-xl shadow border p-4 sm:p-6">
             <div className="flex items-start justify-between flex-wrap gap-3 mb-4 sm:mb-6">
               <div>
                 <h2 className="text-lg sm:text-xl font-bold">نتایج مقایسه</h2>
-                <p className="text-gray-600 mt-1 text-xs sm:text-sm">{compareResult.comparison.length} سناریو مقایسه شد</p>
+                <p className="text-[var(--text-secondary)] mt-1 text-xs sm:text-sm">{compareResult.comparison.length} سناریو مقایسه شد</p>
               </div>
               <div className="px-3 sm:px-4 py-2 rounded-lg border-2 border-green-200 bg-green-50">
                 <p className="text-xs text-green-700">🏆 بهترین</p>
@@ -353,7 +353,7 @@ export default function SimulatorPage() {
                 <div 
                   key={i} 
                   className={"p-3 sm:p-4 rounded-lg border-2 " + 
-                    (c.name === compareResult.bestScenario ? "border-green-300 bg-green-50" : "border-gray-200")}
+                    (c.name === compareResult.bestScenario ? "border-green-300 bg-green-50" : " border-[var(--border-color)]")}
                 >
                   <div className="flex justify-between items-start mb-2">
                     <p className="font-bold text-xs sm:text-sm">{c.name}</p>
@@ -377,11 +377,11 @@ export default function SimulatorPage() {
       {/* Single Scenario Results */}
       {activeTab !== "compare" && result && (
         <div className="space-y-4 sm:space-y-6">
-          <div className="bg-white rounded-xl shadow border p-4 sm:p-6">
+          <div className="bg-[var(--bg-card)] rounded-xl shadow border p-4 sm:p-6">
             <div className="flex items-start justify-between flex-wrap gap-3">
               <div>
                 <h2 className="text-lg sm:text-xl font-bold">{result.scenarioName}</h2>
-                <p className="text-gray-600 mt-1 text-xs sm:text-sm">{result.description}</p>
+                <p className="text-[var(--text-secondary)] mt-1 text-xs sm:text-sm">{result.description}</p>
               </div>
               <div className={"px-3 sm:px-4 py-2 rounded-lg border-2 " + getRiskColor(result.impact.riskLevel)}>
                 <p className="text-xs opacity-70">سطح ریسک</p>
@@ -391,30 +391,30 @@ export default function SimulatorPage() {
 
             <div className="grid grid-cols-2 gap-2 sm:gap-4 mt-4 sm:mt-6">
               <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
-                <p className="text-xs text-gray-500">تغییر درآمد</p>
+                <p className="text-xs text-[var(--text-secondary)]">تغییر درآمد</p>
                 <p className={"text-sm sm:text-xl font-bold " + (result.impact.revenueChange >= 0 ? "text-green-600" : "text-red-600")}>
                   {result.impact.revenueChange >= 0 ? "+" : ""}{formatCurrency(result.impact.revenueChange)} ﷼
                 </p>
-                <p className="text-xs text-gray-500 mt-1">({result.impact.revenueChangePercent.toFixed(1)}%)</p>
+                <p className="text-xs text-[var(--text-secondary)] mt-1">({result.impact.revenueChangePercent.toFixed(1)}%)</p>
               </div>
               <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
-                <p className="text-xs text-gray-500">تعداد تحت تأثیر</p>
+                <p className="text-xs text-[var(--text-secondary)]">تعداد تحت تأثیر</p>
                 <p className="text-xl sm:text-2xl font-bold text-blueframe">
                   {result.impact.customerLoss + result.impact.affectedCustomers.length}
                 </p>
               </div>
               <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
-                <p className="text-xs text-gray-500">اعتماد مدل</p>
+                <p className="text-xs text-[var(--text-secondary)]">اعتماد مدل</p>
                 <p className="text-xl sm:text-2xl font-bold text-purple-600">{(result.confidence * 100).toFixed(0)}%</p>
               </div>
               <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
-                <p className="text-xs text-gray-500">تغییر Churn</p>
+                <p className="text-xs text-[var(--text-secondary)]">تغییر Churn</p>
                 <p className="text-xl sm:text-2xl font-bold text-orange-600">{result.impact.churnRateChange.toFixed(1)}%</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-blue-50 rounded-xl border-2 border-blue-200 p-4 sm:p-6">
+          <div className="bg-blue-50 rounded-xl p-4 sm:p-6">
             <h3 className="font-bold mb-3 text-sm sm:text-base">🧠 تحلیل‌های هوش مصنوعی:</h3>
             <ul className="space-y-2">
               {result.insights.map((insight, i) => (
@@ -426,7 +426,7 @@ export default function SimulatorPage() {
             </ul>
           </div>
 
-          <div className="bg-white rounded-xl shadow border p-4 sm:p-6">
+          <div className="bg-[var(--bg-card)] rounded-xl shadow border p-4 sm:p-6">
             <h3 className="font-bold mb-3 text-sm sm:text-base">✅ پیشنهادات اقدام:</h3>
             <div className="space-y-2">
               {result.recommendations.map((rec, i) => (
@@ -439,7 +439,7 @@ export default function SimulatorPage() {
           </div>
 
           {result.impact.affectedCustomers && result.impact.affectedCustomers.length > 0 && (
-            <div className="bg-white rounded-xl shadow border p-4 sm:p-6">
+            <div className="bg-[var(--bg-card)] rounded-xl shadow border p-4 sm:p-6">
               <h3 className="font-bold mb-3 text-sm sm:text-base">
                 مشتریان تحت تأثیر ({result.impact.affectedCustomers.length}):
               </h3>
@@ -448,14 +448,14 @@ export default function SimulatorPage() {
                   <div key={i} className="flex justify-between items-center p-2 sm:p-3 bg-gray-50 rounded-lg">
                     <div>
                       <p className="font-medium text-xs sm:text-sm">{c.name}</p>
-                      <p className="text-xs text-gray-500">{c.company || ""}</p>
+                      <p className="text-xs text-[var(--text-secondary)]">{c.company || ""}</p>
                     </div>
                     <div className="text-left">
                       {c.lostRevenue !== undefined && (
                         <p className="text-xs sm:text-sm font-bold text-red-600">-{formatCurrency(c.lostRevenue)} ﷼</p>
                       )}
                       {c.probability !== undefined && (
-                        <p className="text-xs text-gray-500">احتمال: {c.probability}%</p>
+                        <p className="text-xs text-[var(--text-secondary)]">احتمال: {c.probability}%</p>
                       )}
                     </div>
                   </div>
@@ -468,12 +468,12 @@ export default function SimulatorPage() {
 
       {/* History */}
       {history.length > 0 && (
-        <div className="bg-white rounded-xl shadow border p-4 sm:p-6">
+        <div className="bg-[var(--bg-card)] rounded-xl shadow border p-4 sm:p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-sm sm:text-base">📜 تاریخچه ({history.length})</h3>
             <button 
               onClick={clearHistory} 
-              className="text-xs text-red-600 hover:text-red-700 px-2 sm:px-3 py-1 rounded border border-red-200"
+              className="text-xs text-red-600 hover:text-red-700 px-2 sm:px-3 py-1 rounded"
             >
               پاک کردن
             </button>
@@ -483,7 +483,7 @@ export default function SimulatorPage() {
               <div key={item.id} className="flex justify-between items-center p-2 sm:p-3 bg-gray-50 rounded-lg">
                 <div>
                   <p className="text-xs sm:text-sm font-medium">{getTypeLabel(item.type)}</p>
-                  <p className="text-xs text-gray-500">{item.timestamp}</p>
+                  <p className="text-xs text-[var(--text-secondary)]">{item.timestamp}</p>
                 </div>
                 <div className="text-left">
                   {item.result?.impact?.revenueChange !== undefined && (

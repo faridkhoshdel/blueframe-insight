@@ -52,7 +52,7 @@ export default function AgentsPage() {
       <div className="flex items-start justify-between flex-wrap gap-3">
         <div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-blueframe">🤖 Autonomous Agents</h1>
-          <p className="text-gray-600 mt-1 text-xs sm:text-sm">عامل‌های خودکار هوشمند برای اقدامات تجاری</p>
+          <p className="text-[var(--text-secondary)] mt-1 text-xs sm:text-sm">عامل‌های خودکار هوشمند برای اقدامات تجاری</p>
         </div>
         <button
           onClick={() => runAgent("ALL")}
@@ -66,19 +66,19 @@ export default function AgentsPage() {
       {/* Stats Cards */}
       {stats && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
-          <div className="bg-white p-3 sm:p-4 rounded-xl shadow-soft border">
-            <p className="text-xs text-gray-500">کل اقدامات</p>
+          <div className="bg-[var(--bg-card)] p-3 sm:p-4 rounded-xl shadow-soft border">
+            <p className="text-xs text-[var(--text-secondary)]">کل اقدامات</p>
             <p className="text-2xl sm:text-3xl font-bold text-blueframe">{stats.totalActions}</p>
           </div>
-          <div className="bg-white p-3 sm:p-4 rounded-xl shadow-soft border">
-            <p className="text-xs text-gray-500">۲۴ ساعت اخیر</p>
+          <div className="bg-[var(--bg-card)] p-3 sm:p-4 rounded-xl shadow-soft border">
+            <p className="text-xs text-[var(--text-secondary)]">۲۴ ساعت اخیر</p>
             <p className="text-2xl sm:text-3xl font-bold text-green-600">{stats.last24h}</p>
           </div>
-          <div className="bg-white p-3 sm:p-4 rounded-xl shadow-soft border">
-            <p className="text-xs text-gray-500">انواع فعال</p>
+          <div className="bg-[var(--bg-card)] p-3 sm:p-4 rounded-xl shadow-soft border">
+            <p className="text-xs text-[var(--text-secondary)]">انواع فعال</p>
             <p className="text-2xl sm:text-3xl font-bold text-purple-600">{stats.byAgent.length}</p>
           </div>
-          <div className="bg-gradient-to-l from-blueframe/10 to-blue-50 p-3 sm:p-4 rounded-xl border-2 border-blueframe/20">
+          <div className="grad-card grad-blueframe p-3 sm:p-4 rounded-xl">
             <p className="text-xs text-blueframe">وضعیت</p>
             <p className="text-sm sm:text-base font-bold text-blueframe">🟢 آنلاین</p>
           </div>
@@ -93,17 +93,17 @@ export default function AgentsPage() {
           const isRunning = runningAgent === type;
           
           return (
-            <div key={type} className="bg-white rounded-xl shadow-soft border overflow-hidden">
-              <div className={"p-4 sm:p-5 bg-gradient-to-l from-" + config.color + "-50 to-white border-b"}>
+            <div key={type} className="bg-[var(--bg-card)] rounded-xl shadow-soft border overflow-hidden">
+              <div className={"p-4 sm:p-5 grad-card grad-header border-b"}>
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
                     <div className="text-3xl sm:text-4xl">{config.icon}</div>
                     <div>
                       <h3 className="font-bold text-sm sm:text-base">{config.name}</h3>
-                      <p className="text-xs text-gray-600 mt-1">{config.desc}</p>
+                      <p className="text-xs text-[var(--text-secondary)] mt-1">{config.desc}</p>
                     </div>
                   </div>
-                  <span className="text-2xl font-bold text-gray-800">{count}</span>
+                  <span className="text-2xl font-bold text-[var(--text-primary)]">{count}</span>
                 </div>
               </div>
               <div className="p-3 sm:p-4">
@@ -111,7 +111,7 @@ export default function AgentsPage() {
                   onClick={() => runAgent(type)}
                   disabled={isRunning}
                   className={"w-full py-2 rounded-lg font-bold text-xs sm:text-sm transition " + 
-                    (isRunning ? "bg-gray-100 text-gray-400" : "bg-blueframe/10 text-blueframe hover:bg-blueframe/20")}
+                    (isRunning ? "bg-gray-100 text-[var(--text-secondary)]" : "bg-blueframe/10 text-blueframe hover:bg-blueframe/20")}
                 >
                   {isRunning ? "⏳ در حال اجرا..." : "▶️ اجرای دستی"}
                 </button>
@@ -122,19 +122,19 @@ export default function AgentsPage() {
       </div>
 
       {/* Activity Timeline */}
-      <div className="bg-white rounded-xl shadow-soft border overflow-hidden">
-        <div className="p-4 sm:p-5 border-b bg-gradient-to-l from-blueframe/5 to-transparent">
+      <div className="bg-[var(--bg-card)] rounded-xl shadow-soft border overflow-hidden">
+        <div className="p-4 sm:p-5 border-b grad-header">
           <div className="flex items-center justify-between flex-wrap gap-3">
             <h3 className="font-bold text-sm sm:text-base flex items-center gap-2">
               <span>📜</span>
               <span>Timeline فعالیت‌ها</span>
-              <span className="text-xs text-gray-500">({filteredLogs.length} مورد)</span>
+              <span className="text-xs text-[var(--text-secondary)]">({filteredLogs.length} مورد)</span>
             </h3>
             <div className="flex gap-2 overflow-x-auto scrollbar-hide">
               <button
                 onClick={() => setFilterType("ALL")}
                 className={"px-3 py-1 rounded-full text-xs whitespace-nowrap " + 
-                  (filterType === "ALL" ? "bg-blueframe text-white" : "bg-gray-100 text-gray-600")}
+                  (filterType === "ALL" ? "bg-blueframe text-white" : "bg-gray-100 text-[var(--text-secondary)]")}
               >
                 همه
               </button>
@@ -143,7 +143,7 @@ export default function AgentsPage() {
                   key={type}
                   onClick={() => setFilterType(type)}
                   className={"px-3 py-1 rounded-full text-xs whitespace-nowrap " + 
-                    (filterType === type ? "bg-blueframe text-white" : "bg-gray-100 text-gray-600")}
+                    (filterType === type ? "bg-blueframe text-white" : "bg-gray-100 text-[var(--text-secondary)]")}
                 >
                   {config.icon} {config.name.replace(" Agent", "")}
                 </button>
@@ -154,7 +154,7 @@ export default function AgentsPage() {
 
         <div className="max-h-[500px] overflow-y-auto">
           {filteredLogs.length === 0 ? (
-            <div className="p-8 text-center text-gray-500">
+            <div className="p-8 text-center text-[var(--text-secondary)]">
               <div className="text-4xl mb-2">📭</div>
               <p className="text-sm">فعالیتی ثبت نشده است</p>
               <button onClick={() => runAgent("ALL")} className="mt-3 text-sm text-blueframe font-bold">
@@ -178,15 +178,15 @@ export default function AgentsPage() {
                         <div className="flex items-start justify-between gap-2 flex-wrap">
                           <div className="flex-1">
                             <p className="font-bold text-sm">{config.name}</p>
-                            <p className="text-xs text-gray-500">{log.action}</p>
+                            <p className="text-xs text-[var(--text-secondary)]">{log.action}</p>
                           </div>
-                          <span className="text-xs text-gray-400 whitespace-nowrap">{formatTime(log.createdAt)}</span>
+                          <span className="text-xs text-[var(--text-secondary)] whitespace-nowrap">{formatTime(log.createdAt)}</span>
                         </div>
                         
                         <div className="mt-2 space-y-1.5">
                           <div className="text-xs">
-                            <span className="font-bold text-gray-700">🎯 هدف: </span>
-                            <span className="text-gray-600">{metrics.customerName || metrics.dealTitle || log.targetType}</span>
+                            <span className="font-bold text-[var(--text-primary)]">🎯 هدف: </span>
+                            <span className="text-[var(--text-secondary)]">{metrics.customerName || metrics.dealTitle || log.targetType}</span>
                           </div>
                           <div className="text-xs bg-blue-50 p-2 rounded border border-blue-100">
                             <span className="font-bold text-blue-900">💭 استدلال: </span>
@@ -225,7 +225,7 @@ export default function AgentsPage() {
       </div>
 
       {/* Info Box */}
-      <div className="bg-gradient-to-l from-purple-50 to-blue-50 p-4 sm:p-5 rounded-xl border border-purple-200">
+      <div className="grad-card grad-purple-blue p-4 sm:p-5 rounded-xl">
         <h3 className="font-bold mb-2 flex items-center gap-2 text-sm sm:text-base">
           <span>💡</span>
           <span>درباره Autonomous Agents</span>
@@ -233,19 +233,19 @@ export default function AgentsPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
           <div>
             <p className="font-bold text-purple-700 mb-1">🛡️ Retention Agent</p>
-            <p className="text-gray-700">مشتریان با Churn Risk &gt; 50% را شناسایی و اقدامات حفظ (ایمیل، تماس مدیر، تخفیف) انجام می‌دهد.</p>
+            <p className="text-[var(--text-primary)]">مشتریان با Churn Risk &gt; 50% را شناسایی و اقدامات حفظ (ایمیل، تماس مدیر، تخفیف) انجام می‌دهد.</p>
           </div>
           <div>
             <p className="font-bold text-green-700 mb-1">🌱 Nurture Agent</p>
-            <p className="text-gray-700">Lead های سرد را با محتوای آموزشی شخصی‌سازی‌شده پرورش می‌دهد.</p>
+            <p className="text-[var(--text-primary)]">Lead های سرد را با محتوای آموزشی شخصی‌سازی‌شده پرورش می‌دهد.</p>
           </div>
           <div>
             <p className="font-bold text-blue-700 mb-1">🎯 Cross-sell Agent</p>
-            <p className="text-gray-700">با استفاده از Knowledge Graph، به مشتریان VIP محصولات مرتبط پیشنهاد می‌دهد.</p>
+            <p className="text-[var(--text-primary)]">با استفاده از Knowledge Graph، به مشتریان VIP محصولات مرتبط پیشنهاد می‌دهد.</p>
           </div>
           <div>
             <p className="font-bold text-yellow-700 mb-1">⏰ Follow-up Agent</p>
-            <p className="text-gray-700">معاملات راکد (بیش از ۷ روز بدون فعالیت) را پیگیری می‌کند.</p>
+            <p className="text-[var(--text-primary)]">معاملات راکد (بیش از ۷ روز بدون فعالیت) را پیگیری می‌کند.</p>
           </div>
         </div>
       </div>

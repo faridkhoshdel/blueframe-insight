@@ -540,3 +540,154 @@ textarea.theme-input {
 }
 
 /* ============ END THEME SYSTEM V2 ============ */
+
+/* ============ THEME-AWARE GRADIENTS: کامل ============ */
+.grad-card {
+  border-radius: 16px;
+  padding: 24px;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.grad-card h1, .grad-card h2, .grad-card h3, .grad-card h4,
+.grad-card p, .grad-card span, .grad-card div {
+  color: inherit !important;
+}
+
+/* آبی روشن */
+.grad-blue, .grad-blueframe {
+  background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+  color: #1e3a8a;
+  border-color: #93c5fd;
+}
+[data-theme="dark"] .grad-blue,
+[data-theme="dark"] .grad-blueframe {
+  background: linear-gradient(135deg, #1e3a5f 0%, #1e293b 100%);
+  color: #93c5fd;
+  border-color: #334155;
+}
+[data-theme="glass"] .grad-blue,
+[data-theme="glass"] .grad-blueframe {
+  background: rgba(186, 230, 253, 0.5);
+  backdrop-filter: blur(20px);
+  color: #0c4a6e;
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* بنفش */
+.grad-purple {
+  background: linear-gradient(135deg, #ede9fe 0%, #f5f3ff 100%);
+  color: #5b21b6;
+  border-color: #c4b5fd;
+}
+[data-theme="dark"] .grad-purple {
+  background: linear-gradient(135deg, #3b2f66 0%, #1e293b 100%);
+  color: #c4b5fd;
+  border-color: #334155;
+}
+[data-theme="glass"] .grad-purple {
+  background: rgba(221, 214, 254, 0.5);
+  backdrop-filter: blur(20px);
+  color: #4c1d95;
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* بنفش به آبی (ترکیبی) */
+.grad-purple-blue {
+  background: linear-gradient(135deg, #ede9fe 0%, #dbeafe 100%);
+  color: #5b21b6;
+  border-color: #c4b5fd;
+}
+[data-theme="dark"] .grad-purple-blue {
+  background: linear-gradient(135deg, #3b2f66 0%, #1e3a5f 100%);
+  color: #c4b5fd;
+  border-color: #334155;
+}
+[data-theme="glass"] .grad-purple-blue {
+  background: linear-gradient(135deg, rgba(221,214,254,0.5) 0%, rgba(186,230,253,0.5) 100%);
+  backdrop-filter: blur(20px);
+  color: #4c1d95;
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* سبز */
+.grad-green {
+  background: linear-gradient(135deg, #dcfce7 0%, #f0fdf4 100%);
+  color: #166534;
+  border-color: #86efac;
+}
+[data-theme="dark"] .grad-green {
+  background: linear-gradient(135deg, #14532d 0%, #1e293b 100%);
+  color: #86efac;
+  border-color: #334155;
+}
+[data-theme="glass"] .grad-green {
+  background: rgba(187, 247, 208, 0.5);
+  backdrop-filter: blur(20px);
+  color: #14532d;
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* صورتی */
+.grad-pink {
+  background: linear-gradient(135deg, #fce7f3 0%, #fdf2f8 100%);
+  color: #9d174d;
+  border-color: #f9a8d4;
+}
+[data-theme="dark"] .grad-pink {
+  background: linear-gradient(135deg, #4c1137 0%, #1e293b 100%);
+  color: #f9a8d4;
+  border-color: #334155;
+}
+[data-theme="glass"] .grad-pink {
+  background: rgba(252, 231, 243, 0.5);
+  backdrop-filter: blur(20px);
+  color: #9d174d;
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* قرمز به صورتی */
+.grad-red-pink {
+  background: linear-gradient(135deg, #fee2e2 0%, #fce7f3 100%);
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+[data-theme="dark"] .grad-red-pink {
+  background: linear-gradient(135deg, #4c0519 0%, #4c1137 100%);
+  color: #fca5a5;
+  border-color: #334155;
+}
+[data-theme="glass"] .grad-red-pink {
+  background: linear-gradient(135deg, rgba(254,226,226,0.5) 0%, rgba(252,231,243,0.5) 100%);
+  backdrop-filter: blur(20px);
+  color: #991b1b;
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* خنثی (برای header) */
+.grad-header {
+  background: linear-gradient(to left, rgba(30,58,138,0.05), transparent);
+}
+[data-theme="dark"] .grad-header {
+  background: linear-gradient(to left, rgba(147,197,253,0.08), transparent);
+}
+[data-theme="glass"] .grad-header {
+  background: linear-gradient(to left, rgba(14,165,233,0.08), transparent);
+}
+
+/* پس‌زمینه اصلی صفحه (login) */
+.grad-page-bg {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e40af 100%);
+  color: white;
+}
+[data-theme="dark"] .grad-page-bg {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e40af 100%);
+  color: white;
+}
+[data-theme="glass"] .grad-page-bg {
+  background: linear-gradient(135deg, #bae6fd 0%, #7dd3fc 50%, #38bdf8 100%);
+  color: #0c4a6e;
+}
+
+/* ============ END THEME-AWARE GRADIENTS ============ */

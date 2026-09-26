@@ -46,14 +46,14 @@ export default function LoginPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blueframe via-blue-600 to-blueframe-dark">
+      <div className="min-h-screen flex items-center justify-center grad-page-bg">
         <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blueframe via-blue-600 to-blueframe-dark p-4" dir="rtl">
+    <div className="min-h-screen flex items-center justify-center grad-page-bg p-4" dir="rtl">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -66,7 +66,7 @@ export default function LoginPage() {
       <div className="relative w-full max-w-md">
         {/* Logo and Title */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl shadow-xl mb-4">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-[var(--bg-card)] rounded-2xl shadow-xl mb-4">
             <Image
               src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png"
               alt="blueFrame"
@@ -79,13 +79,13 @@ export default function LoginPage() {
         </div>
 
         {/* Card */}
-        <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8">
+        <div className="bg-[var(--bg-card)] rounded-2xl shadow-2xl p-6 sm:p-8">
           <div className="flex bg-gray-100 rounded-xl p-1 mb-6">
             <button
               type="button"
               onClick={() => setIsLogin(true)}
               className={"flex-1 py-2.5 rounded-lg font-bold text-sm transition " +
-                (isLogin ? "bg-white text-blueframe shadow" : "text-gray-600")}
+                (isLogin ? "bg-[var(--bg-card)] text-blueframe shadow" : "text-[var(--text-secondary)]")}
             >
               ورود
             </button>
@@ -93,7 +93,7 @@ export default function LoginPage() {
               type="button"
               onClick={() => setIsLogin(false)}
               className={"flex-1 py-2.5 rounded-lg font-bold text-sm transition " +
-                (!isLogin ? "bg-white text-blueframe shadow" : "text-gray-600")}
+                (!isLogin ? "bg-[var(--bg-card)] text-blueframe shadow" : "text-[var(--text-secondary)]")}
             >
               ثبت‌نام
             </button>
@@ -102,7 +102,7 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {!isLogin && (
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-1.5">نام کامل</label>
+                <label className="block text-sm font-bold text-[var(--text-primary)] mb-1.5">نام کامل</label>
                 <input
                   type="text"
                   value={name}
@@ -115,7 +115,7 @@ export default function LoginPage() {
             )}
 
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-1.5">ایمیل</label>
+              <label className="block text-sm font-bold text-[var(--text-primary)] mb-1.5">ایمیل</label>
               <input
                 type="email"
                 value={email}
@@ -127,7 +127,7 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-1.5">رمز عبور</label>
+              <label className="block text-sm font-bold text-[var(--text-primary)] mb-1.5">رمز عبور</label>
               <input
                 type="password"
                 value={password}
@@ -141,7 +141,7 @@ export default function LoginPage() {
 
             {!isLogin && (
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-1.5">نقش</label>
+                <label className="block text-sm font-bold text-[var(--text-primary)] mb-1.5">نقش</label>
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
@@ -156,7 +156,7 @@ export default function LoginPage() {
             )}
 
             {error && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+              <div className="bg-red-50 rounded-lg p-3">
                 <p className="text-sm text-red-700 text-center">{error}</p>
               </div>
             )}
@@ -172,8 +172,8 @@ export default function LoginPage() {
 
           {/* Demo credentials */}
           {isLogin && (
-            <div className="mt-5 pt-5 border-t border-gray-200">
-              <p className="text-xs text-center text-gray-500 mb-2">دسترسی سریع (دمو):</p>
+            <div className="mt-5 pt-5 border-t border-[var(--border-color)]">
+              <p className="text-xs text-center text-[var(--text-secondary)] mb-2">دسترسی سریع (دمو):</p>
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"

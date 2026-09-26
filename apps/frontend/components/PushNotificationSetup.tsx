@@ -33,7 +33,7 @@ export default function PushNotificationSetup() {
   }
 
   return (
-    <div className="bg-gradient-to-l from-purple-50 to-blue-50900/20900/20 p-4 rounded-xl border border-purple-200800">
+    <div className="grad-card grad-purple-blue900/20900/20 p-4 rounded-xl800">
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1">
           <p className="text-sm font-bold text-purple-900300 flex items-center gap-2">

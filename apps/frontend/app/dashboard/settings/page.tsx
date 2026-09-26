@@ -109,15 +109,15 @@ export default function SettingsPage() {
         checked ? "bg-blueframe" : "bg-gray-300600"
       }`}
     >
-      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+      <span className={`inline-block h-4 w-4 transform rounded-full bg-[var(--bg-card)] transition-transform ${
         checked ? "-translate-x-6" : "-translate-x-1"
       }`} />
     </button>
   );
 
   const Section = ({ title, icon, children }: any) => (
-    <div className="bg-white800 rounded-xl shadow-sm border border-gray-200700 overflow-hidden">
-      <div className="px-4 sm:px-5 py-3 border-b border-gray-200700 bg-gradient-to-l from-blueframe/5 to-transparent">
+    <div className="bg-white800 rounded-xl shadow-sm border border-[var(--border-color)]700 overflow-hidden">
+      <div className="px-4 sm:px-5 py-3 border-b border-[var(--border-color)]700 grad-header">
         <h3 className="font-bold text-sm flex items-center gap-2 text-gray-900100">
           <span>{icon}</span>
           <span>{title}</span>
@@ -176,7 +176,7 @@ export default function SettingsPage() {
           <Toggle checked={theme === "dark"} onChange={(v) => setTheme(v ? "dark" : "light")} />
         </SettingRow>
         
-        <div className="pt-3 border-t border-gray-200700">
+        <div className="pt-3 border-t border-[var(--border-color)]700">
           <SettingRow label="اندازه فونت" description={`${fontSize}px`}>
             <input type="range" min="12" max="18" value={fontSize}
               onChange={(e) => setFontSize(Number(e.target.value))}
@@ -184,13 +184,13 @@ export default function SettingsPage() {
           </SettingRow>
         </div>
 
-        <div className="pt-3 border-t border-gray-200700">
+        <div className="pt-3 border-t border-[var(--border-color)]700">
           <SettingRow label="حالت فشرده" description="نمایش اطلاعات بیشتر">
             <Toggle checked={compactMode} onChange={setCompactMode} />
           </SettingRow>
         </div>
 
-        <div className="pt-3 border-t border-gray-200700">
+        <div className="pt-3 border-t border-[var(--border-color)]700">
           <SettingRow label="انیمیشن‌ها" description="افکت‌های بصری">
             <Toggle checked={animationsEnabled} onChange={setAnimationsEnabled} />
           </SettingRow>
@@ -208,14 +208,14 @@ export default function SettingsPage() {
           </select>
         </SettingRow>
         <div className="pt-2">
-          <div className="p-3 bg-blue-50900/20 rounded-lg border border-blue-200800">
+          <div className="p-3 bg-blue-50900/20 rounded-lg800">
             <p className="text-xs text-blue-800300">
               💡 پشتیبانی کامل از زبان‌های دیگر در نسخه بعدی اضافه خواهد شد. انتخاب شما ذخیره شده است.
             </p>
           </div>
         </div>
 
-        <div className="pt-3 border-t border-gray-200700">
+        <div className="pt-3 border-t border-[var(--border-color)]700">
           <SettingRow label="واحد پول" description="نمایش مبالغ">
             <select value={currency} onChange={(e) => setCurrency(e.target.value)}
               className="p-2 border border-gray-300600 rounded-lg text-sm bg-white700100">
@@ -240,13 +240,13 @@ export default function SettingsPage() {
           />
         </SettingRow>
 
-        <div className="pt-3 border-t border-gray-200700">
+        <div className="pt-3 border-t border-[var(--border-color)]700">
           <SettingRow label="اعلان ایمیلی" description="خلاصه روزانه فعالیت‌ها">
             <Toggle checked={emailNotifs} onChange={setEmailNotifs} />
           </SettingRow>
         </div>
 
-        <div className="pt-3 border-t border-gray-200700">
+        <div className="pt-3 border-t border-[var(--border-color)]700">
           <SettingRow label="صدای اعلان" description="پخش صدا هنگام پیام">
             <Toggle checked={soundEnabled} onChange={setSoundEnabled} />
           </SettingRow>
@@ -260,7 +260,7 @@ export default function SettingsPage() {
         </SettingRow>
 
         {autoRefresh && (
-          <div className="pt-3 border-t border-gray-200700">
+          <div className="pt-3 border-t border-[var(--border-color)]700">
             <SettingRow label="فاصله به‌روزرسانی" description={`هر ${refreshInterval} ثانیه`}>
               <input type="range" min="10" max="120" step="10" value={refreshInterval}
                 onChange={(e) => setRefreshInterval(Number(e.target.value))}
@@ -269,13 +269,13 @@ export default function SettingsPage() {
           </div>
         )}
 
-        <div className="pt-3 border-t border-gray-200700">
+        <div className="pt-3 border-t border-[var(--border-color)]700">
           <SettingRow label="نمایش Insights AI" description="تحلیل‌های هوشمند">
             <Toggle checked={showInsights} onChange={setShowInsights} />
           </SettingRow>
         </div>
 
-        <div className="pt-3 border-t border-gray-200700">
+        <div className="pt-3 border-t border-[var(--border-color)]700">
           <SettingRow label="حفظ داده‌ها" description={`${dataRetention} روز`}>
             <input type="range" min="30" max="365" step="30" value={dataRetention}
               onChange={(e) => setDataRetention(Number(e.target.value))}

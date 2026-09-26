@@ -18,7 +18,7 @@ export default function HomePage() {
   }, [isAuthenticated, isLoading, router]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blueframe to-blue-700">
+    <div className="min-h-screen flex items-center justify-center grad-card grad-blueframe">
       <div className="text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
         <p className="text-white">در حال بارگذاری blueFrame Insight...</p>

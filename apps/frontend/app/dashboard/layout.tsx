@@ -69,7 +69,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="min-h-screen md:grid md:grid-cols-[256px_1fr]">
         
         {/* ===== Sidebar Desktop (Grid Column 1) ===== */}
-        <aside className="hidden md:flex md:flex-col bg-white border-l border-gray-200 sticky top-0 h-screen overflow-y-auto">
+        <aside className="hidden md:flex md:flex-col bg-[var(--bg-card)] border-l border-[var(--border-color)] sticky top-0 h-screen overflow-y-auto">
           <div className="p-6 border-b border-[var(--border-color)] flex items-center gap-3">
             <Image 
               src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png" 
@@ -147,7 +147,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
 
           {/* Footer */}
-          <footer className="w-full text-center py-4 text-xs text-gray-400 bg-white border-t">
+          <footer className="w-full text-center py-4 text-xs text-[var(--text-secondary)] bg-[var(--bg-card)] border-t">
             Designed and Developed by <a href="https://faridkhoshdel.ir" target="_blank" rel="noopener noreferrer" className="font-bold text-blueframe hover:text-blue-800 underline decoration-2 underline-offset-2 transition">blueFrame studio</a> — Designer: Farid Khoshdel
           </footer>
         </main>
@@ -163,14 +163,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       <aside 
         className={`
-          fixed top-0 right-0 bottom-0 w-72 bg-white z-50
+          fixed top-0 right-0 bottom-0 w-72 bg-[var(--bg-card)] z-50
           flex flex-col shadow-2xl
           transition-transform duration-300 ease-out
           md:hidden
           ${sidebarOpen ? "translate-x-0" : "translate-x-full"}
         `}
       >
-        <div className="p-4 border-b border-[var(--border-color)] flex items-center justify-between bg-gradient-to-l from-blueframe/5 to-transparent">
+        <div className="p-4 border-b border-[var(--border-color)] flex items-center justify-between grad-header">
           <div className="flex items-center gap-3">
             <Image 
               src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png" 

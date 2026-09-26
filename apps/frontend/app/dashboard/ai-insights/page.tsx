@@ -59,7 +59,7 @@ export default function AIInsightsPage() {
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold text-blueframe">هوش مصنوعی و Predictive Analytics</h1>
-          <p className="text-gray-600 mt-1 text-sm md:text-base">Lead Scoring، پیش‌بینی Churn و Explainable AI</p>
+          <p className="text-[var(--text-secondary)] mt-1 text-sm md:text-base">Lead Scoring، پیش‌بینی Churn و Explainable AI</p>
         </div>
         <button
           onClick={analyzeAll}
@@ -71,21 +71,21 @@ export default function AIInsightsPage() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl shadow-soft border">
+        <div className="bg-[var(--bg-card)] rounded-xl shadow-soft border">
           <div className="p-4 border-b">
             <h3 className="font-bold">مشتریان</h3>
           </div>
           <div className="divide-y max-h-96 overflow-y-auto">
             {loading ? (
-              <div className="p-8 text-center text-gray-500">در حال بارگذاری...</div>
+              <div className="p-8 text-center text-[var(--text-secondary)]">در حال بارگذاری...</div>
             ) : customers.length === 0 ? (
-              <div className="p-8 text-center text-gray-500">مشتری ثبت نشده</div>
+              <div className="p-8 text-center text-[var(--text-secondary)]">مشتری ثبت نشده</div>
             ) : customers.map(c => (
               <div key={c.id} className="p-4 hover:bg-gray-50 cursor-pointer" onClick={() => analyzeCustomer(c.id)}>
                 <div className="flex justify-between items-start">
                   <div>
                     <h4 className="font-bold">{c.name}</h4>
-                    <p className="text-xs text-gray-500">{c.company || c.email}</p>
+                    <p className="text-xs text-[var(--text-secondary)]">{c.company || c.email}</p>
                   </div>
                   <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">
                     Score: {c.leadScore || 0}
@@ -96,7 +96,7 @@ export default function AIInsightsPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-soft border">
+        <div className="bg-[var(--bg-card)] rounded-xl shadow-soft border">
           <div className="p-4 border-b">
             <h3 className="font-bold">تحلیل AI</h3>
           </div>
@@ -115,7 +115,7 @@ export default function AIInsightsPage() {
                 </div>
               </div>
 
-              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+              <div className="bg-blue-50 p-4 rounded-lg">
                 <p className="text-sm font-bold text-blue-900 mb-2">💡 AI Insight:</p>
                 <p className="text-sm text-blue-800">{selectedCustomer.aiInsights}</p>
               </div>
@@ -149,7 +149,7 @@ export default function AIInsightsPage() {
               )}
             </div>
           ) : (
-            <div className="p-12 text-center text-gray-500">
+            <div className="p-12 text-center text-[var(--text-secondary)]">
               یک مشتری از لیست انتخاب کنید تا تحلیل AI نمایش داده شود
             </div>
           )}

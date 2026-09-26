@@ -74,7 +74,7 @@ export default function ExecutiveDashboard() {
       <div className="space-y-6">
         <div className="text-center py-12">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blueframe mx-auto mb-4"></div>
-          <p className="text-gray-600">در حال بارگذاری داشبورد مدیریتی...</p>
+          <p className="text-[var(--text-secondary)]">در حال بارگذاری داشبورد مدیریتی...</p>
         </div>
       </div>
     );
@@ -82,7 +82,7 @@ export default function ExecutiveDashboard() {
 
   if (error || !data) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+      <div className="bg-red-50 rounded-xl p-6 text-center">
         <p className="text-red-800 font-bold">❌ خطا در بارگذاری داده‌ها</p>
         <p className="text-red-600 text-sm mt-2">{error || "خطای ناشناخته"}</p>
         <button onClick={loadData} className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg text-sm">
@@ -109,21 +109,21 @@ export default function ExecutiveDashboard() {
       <div className="flex items-start justify-between flex-wrap gap-3">
         <div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-blueframe">📊 داشبورد Executive</h1>
-          <p className="text-gray-600 mt-1 text-xs sm:text-sm">نمای کلی کسب‌وکار برای مدیران ارشد</p>
+          <p className="text-[var(--text-secondary)] mt-1 text-xs sm:text-sm">نمای کلی کسب‌وکار برای مدیران ارشد</p>
         </div>
-        <button onClick={loadData} className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm hover:bg-gray-50 shadow-sm">
+        <button onClick={loadData} className="px-4 py-2 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-lg text-sm hover:bg-gray-50 shadow-sm">
           🔄 بروزرسانی
         </button>
       </div>
 
       {/* Executive Summary */}
       {summary && (
-        <div className="bg-gradient-to-l from-blueframe/10 to-blue-50 p-4 sm:p-5 rounded-xl border-2 border-blueframe/20">
+        <div className="grad-card grad-blueframe p-4 sm:p-5 rounded-xl">
           <div className="flex items-start gap-3">
             <div className="text-3xl">🎯</div>
             <div className="flex-1">
               <h3 className="font-bold text-blueframe mb-1">خلاصه اجرایی</h3>
-              <p className="text-sm text-gray-700 leading-relaxed">{summary}</p>
+              <p className="text-sm text-[var(--text-primary)] leading-relaxed">{summary}</p>
             </div>
           </div>
         </div>
@@ -134,7 +134,7 @@ export default function ExecutiveDashboard() {
         {kpiCards.map((kpi, i) => {
           const isPositiveChange = kpi.invertColor ? kpi.change < 0 : kpi.change > 0;
           return (
-            <div key={i} className="bg-white p-3 sm:p-4 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+            <div key={i} className="bg-[var(--bg-card)] p-3 sm:p-4 rounded-xl shadow-sm border border-[var(--border-color)] hover:shadow-md transition">
               <div className="flex items-start justify-between mb-2">
                 <div className="text-2xl">{kpi.icon}</div>
                 <span className={"text-xs font-bold px-2 py-0.5 rounded " + 
@@ -142,7 +142,7 @@ export default function ExecutiveDashboard() {
                   {formatPercent(kpi.change)}
                 </span>
               </div>
-              <p className="text-xs text-gray-500">{kpi.label}</p>
+              <p className="text-xs text-[var(--text-secondary)]">{kpi.label}</p>
               <p className="text-base sm:text-lg font-bold text-gray-900 mt-1 truncate">{kpi.value}</p>
             </div>
           );
@@ -152,7 +152,7 @@ export default function ExecutiveDashboard() {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Revenue Trend */}
-        <div className="bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-gray-200">
+        <div className="bg-[var(--bg-card)] p-4 sm:p-5 rounded-xl shadow-sm border border-[var(--border-color)]">
           <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span>📈</span>
             <span>روند درآمد (۶ ماه اخیر)</span>
@@ -177,7 +177,7 @@ export default function ExecutiveDashboard() {
         </div>
 
         {/* Deals & Customers */}
-        <div className="bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-gray-200">
+        <div className="bg-[var(--bg-card)] p-4 sm:p-5 rounded-xl shadow-sm border border-[var(--border-color)]">
           <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span>📊</span>
             <span>معاملات و مشتریان</span>
@@ -200,7 +200,7 @@ export default function ExecutiveDashboard() {
 
       {/* Forecast */}
       {forecast && (
-        <div className="bg-gradient-to-l from-purple-50 to-blue-50 p-4 sm:p-6 rounded-xl border border-purple-200">
+        <div className="grad-card grad-purple-blue p-4 sm:p-6 rounded-xl">
           <div className="flex items-start justify-between flex-wrap gap-3 mb-4">
             <div>
               <h3 className="font-bold text-purple-900 flex items-center gap-2 text-lg">
@@ -234,7 +234,7 @@ export default function ExecutiveDashboard() {
       )}
 
       {/* Insights */}
-      <div className="bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-gray-200">
+      <div className="bg-[var(--bg-card)] p-4 sm:p-5 rounded-xl shadow-sm border border-[var(--border-color)]">
         <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
           <span>💡</span>
           <span>بینش‌های کلیدی ({insights.length})</span>
@@ -255,7 +255,7 @@ export default function ExecutiveDashboard() {
       </div>
 
       {/* Last Updated */}
-      <div className="text-center text-xs text-gray-400 py-2">
+      <div className="text-center text-xs text-[var(--text-secondary)] py-2">
         آخرین بروزرسانی: {new Date(data.generatedAt).toLocaleString("fa-IR")}
       </div>
     </div>

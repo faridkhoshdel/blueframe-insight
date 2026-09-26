@@ -100,7 +100,7 @@ export default function MultimodalPage() {
     if (file) analyzeFile(file, type);
   };
 
-  const getSentimentColor = (label) => ({ positive: "text-green-600 bg-green-50", negative: "text-red-600 bg-red-50", neutral: "text-gray-600 bg-gray-50" }[label] || "text-gray-600 bg-gray-50");
+  const getSentimentColor = (label) => ({ positive: "text-green-600 bg-green-50", negative: "text-red-600 bg-red-50", neutral: "text-[var(--text-secondary)] bg-gray-50" }[label] || "text-[var(--text-secondary)] bg-gray-50");
   const getSentimentLabel = (label) => ({ positive: "مثبت 😊", negative: "منفی 😔", neutral: "خنثی 😐" }[label] || label);
   const formatTime = (d) => new Date(d).toLocaleString("fa-IR", { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "short" });
 
@@ -111,25 +111,25 @@ export default function MultimodalPage() {
     <div className="w-full max-w-7xl mx-auto space-y-4 sm:space-y-6">
       <div>
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-blueframe">🎙️ Multimodal AI</h1>
-        <p className="text-gray-600 mt-1 text-xs sm:text-sm">تحلیل احساسات صوت، تصویر و متون طولانی به فارسی</p>
+        <p className="text-[var(--text-secondary)] mt-1 text-xs sm:text-sm">تحلیل احساسات صوت، تصویر و متون طولانی به فارسی</p>
       </div>
 
       <div className="grid md:grid-cols-3 gap-3">
-        <div className="bg-red-50 p-4 rounded-xl border border-red-200">
+        <div className="bg-red-50 p-4 rounded-xl">
           <p className="text-xs text-red-700 font-bold">🎙️ تحلیل صوت</p>
-          <p className="text-xs text-gray-700 mt-1">Whisper + احساسات</p>
+          <p className="text-xs text-[var(--text-primary)] mt-1">Whisper + احساسات</p>
         </div>
-        <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
+        <div className="bg-blue-50 p-4 rounded-xl">
           <p className="text-xs text-blue-700 font-bold">📸 تحلیل تصویر</p>
-          <p className="text-xs text-gray-700 mt-1">Vision + چهره‌خوانی</p>
+          <p className="text-xs text-[var(--text-primary)] mt-1">Vision + چهره‌خوانی</p>
         </div>
         <div className="bg-green-50 p-4 rounded-xl border border-green-200">
           <p className="text-xs text-green-700 font-bold">📝 خلاصه‌سازی</p>
-          <p className="text-xs text-gray-700 mt-1">متون طولانی</p>
+          <p className="text-xs text-[var(--text-primary)] mt-1">متون طولانی</p>
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow border overflow-hidden">
+      <div className="bg-[var(--bg-card)] rounded-xl shadow border overflow-hidden">
         <div className="flex border-b overflow-x-auto scrollbar-hide">
           {Object.entries(TYPE_CONFIG).map(([type, config]) => (
             <button
@@ -147,7 +147,7 @@ export default function MultimodalPage() {
         <div className="p-4 sm:p-6 space-y-4">
           {activeTab === "voice" && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-gradient-to-br from-red-50 to-pink-50 p-6 rounded-xl border-2 border-red-200 text-center">
+              <div className="grad-card grad-red-pink p-6 rounded-xl text-center">
                 <button
                   onClick={isRecording ? stopRecording : startRecording}
                   className={"w-24 h-24 rounded-full shadow-lg transition-all mx-auto flex items-center justify-center " + 
@@ -159,7 +159,7 @@ export default function MultimodalPage() {
                   {isRecording ? `⏺ در حال ضبط... ${recordingTime}s` : "ضبط صدا"}
                 </p>
               </div>
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border-2 border-blue-200 text-center">
+              <div className="grad-card grad-blue p-6 rounded-xl text-center">
                 <label className="cursor-pointer block">
                   <div className="w-24 h-24 rounded-full bg-blue-500 shadow-lg mx-auto flex items-center justify-center hover:bg-blue-600">
                     <span className="text-white text-4xl">📁</span>
@@ -173,7 +173,7 @@ export default function MultimodalPage() {
 
           {activeTab === "image" && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-xl border-2 border-purple-200 text-center">
+              <div className="grad-card grad-purple p-6 rounded-xl text-center">
                 <label className="cursor-pointer block">
                   <div className="w-24 h-24 rounded-full bg-purple-500 shadow-lg mx-auto flex items-center justify-center">
                     <span className="text-white text-4xl">📷</span>
@@ -182,7 +182,7 @@ export default function MultimodalPage() {
                   <input type="file" accept="image/*" capture="environment" onChange={(e) => handleFileUpload(e, "image")} className="hidden" />
                 </label>
               </div>
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border-2 border-blue-200 text-center">
+              <div className="grad-card grad-blue p-6 rounded-xl text-center">
                 <label className="cursor-pointer block">
                   <div className="w-24 h-24 rounded-full bg-blue-500 shadow-lg mx-auto flex items-center justify-center">
                     <span className="text-white text-4xl">🖼️</span>
@@ -211,7 +211,7 @@ export default function MultimodalPage() {
                 rows={6}
               />
               <div className="flex justify-between items-center">
-                <span className="text-xs text-gray-500">{text.length} کاراکتر</span>
+                <span className="text-xs text-[var(--text-secondary)]">{text.length} کاراکتر</span>
                 <button
                   onClick={analyzeText}
                   disabled={loading || !text.trim()}
@@ -226,22 +226,22 @@ export default function MultimodalPage() {
       </div>
 
       {loading && (
-        <div className="bg-white rounded-xl shadow border p-8 text-center">
+        <div className="bg-[var(--bg-card)] rounded-xl shadow border p-8 text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blueframe mx-auto mb-3"></div>
-          <p className="text-gray-600">در حال تحلیل با AI...</p>
+          <p className="text-[var(--text-secondary)]">در حال تحلیل با AI...</p>
         </div>
       )}
 
       {result && !loading && (
-        <div className="bg-white rounded-xl shadow border overflow-hidden">
-          <div className="p-4 sm:p-5 bg-gradient-to-l from-blueframe/10 to-blue-50 border-b">
+        <div className="bg-[var(--bg-card)] rounded-xl shadow border overflow-hidden">
+          <div className="p-4 sm:p-5 grad-card grad-blueframe border-b">
             <div className="flex items-start justify-between flex-wrap gap-2">
               <div>
                 <h3 className="font-bold text-sm sm:text-base flex items-center gap-2">
                   <span>{TYPE_CONFIG[result.type]?.icon}</span>
                   <span>{result.title}</span>
                 </h3>
-                <p className="text-xs text-gray-500 mt-1">{formatTime(result.createdAt)}</p>
+                <p className="text-xs text-[var(--text-secondary)] mt-1">{formatTime(result.createdAt)}</p>
               </div>
               <div className={"px-3 py-1.5 rounded-full text-xs font-bold " + getSentimentColor(result.sentimentLabel)}>
                 {getSentimentLabel(result.sentimentLabel)} ({result.sentiment.toFixed(2)})
@@ -252,13 +252,13 @@ export default function MultimodalPage() {
           <div className="p-4 sm:p-5 space-y-4">
             {result.originalText && (
               <div>
-                <p className="text-xs font-bold text-gray-700 mb-1">📄 متن اصلی:</p>
+                <p className="text-xs font-bold text-[var(--text-primary)] mb-1">📄 متن اصلی:</p>
                 <div className="bg-gray-50 p-3 rounded-lg text-sm max-h-40 overflow-y-auto">{result.originalText}</div>
               </div>
             )}
 
             {result.summary && (
-              <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+              <div className="bg-blue-50 p-3 rounded-lg">
                 <p className="text-xs font-bold text-blue-900 mb-1">💡 خلاصه AI:</p>
                 <p className="text-sm text-blue-800">{result.summary}</p>
               </div>
@@ -266,13 +266,13 @@ export default function MultimodalPage() {
 
             {Object.keys(emotions).length > 0 && (
               <div>
-                <p className="text-xs font-bold text-gray-700 mb-2">🎭 احساسات:</p>
+                <p className="text-xs font-bold text-[var(--text-primary)] mb-2">🎭 احساسات:</p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {Object.entries(emotions).map(([emotion, value]) => {
                     const labels = { joy: "😊 شادی", anger: "😠 خشم", sadness: "😔 غم", trust: "🤝 اعتماد" };
                     const colors = { joy: "bg-yellow-500", anger: "bg-red-500", sadness: "bg-blue-500", trust: "bg-green-500" };
                     return (
-                      <div key={emotion} className="bg-white border rounded-lg p-2">
+                      <div key={emotion} className="bg-[var(--bg-card)] border rounded-lg p-2">
                         <div className="flex justify-between items-center mb-1">
                           <span className="text-xs font-medium">{labels[emotion] || emotion}</span>
                           <span className="text-xs font-bold">{(value * 100).toFixed(0)}%</span>
@@ -289,7 +289,7 @@ export default function MultimodalPage() {
 
             {metadata.keyPoints && metadata.keyPoints.length > 0 && (
               <div>
-                <p className="text-xs font-bold text-gray-700 mb-2">🎯 نکات کلیدی:</p>
+                <p className="text-xs font-bold text-[var(--text-primary)] mb-2">🎯 نکات کلیدی:</p>
                 <ul className="space-y-1">
                   {metadata.keyPoints.map((point, i) => (
                     <li key={i} className="text-sm flex items-start gap-2 bg-gray-50 p-2 rounded">
@@ -305,7 +305,7 @@ export default function MultimodalPage() {
       )}
 
       {history.length > 0 && (
-        <div className="bg-white rounded-xl shadow border overflow-hidden">
+        <div className="bg-[var(--bg-card)] rounded-xl shadow border overflow-hidden">
           <div className="p-4 border-b">
             <h3 className="font-bold text-sm">📜 تاریخچه ({history.length})</h3>
           </div>
@@ -317,7 +317,7 @@ export default function MultimodalPage() {
                     <span className="text-xl">{TYPE_CONFIG[item.type]?.icon}</span>
                     <div className="flex-1 min-w-0">
                       <p className="font-bold text-sm">{item.title}</p>
-                      <p className="text-xs text-gray-500 mt-0.5 truncate">{item.summary}</p>
+                      <p className="text-xs text-[var(--text-secondary)] mt-0.5 truncate">{item.summary}</p>
                     </div>
                   </div>
                   <span className={"px-2 py-0.5 rounded-full text-xs whitespace-nowrap " + getSentimentColor(item.sentimentLabel)}>

@@ -48,10 +48,10 @@ export default function SentimentPage() {
     <div className="max-w-4xl mx-auto space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-blueframe mb-2">تحلیل احساسات مشتریان (AI)</h1>
-        <p className="text-gray-600">متن نظرات، بازخوردها یا تیکت‌ها را وارد کنید تا هوش مصنوعی احساسات پنهان را استخراج کند.</p>
+        <p className="text-[var(--text-secondary)]">متن نظرات، بازخوردها یا تیکت‌ها را وارد کنید تا هوش مصنوعی احساسات پنهان را استخراج کند.</p>
       </div>
 
-      <div className="bg-white p-6 rounded-xl shadow-soft border border-gray-200 space-y-4">
+      <div className="bg-[var(--bg-card)] p-6 rounded-xl shadow-soft border border-[var(--border-color)] space-y-4">
         <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -60,7 +60,7 @@ export default function SentimentPage() {
           dir="rtl"
         />
         {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+          <div className="p-3 bg-red-50 rounded-lg text-red-700 text-sm">
             {error}
           </div>
         )}
@@ -77,7 +77,7 @@ export default function SentimentPage() {
         <div className={"p-6 rounded-xl border-2 space-y-4 " + getSentimentStyle(result.emotion)}>
           <div className="flex items-center justify-between flex-wrap gap-2">
             <h3 className="text-xl font-bold">نتیجه تحلیل</h3>
-            <span className="px-4 py-1.5 rounded-full text-sm font-bold bg-white/80">
+            <span className="px-4 py-1.5 rounded-full text-sm font-bold bg-[var(--bg-card)]/80">
               امتیاز: {result.score > 0 ? "+" : ""}{result.score}
             </span>
           </div>

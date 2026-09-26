@@ -2,7 +2,7 @@ export default function DashboardPage() {
   const stats = [
     { title: "مجموع بازخوردهای مشتریان", value: "۱۲,۴۵۰", change: "+۱۲٪", color: "text-blueframe" },
     { title: "میانگین امتیاز احساسات (NPS)", value: "۷۸/۱۰۰", change: "+۵٪", color: "text-sentiment-positive" },
-    { title: "محصولات فعال در انبار", value: "۳,۲۱۰", change: "پایدار", color: "text-gray-700" },
+    { title: "محصولات فعال در انبار", value: "۳,۲۱۰", change: "پایدار", color: "text-[var(--text-primary)]" },
     { title: "سفارشات در انتظار توزیع", value: "۱۴۵", change: "-۲٪", color: "text-sentiment-negative" },
   ];
 
@@ -10,17 +10,17 @@ export default function DashboardPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">نمای کلی عملیات</h1>
-        <p className="text-gray-500 mt-1">آخرین به‌روزرسانی: امروز، ۱۰:۳۰ صبح</p>
+        <p className="text-[var(--text-secondary)] mt-1">آخرین به‌روزرسانی: امروز، ۱۰:۳۰ صبح</p>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
-          <div key={index} className="bg-white p-6 rounded-xl shadow-soft border border-gray-100">
-            <p className="text-sm text-gray-500 mb-2">{stat.title}</p>
+          <div key={index} className="bg-[var(--bg-card)] p-6 rounded-xl shadow-soft border border-[var(--border-color)]">
+            <p className="text-sm text-[var(--text-secondary)] mb-2">{stat.title}</p>
             <div className="flex items-end justify-between">
               <span className={`text-3xl font-bold ${stat.color}`}>{stat.value}</span>
-              <span className={`text-xs font-medium px-2 py-1 rounded-full ${stat.change.includes('+') ? 'bg-green-100 text-green-700' : stat.change.includes('-') ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-600'}`}>
+              <span className={`text-xs font-medium px-2 py-1 rounded-full ${stat.change.includes('+') ? 'bg-green-100 text-green-700' : stat.change.includes('-') ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-[var(--text-secondary)]'}`}>
                 {stat.change}
               </span>
             </div>
@@ -30,12 +30,12 @@ export default function DashboardPage() {
 
       {/* Placeholder for AI Chart / Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white p-6 rounded-xl shadow-soft border border-gray-100 min-h-[300px] flex flex-col items-center justify-center text-gray-400">
+        <div className="lg:col-span-2 bg-[var(--bg-card)] p-6 rounded-xl shadow-soft border border-[var(--border-color)] min-h-[300px] flex flex-col items-center justify-center text-[var(--text-secondary)]">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
           <p className="mt-4 font-medium">نمودار روند احساسات مشتریان (به زودی با اتصال به API)</p>
         </div>
-        <div className="bg-white p-6 rounded-xl shadow-soft border border-gray-100">
-          <h3 className="font-bold text-gray-800 mb-4">هشدارهای سیستم</h3>
+        <div className="bg-[var(--bg-card)] p-6 rounded-xl shadow-soft border border-[var(--border-color)]">
+          <h3 className="font-bold text-[var(--text-primary)] mb-4">هشدارهای سیستم</h3>
           <div className="space-y-4">
             <div className="flex gap-3 items-start p-3 bg-red-50 rounded-lg border border-red-100">
               <div className="w-2 h-2 mt-2 rounded-full bg-red-500 flex-shrink-0"></div>

@@ -86,10 +86,10 @@ export default function AnalyticsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-blueframe">تحلیل و بصری‌سازی</h1>
-        <p className="text-gray-600 mt-1">نمای کلی عملکرد کسب‌وکار با نمودارهای زنده</p>
+        <p className="text-[var(--text-secondary)] mt-1">نمای کلی عملکرد کسب‌وکار با نمودارهای زنده</p>
       </div>
 
-      <div className="bg-white p-6 rounded-xl shadow-soft border">
+      <div className="bg-[var(--bg-card)] p-6 rounded-xl shadow-soft border">
         <h3 className="text-lg font-bold mb-4">توزیع مراحل معاملات (Kanban)</h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={stageData}>
@@ -107,7 +107,7 @@ export default function AnalyticsPage() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow-soft border">
+        <div className="bg-[var(--bg-card)] p-6 rounded-xl shadow-soft border">
           <h3 className="text-lg font-bold mb-4">وضعیت موجودی انبار</h3>
           <ResponsiveContainer width="100%" height={280}>
             <PieChart>
@@ -123,7 +123,7 @@ export default function AnalyticsPage() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-soft border">
+        <div className="bg-[var(--bg-card)] p-6 rounded-xl shadow-soft border">
           <h3 className="text-lg font-bold mb-4">روند ارزش معاملات</h3>
           <ResponsiveContainer width="100%" height={280}>
             <AreaChart data={trendData}>
@@ -137,7 +137,7 @@ export default function AnalyticsPage() {
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-xl shadow-soft border">
+      <div className="bg-[var(--bg-card)] p-6 rounded-xl shadow-soft border">
         <h3 className="text-lg font-bold mb-4">روند احساسات نظرات مشتریان</h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={sentimentTrend}>

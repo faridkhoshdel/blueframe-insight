@@ -57,7 +57,7 @@ export default function SalesPage() {
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-3xl font-bold text-blueframe">فروش و CRM</h1>
-          <p className="text-gray-600 mt-1">Kanban pipeline و مدیریت مشتریان</p>
+          <p className="text-[var(--text-secondary)] mt-1">Kanban pipeline و مدیریت مشتریان</p>
         </div>
         <button onClick={() => setShowForm(!showForm)} className="px-6 py-2.5 bg-blueframe text-white rounded-lg shadow-soft">
           + معامله جدید
@@ -66,27 +66,27 @@ export default function SalesPage() {
 
       {stats && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white p-4 rounded-xl shadow-soft border">
-            <p className="text-sm text-gray-500">مشتریان</p>
+          <div className="bg-[var(--bg-card)] p-4 rounded-xl shadow-soft border">
+            <p className="text-sm text-[var(--text-secondary)]">مشتریان</p>
             <p className="text-2xl font-bold text-blueframe">{stats.totalCustomers}</p>
           </div>
-          <div className="bg-white p-4 rounded-xl shadow-soft border">
-            <p className="text-sm text-gray-500">معاملات فعال</p>
+          <div className="bg-[var(--bg-card)] p-4 rounded-xl shadow-soft border">
+            <p className="text-sm text-[var(--text-secondary)]">معاملات فعال</p>
             <p className="text-2xl font-bold text-yellow-600">{stats.activeDeals}</p>
           </div>
-          <div className="bg-white p-4 rounded-xl shadow-soft border">
-            <p className="text-sm text-gray-500">ارزش Pipeline</p>
+          <div className="bg-[var(--bg-card)] p-4 rounded-xl shadow-soft border">
+            <p className="text-sm text-[var(--text-secondary)]">ارزش Pipeline</p>
             <p className="text-2xl font-bold text-green-600">{formatPrice(stats.pipelineValue)}</p>
           </div>
-          <div className="bg-white p-4 rounded-xl shadow-soft border">
-            <p className="text-sm text-gray-500">نرخ برد</p>
+          <div className="bg-[var(--bg-card)] p-4 rounded-xl shadow-soft border">
+            <p className="text-sm text-[var(--text-secondary)]">نرخ برد</p>
             <p className="text-2xl font-bold text-purple-600">{stats.winRate}%</p>
           </div>
         </div>
       )}
 
       {showForm && (
-        <div className="bg-white p-6 rounded-xl shadow-soft border space-y-4">
+        <div className="bg-[var(--bg-card)] p-6 rounded-xl shadow-soft border space-y-4">
           <h3 className="text-lg font-bold">معامله جدید</h3>
           <div className="grid md:grid-cols-3 gap-4">
             <input placeholder="عنوان معامله" value={newDeal.title}
@@ -112,9 +112,9 @@ export default function SalesPage() {
             <h3 className="font-bold text-sm mb-3 text-center">{stage.name}</h3>
             <div className="space-y-2">
               {(groupedDeals[stage.key] || []).map((deal: any) => (
-                <div key={deal.id} className="bg-white p-3 rounded-lg shadow-sm border">
+                <div key={deal.id} className="bg-[var(--bg-card)] p-3 rounded-lg shadow-sm border">
                   <p className="font-bold text-sm mb-1">{deal.title}</p>
-                  <p className="text-xs text-gray-600 mb-2">{deal.customer?.name}</p>
+                  <p className="text-xs text-[var(--text-secondary)] mb-2">{deal.customer?.name}</p>
                   <p className="text-xs font-bold text-blueframe mb-2">{formatPrice(deal.value)} ﷼</p>
                   {stage.key !== "WON" && stage.key !== "LOST" && (
                     <select onChange={(e) => moveDeal(deal.id, e.target.value)}
@@ -128,7 +128,7 @@ export default function SalesPage() {
                 </div>
               ))}
               {(!groupedDeals[stage.key] || groupedDeals[stage.key].length === 0) && (
-                <p className="text-center text-xs text-gray-500 py-8">خالی</p>
+                <p className="text-center text-xs text-[var(--text-secondary)] py-8">خالی</p>
               )}
             </div>
           </div>

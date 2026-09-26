@@ -11,7 +11,7 @@ const ForceGraph2D = dynamic(
       <div className="h-96 bg-gray-50 rounded-xl flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blueframe mx-auto mb-4"></div>
-          <p className="text-gray-500">در حال بارگذاری گراف...</p>
+          <p className="text-[var(--text-secondary)]">در حال بارگذاری گراف...</p>
         </div>
       </div>
     )
@@ -143,7 +143,7 @@ export default function GraphPage() {
     return (
       <div className="space-y-6">
         <h1 className="text-2xl md:text-3xl font-bold text-blueframe">🕸️ Knowledge Graph</h1>
-        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+        <div className="bg-red-50 rounded-xl p-6 text-center">
           <p className="text-red-700 font-bold mb-2">خطا در بارگذاری گراف</p>
           <p className="text-sm text-red-600 mb-4">{error}</p>
           <button onClick={loadGraph} className="px-4 py-2 bg-red-600 text-white rounded-lg">
@@ -158,28 +158,28 @@ export default function GraphPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-blueframe">🕸️ Knowledge Graph</h1>
-        <p className="text-gray-600 mt-1 text-sm md:text-base">شبکه روابط بین مشتریان و تحلیل Influence</p>
+        <p className="text-[var(--text-secondary)] mt-1 text-sm md:text-base">شبکه روابط بین مشتریان و تحلیل Influence</p>
       </div>
 
       {/* آمار گراف */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-        <div className="bg-white p-4 rounded-xl shadow-soft border">
-          <p className="text-xs text-gray-500">Nodes</p>
+        <div className="bg-[var(--bg-card)] p-4 rounded-xl shadow-soft border">
+          <p className="text-xs text-[var(--text-secondary)]">Nodes</p>
           <p className="text-2xl font-bold text-blueframe">{stats.totalNodes}</p>
         </div>
-        <div className="bg-white p-4 rounded-xl shadow-soft border">
-          <p className="text-xs text-gray-500">Edges</p>
+        <div className="bg-[var(--bg-card)] p-4 rounded-xl shadow-soft border">
+          <p className="text-xs text-[var(--text-secondary)]">Edges</p>
           <p className="text-2xl font-bold text-purple-600">{stats.totalEdges}</p>
         </div>
-        <div className="bg-white p-4 rounded-xl shadow-soft border">
-          <p className="text-xs text-gray-500">Communities</p>
+        <div className="bg-[var(--bg-card)] p-4 rounded-xl shadow-soft border">
+          <p className="text-xs text-[var(--text-secondary)]">Communities</p>
           <p className="text-2xl font-bold text-green-600">{stats.communities}</p>
         </div>
-        <div className="bg-white p-4 rounded-xl shadow-soft border">
-          <p className="text-xs text-gray-500">Avg Degree</p>
+        <div className="bg-[var(--bg-card)] p-4 rounded-xl shadow-soft border">
+          <p className="text-xs text-[var(--text-secondary)]">Avg Degree</p>
           <p className="text-2xl font-bold text-yellow-600">{stats.avgDegree}</p>
         </div>
-        <div className="bg-gradient-to-l from-blueframe/10 to-blue-50 p-4 rounded-xl border-2 border-blueframe/20 col-span-2 md:col-span-1">
+        <div className="grad-card grad-blueframe p-4 rounded-xl col-span-2 md:col-span-1">
           <p className="text-xs text-blueframe">🏆 Top Influencer</p>
           <p className="text-sm font-bold text-blueframe truncate">
             {stats.topInfluencer?.name || "-"}
@@ -189,29 +189,29 @@ export default function GraphPage() {
 
       <div className="grid lg:grid-cols-3 gap-6">
         {/* گراف اصلی */}
-        <div className="lg:col-span-2 bg-white rounded-xl shadow-soft border overflow-hidden">
-          <div className="p-4 border-b bg-gradient-to-l from-blueframe/5 to-transparent">
+        <div className="lg:col-span-2 bg-[var(--bg-card)] rounded-xl shadow-soft border overflow-hidden">
+          <div className="p-4 border-b grad-header">
             <h3 className="font-bold flex items-center gap-2">
               <span>🕸️</span>
               <span>Network Visualization</span>
             </h3>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-[var(--text-secondary)] mt-1">
               روی گره‌ها کلیک کنید • اندازه = Influence • رنگ = Community
             </p>
           </div>
-          <div className="relative h-[500px] md:h-[600px] bg-gradient-to-br from-gray-50 to-white">
+          <div className="relative h-[500px] md:h-[600px] grad-card grad-blue">
             {loading ? (
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blueframe mx-auto mb-4"></div>
-                  <p className="text-gray-500">در حال بارگذاری گراف...</p>
+                  <p className="text-[var(--text-secondary)]">در حال بارگذاری گراف...</p>
                 </div>
               </div>
             ) : graphData.nodes.length === 0 ? (
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-5xl mb-3">🕸️</div>
-                  <p className="text-gray-500">داده‌ای برای نمایش وجود ندارد</p>
+                  <p className="text-[var(--text-secondary)]">داده‌ای برای نمایش وجود ندارد</p>
                   <button onClick={loadGraph} className="mt-4 px-4 py-2 bg-blueframe text-white rounded-lg">
                     بارگذاری مجدد
                   </button>
@@ -270,8 +270,8 @@ export default function GraphPage() {
         </div>
 
         {/* پنل جزئیات */}
-        <div className="bg-white rounded-xl shadow-soft border">
-          <div className="p-4 border-b bg-gradient-to-l from-blueframe/5 to-transparent">
+        <div className="bg-[var(--bg-card)] rounded-xl shadow-soft border">
+          <div className="p-4 border-b grad-header">
             <h3 className="font-bold flex items-center gap-2">
               <span>🔍</span>
               <span>Network Insights</span>
@@ -282,13 +282,13 @@ export default function GraphPage() {
               loadingNetwork ? (
                 <div className="text-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blueframe mx-auto mb-3"></div>
-                  <p className="text-sm text-gray-500">در حال تحلیل شبکه...</p>
+                  <p className="text-sm text-[var(--text-secondary)]">در حال تحلیل شبکه...</p>
                 </div>
               ) : nodeNetwork ? (
                 <div className="space-y-4">
                   <div className="pb-4 border-b">
                     <h4 className="text-lg font-bold">{selectedNode.name}</h4>
-                    <p className="text-sm text-gray-500">{selectedNode.company}</p>
+                    <p className="text-sm text-[var(--text-secondary)]">{selectedNode.company}</p>
                     <div className="flex gap-2 mt-2 flex-wrap">
                       <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">
                         Score: {selectedNode.leadScore}
@@ -303,7 +303,7 @@ export default function GraphPage() {
                   </div>
 
                   {nodeNetwork.networkInsights && (
-                    <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                    <div className="bg-blue-50 p-3 rounded-lg">
                       <p className="text-xs font-bold text-blue-900 mb-1">🧠 Network Insight:</p>
                       <p className="text-xs text-blue-800 leading-relaxed">
                         {nodeNetwork.networkInsights}
@@ -328,7 +328,7 @@ export default function GraphPage() {
                           <div className="flex justify-between items-start gap-2">
                             <div className="flex-1">
                               <p className="font-medium text-sm">{conn.name}</p>
-                              <p className="text-xs text-gray-500">{conn.company}</p>
+                              <p className="text-xs text-[var(--text-secondary)]">{conn.company}</p>
                             </div>
                             <span className="text-xs">
                               {conn.direction === 'outgoing' ? '→' : '←'}
@@ -338,14 +338,14 @@ export default function GraphPage() {
                             <span className="text-xs px-2 py-0.5 bg-blueframe/10 text-blueframe rounded">
                               {getRelationTypeName(conn.relationType)}
                             </span>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-[var(--text-secondary)]">
                               Score: {conn.leadScore}
                             </span>
                           </div>
                         </div>
                       ))}
                       {(!nodeNetwork.connections || nodeNetwork.connections.length === 0) && (
-                        <p className="text-xs text-gray-500 text-center py-4">
+                        <p className="text-xs text-[var(--text-secondary)] text-center py-4">
                           ارتباطی ثبت نشده
                         </p>
                       )}
@@ -357,7 +357,7 @@ export default function GraphPage() {
               <div className="text-center py-12">
                 <div className="text-5xl mb-3">🎯</div>
                 <h4 className="font-bold mb-2">یک گره انتخاب کنید</h4>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-[var(--text-secondary)]">
                   روی هر مشتری در گراف کلیک کنید تا تحلیل شبکه آن را ببینید
                 </p>
               </div>
@@ -367,7 +367,7 @@ export default function GraphPage() {
       </div>
 
       {/* راهنما */}
-      <div className="bg-gradient-to-l from-blueframe/5 to-transparent p-5 rounded-xl border border-blueframe/20">
+      <div className="grad-header p-5 rounded-xl">
         <h3 className="font-bold mb-3 flex items-center gap-2">
           <span>💡</span>
           <span>راهنمای تحلیل Knowledge Graph</span>
@@ -377,28 +377,28 @@ export default function GraphPage() {
             <span className="text-blueframe">●</span>
             <div>
               <p className="font-medium">اندازه گره</p>
-              <p className="text-xs text-gray-600">نشان‌دهنده Influence (Centrality) در شبکه</p>
+              <p className="text-xs text-[var(--text-secondary)]">نشان‌دهنده Influence (Centrality) در شبکه</p>
             </div>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-blueframe">●</span>
             <div>
               <p className="font-medium">رنگ گره</p>
-              <p className="text-xs text-gray-600">نشان‌دهنده Community (گروه مشتریان مرتبط)</p>
+              <p className="text-xs text-[var(--text-secondary)]">نشان‌دهنده Community (گروه مشتریان مرتبط)</p>
             </div>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-blueframe">●</span>
             <div>
               <p className="font-medium">ضخامت خط</p>
-              <p className="text-xs text-gray-600">نشان‌دهنده قدرت رابطه (Strength)</p>
+              <p className="text-xs text-[var(--text-secondary)]">نشان‌دهنده قدرت رابطه (Strength)</p>
             </div>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-blueframe">●</span>
             <div>
               <p className="font-medium">Drag & Zoom</p>
-              <p className="text-xs text-gray-600">گره‌ها را بکشید و با چرخ موس zoom کنید</p>
+              <p className="text-xs text-[var(--text-secondary)]">گره‌ها را بکشید و با چرخ موس zoom کنید</p>
             </div>
           </div>
         </div>
