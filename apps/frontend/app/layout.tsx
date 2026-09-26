@@ -4,12 +4,13 @@ import { Vazirmatn } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/lib/auth';
 import { ThemeProvider } from '@/lib/ThemeContext';
+import { ColorThemeProvider } from '@/lib/ColorThemeContext';
 import InstallBanner from '@/components/InstallBanner';
 
 const vazir = Vazirmatn({ subsets: ['arabic'], weight: ['300', '400', '500', '700', '900'] });
 
 export const metadata = {
-  title: 'blueFrame Insight - پلتفرم هوشمند مدیریت کسب‌وکار',
+  title: 'Vira - پلتفرم هوشمند مدیریت کسب‌وکار',
   description: 'پلتفرم جامع تحلیل احساسات، مدیریت انبار و CRM با هوش مصنوعی',
   viewport: {
     width: 'device-width',
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
       <body className={vazir.className + ' antialiased'}>
+        <ColorThemeProvider>
         <ThemeProvider>
           <DemoProvider>
             <Watermark />
@@ -61,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <AuthProvider>{children}<InstallBanner /></AuthProvider>
           </DemoProvider>
         </ThemeProvider>
+        </ColorThemeProvider>
       </body>
     </html>
   );

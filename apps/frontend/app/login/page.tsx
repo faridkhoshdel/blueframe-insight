@@ -74,7 +74,7 @@ export default function LoginPage() {
               height={60}
             />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-1">blueFrame Insight</h1>
+          <h1 className="text-3xl font-bold text-white mb-1">Vira</h1>
           <p className="text-blue-100 text-sm">پلتفرم هوشمند مدیریت کسب‌وکار</p>
         </div>
 
