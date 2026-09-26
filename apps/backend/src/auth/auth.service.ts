@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Role } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 
@@ -79,10 +79,63 @@ export class AuthService {
         email: 'admin@blueframe.ir',
         password: hashedPassword,
         name: 'مدیر سیستم',
-        role: 'ADMIN' as any,
+        role: Role.ADMIN,
         isActive: true,
       },
     });
     return { message: '✅ کاربر admin ساخته شد', email: 'admin@blueframe.ir', password: 'admin123' };
   }
+
+
+  async seedDemoUser() {
+    const existing = await prisma.user.findUnique({ where: { email: 'demo@blueframe.ir' } });
+    if (existing) {
+      // به‌روزرسانی role به ADMIN (اگر String قدیمی است)
+      await prisma.user.update({
+        where: { email: 'demo@blueframe.ir' },
+        data: { role: Role.ADMIN },
+      });
+      return { message: '✅ Demo user به‌روزرسانی شد', email: 'demo@blueframe.ir', role: 'ADMIN' };
+    }
+
+    const hashedPassword = await bcrypt.hash('Demo@123', 10);
+    await prisma.user.create({
+      data: {
+        email: 'demo@blueframe.ir',
+        password: hashedPassword,
+        name: 'Demo User',
+        role: Role.ADMIN,
+        isActive: true,
+      },
+    });
+    return { message: '✅ Demo user ساخته شد', email: 'demo@blueframe.ir', password: 'Demo@123', role: 'ADMIN' };
+  }
+
+  async seedAllRoles() {
+    const users = [
+      { email: 'warehouse@blueframe.ir', name: 'انباردار', role: Role.WAREHOUSE_MANAGER, password: 'Wh@123' },
+      { email: 'distributor@blueframe.ir', name: 'مدیر پخش', role: Role.DISTRIBUTOR_MANAGER, password: 'Dm@123' },
+      { email: 'driver@blueframe.ir', name: 'راننده', role: Role.DRIVER, password: 'Dr@123' },
+      { email: 'sales@blueframe.ir', name: 'مدیر فروش', role: Role.SALES_MANAGER, password: 'Sm@123' },
+      { email: 'executive@blueframe.ir', name: 'مدیرعامل', role: Role.EXECUTIVE, password: 'Ex@123' },
+      { email: 'ai@blueframe.ir', name: 'اپراتور AI', role: Role.AI_OPERATOR, password: 'Ai@123' },
+    ];
+
+    const results: any[] = [];
+    for (const u of users) {
+      const existing = await prisma.user.findUnique({ where: { email: u.email } });
+      if (existing) {
+        await prisma.user.update({ where: { email: u.email }, data: { role: u.role } });
+        results.push({ email: u.email, role: u.role, status: 'updated' });
+      } else {
+        const hash = await bcrypt.hash(u.password, 10);
+        await prisma.user.create({
+          data: { email: u.email, name: u.name, password: hash, role: u.role, isActive: true },
+        });
+        results.push({ email: u.email, role: u.role, status: 'created' });
+      }
+    }
+    return { message: '✅ همه نقش‌ها seed شدند', users: results };
+  }
+
 }

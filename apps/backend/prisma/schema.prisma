@@ -173,7 +173,7 @@ model User {
   email         String   @unique
   password      String
   name          String
-  role          String   @default("SALES")
+  role          Role     @default(SALES_MANAGER)
   isActive      Boolean  @default(true)
   lastLoginAt   DateTime?
   createdAt     DateTime @default(now())
@@ -291,4 +291,17 @@ model OtpCode {
   expiresAt DateTime
   used      Boolean  @default(false)
   createdAt DateTime @default(now())
+}
+
+
+// ============ نقش‌های سیستم (Role-Based Access Control) ============
+enum Role {
+  ADMIN                  // مدیر کل - دسترسی به همه چیز
+  EXECUTIVE              // مدیرعامل - داشبورد و گزارش‌های مدیریتی
+  WAREHOUSE_MANAGER      // مدیر انبار - محصولات، ورودی/خروجی، انبارگردانی
+  DISTRIBUTOR_MANAGER    // مدیر پخش - توزیع‌کنندگان، مسیرها، فاکتورها
+  DRIVER                 // راننده - فقط مسیرهای تخصیص‌یافته
+  SALES_MANAGER          // مدیر فروش - فاکتورها و CRM
+  AI_OPERATOR            // اپراتور AI - Agents, Insights, Sentiment
+  CUSTOMER               // خریدار - فقط verify فاکتور خود
 }

@@ -36,6 +36,20 @@ export class AuthController {
   async seedAdmin() {
     return this.authService.seedAdmin();
   }
+  @Post('seed-demo')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'ساخت کاربر demo با role ADMIN' })
+  async seedDemo() {
+    return this.authService.seedDemoUser();
+  }
+
+  @Post('seed-all-roles')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'ساخت کاربرانی با همه نقش‌های ۸ گانه' })
+  async seedAllRoles() {
+    return this.authService.seedAllRoles();
+  }
+
 }
 
 // ===== ENDPOINTS کمکی برای تست =====
