@@ -141,8 +141,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               </button>
               <h2 className="text-base font-bold text-[var(--text-primary)]">داشبورد مدیریتی</h2>
               <ThemeToggle />
-              <div className="w-8 h-8 bg-blueframe/10 rounded-full flex items-center justify-center">
-                <span className="text-blueframe font-bold text-sm">م</span>
+              <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 border" style={{ borderColor: "var(--border-color)", background: "var(--bg-hover)" }}>
+                <Image
+                  src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png"
+                  alt="blueFrame logo"
+                  width={36}
+                  height={36}
+                  className="w-full h-full object-contain"
+                />
               </div>
             </div>
           </header>
