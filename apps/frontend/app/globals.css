@@ -107,3 +107,299 @@
   to { transform: translateY(0); opacity: 1; }
 }
 .animate-slide-up { animation: slide-up 0.5s ease-out; }
+
+/* ============ GLASS SYSTEM - Part 1: Variables + Background + Cards ============ */
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  --glass-blur: blur(16px);
+}
+
+.glass-background {
+  background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1a1a2e, #16213e);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  min-height: 100vh;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ============ GLASS SYSTEM - Part 2: Modal + Inputs ============ */
+.glass-modal-overlay {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.glass-modal .ant-modal-content {
+  background: rgba(30, 30, 50, 0.85) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+}
+
+.glass-modal .ant-modal-header {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.glass-modal .ant-modal-title {
+  color: white !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+}
+
+.glass-modal .ant-modal-close { color: rgba(255, 255, 255, 0.6) !important; }
+.glass-modal .ant-modal-body { color: rgba(255, 255, 255, 0.9) !important; }
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 12px !important;
+  color: white !important;
+  transition: all 0.3s ease !important;
+}
+
+.glass-input:hover { border-color: rgba(255, 255, 255, 0.3) !important; }
+
+.glass-input:focus, .glass-input.focused {
+  border-color: #667eea !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2) !important;
+}
+
+.glass-input::placeholder { color: rgba(255, 255, 255, 0.4) !important; }
+
+.ant-select.glass-select .ant-select-selector {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 12px !important;
+  color: white !important;
+  min-height: 40px !important;
+}
+
+.ant-select.glass-select .ant-select-selection-item,
+.ant-select.glass-select .ant-select-selection-placeholder {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.ant-select-dropdown {
+  background: rgba(30, 30, 50, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 12px !important;
+}
+
+.ant-select-dropdown .ant-select-item { color: rgba(255, 255, 255, 0.9) !important; }
+.ant-select-dropdown .ant-select-item-option-active { background: rgba(102, 126, 234, 0.3) !important; }
+
+.glass-form .ant-form-item-label > label {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 500 !important;
+}
+
+.glass-form .ant-input-number {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 12px !important;
+  color: white !important;
+}
+
+.glass-form .ant-picker {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 12px !important;
+  color: white !important;
+}
+
+/* ============ GLASS SYSTEM - Part 3: Buttons + Table + Tags ============ */
+.glass-btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: white !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4) !important;
+  transition: all 0.3s ease !important;
+  padding: 10px 24px !important;
+  height: auto !important;
+}
+
+.glass-btn-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6) !important;
+}
+
+.glass-btn-secondary {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 12px !important;
+  color: white !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.glass-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.glass-table .ant-table {
+  background: transparent !important;
+  color: white !important;
+}
+
+.glass-table .ant-table-thead > tr > th {
+  background: rgba(102, 126, 234, 0.15) !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  font-weight: 600 !important;
+}
+
+.glass-table .ant-table-tbody > tr > td {
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.glass-table .ant-table-tbody > tr:hover > td { background: rgba(255, 255, 255, 0.05) !important; }
+.glass-table .ant-empty-description { color: rgba(255, 255, 255, 0.5) !important; }
+.glass-table .ant-pagination-item a { color: rgba(255, 255, 255, 0.85) !important; }
+.glass-table .ant-pagination-item-active { background: rgba(102, 126, 234, 0.3) !important; border-color: #667eea !important; }
+
+.glass-tag {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 8px !important;
+  color: white !important;
+  backdrop-filter: blur(10px) !important;
+  padding: 2px 10px !important;
+}
+
+.glass-tag-success { background: rgba(82, 196, 26, 0.2) !important; border-color: rgba(82, 196, 26, 0.4) !important; color: #95de64 !important; }
+.glass-tag-blue { background: rgba(102, 126, 234, 0.2) !important; border-color: rgba(102, 126, 234, 0.4) !important; color: #b7c4ff !important; }
+.glass-tag-warning { background: rgba(250, 173, 20, 0.2) !important; border-color: rgba(250, 173, 20, 0.4) !important; color: #ffd666 !important; }
+
+.glass-title {
+  color: white;
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff 0%, #a8edea 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-subtitle { color: rgba(255, 255, 255, 0.7); font-weight: 500; }
+
+/* ============ GLASS SYSTEM - Part 4: Stats + Orbs + Scrollbar ============ */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 24px;
+  color: white;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.stat-card-blue { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.stat-card-purple { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.stat-card-pink { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.stat-card-green { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+
+.floating-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb-1 {
+  width: 400px; height: 400px;
+  background: #667eea;
+  top: -100px; left: -100px;
+  animation: float1 20s ease-in-out infinite;
+}
+
+.orb-2 {
+  width: 300px; height: 300px;
+  background: #f093fb;
+  bottom: -50px; right: -50px;
+  animation: float2 25s ease-in-out infinite;
+}
+
+.orb-3 {
+  width: 250px; height: 250px;
+  background: #4facfe;
+  top: 50%; left: 50%;
+  animation: float3 30s ease-in-out infinite;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(100px, 100px); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-80px, -80px); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translate(-50%, -50%); }
+  50% { transform: translate(-30%, -70%); }
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
+
+.ant-message-notice-content {
+  background: rgba(30, 30, 50, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 12px !important;
+  color: white !important;
+}
+
+/* ============ END GLASS SYSTEM ============ */
