@@ -4,6 +4,7 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
 @ApiTags('CRM & Sales')
 @Controller('crm')
+@Roles(Role.SALES_MANAGER, Role.ADMIN)
 export class CrmController {
   constructor(
     private readonly crmService: CrmService,

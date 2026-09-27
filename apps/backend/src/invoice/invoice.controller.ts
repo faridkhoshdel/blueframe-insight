@@ -7,6 +7,7 @@ import { Roles } from '../common/decorators/roles.decorator';
 import type { Response } from 'express';
 import { Body, Controller, Get, Param, Patch, Post, Query, Req, Res } from '@nestjs/common';
 @Controller('invoices')
+@Roles(Role.SALES_MANAGER, Role.DISTRIBUTOR_MANAGER, Role.ADMIN)
 export class InvoiceController {
   constructor(
     private readonly invoiceService: InvoiceService,

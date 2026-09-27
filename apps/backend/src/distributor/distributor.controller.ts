@@ -2,6 +2,7 @@ import { Role, PrismaClient } from '@prisma/client';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 @Controller('distributors')
+@Roles(Role.DISTRIBUTOR_MANAGER, Role.ADMIN)
 export class DistributorController {
   private prisma = new PrismaClient();
 

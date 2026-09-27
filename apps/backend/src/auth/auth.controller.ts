@@ -29,7 +29,7 @@ export class AuthController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'دریافت پروفایل کاربر فعلی' })
   async getProfile(@Req() req: any) {
-    return this.authService.getProfile(req.user.sub);
+    return this.authService.getProfile(req.user.id);
   }
 
   @Public()

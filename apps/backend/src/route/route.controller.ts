@@ -2,6 +2,7 @@ import { Role, PrismaClient } from '@prisma/client';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 @Controller('routes')
+@Roles(Role.DISTRIBUTOR_MANAGER, Role.DRIVER, Role.ADMIN)
 export class RouteController {
   private prisma = new PrismaClient();
 
