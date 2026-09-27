@@ -3,7 +3,7 @@ import { AnalyzeSentimentDto } from './dto/analyze-sentiment.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from '@prisma/client';
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 @ApiTags('Sentiment Analysis')
 @Controller('sentiment')
 @Roles(Role.AI_OPERATOR, Role.ADMIN)

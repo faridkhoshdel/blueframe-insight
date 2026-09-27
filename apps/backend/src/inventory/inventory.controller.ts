@@ -3,7 +3,7 @@ import { CreateProductDto, UpdateStockDto } from './dto/inventory.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from '@prisma/client';
-import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
 @ApiTags('Inventory')
 @Controller('inventory')
 @Roles(Role.WAREHOUSE_MANAGER, Role.ADMIN)

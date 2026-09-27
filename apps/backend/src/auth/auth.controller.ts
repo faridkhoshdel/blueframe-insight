@@ -2,6 +2,7 @@ import { Public } from '../common/decorators/public.decorator';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req } from '@nestjs/common';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -60,7 +61,6 @@ export class AuthController {
 
 import { PrismaClient, Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
-import { Body, Controller, Get, HttpCode, Post, Req } from '@nestjs/common';
 const testPrisma = new PrismaClient();
 
 @Controller()
