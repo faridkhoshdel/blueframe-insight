@@ -1,34 +1,31 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
-import { JwtService } from '@nestjs/jwt';
+import { IS_PUBLIC_KEY } from '../common/decorators/public.decorator';
 
 @Injectable()
-export class JwtAuthGuard implements CanActivate {
-  constructor(private readonly jwtService: JwtService, private reflector: Reflector) {}
+export class JwtAuthGuard extends AuthGuard('jwt') {
+  constructor(private reflector: Reflector) {
+    super();
+  }
 
-  async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
-    const authHeader = request.headers.authorization;
-    
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return false;
-    }
-
-    try {
-      const token = authHeader.split(' ')[1];
-      const payload = this.jwtService.verify(token, { secret: process.env.JWT_SECRET });
-      request.user = payload;
+  canActivate(context: ExecutionContext) {
+    // اگر @Public باشد، اجازه بده
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+    if (isPublic) {
       return true;
-    } catch (e) {
-      return false;
     }
+
+    return super.canActivate(context);
+  }
+
+  handleRequest(err: any, user: any, info: any) {
+    if (err || !user) {
+      throw err || new UnauthorizedException('احراز هویت ناموفق');
+    }
+    return user;
   }
 }
-
-// Guard برای نقش‌های خاص
-export const Roles = (...roles: string[]) => {
-  return (target: any, key?: string, descriptor?: any) => {
-    Reflect.defineMetadata('roles', roles, descriptor?.value || target);
-    return descriptor?.value || target;
-  };
-};

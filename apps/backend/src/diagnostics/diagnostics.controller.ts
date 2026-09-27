@@ -1,7 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
-
+import { Controller, Get } from '@nestjs/common';
 @Controller('diagnostics')
 export class DiagnosticsController {
   @Get('fonts')

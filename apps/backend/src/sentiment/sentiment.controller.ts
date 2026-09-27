@@ -1,14 +1,11 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { SentimentService } from './sentiment.service';
 import { AnalyzeSentimentDto } from './dto/analyze-sentiment.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from '@prisma/client';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 @ApiTags('Sentiment Analysis')
 @Controller('sentiment')
-@UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.AI_OPERATOR, Role.ADMIN)
 export class SentimentController {
   constructor(private readonly sentimentService: SentimentService) {}

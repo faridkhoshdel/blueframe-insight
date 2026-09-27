@@ -1,13 +1,11 @@
+import { Public } from '../common/decorators/public.decorator';
 import { Role, PrismaClient } from '@prisma/client';
-import { Controller, Get, Post, Body, Param, Query, UseGuards, Request, Patch, Res } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { InvoiceService } from './invoice.service';
 import { InvoicePdfService } from './invoice-pdf.service';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import type { Response } from 'express';
-
+import { Body, Controller, Get, Param, Patch, Post, Query, Req, Res } from '@nestjs/common';
 @Controller('invoices')
 export class InvoiceController {
   constructor(
@@ -15,35 +13,33 @@ export class InvoiceController {
     private readonly pdfService: InvoicePdfService,
   ) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Request() req, @Body() dto: any) {
+  create(@Req() req, @Body() dto: any) {
     return this.invoiceService.create(req.user.id, dto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   findAll(@Query() filters: any) {
     return this.invoiceService.findAll(filters);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.invoiceService.findOne(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Patch(':id/status')
   updateStatus(@Param('id') id: string, @Body('status') status: string) {
     return this.invoiceService.updateStatus(id, status);
   }
 
+  @Public()
   @Get('verify/:token')
   findByToken(@Param('token') token: string) {
     return this.invoiceService.findByToken(token);
   }
 
+  @Public()
   @Post('verify/:token')
   verifyByCustomer(
     @Param('token') token: string,
@@ -52,7 +48,6 @@ export class InvoiceController {
     return this.invoiceService.verifyByCustomer(token, body.isApproved, body.comment, body.rating);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':id/pdf')
   async downloadPdf(@Param('id') id: string, @Res() res: Response) {
     const invoice = await this.invoiceService.findOne(id);
@@ -65,6 +60,7 @@ export class InvoiceController {
     res.send(pdfBuffer);
   }
 
+  @Public()
   @Get('verify/:token/pdf')
   async downloadPdfByToken(@Param('token') token: string, @Res() res: Response) {
     const invoice = await this.invoiceService.findByToken(token);
@@ -77,9 +73,8 @@ export class InvoiceController {
     res.send(pdfBuffer);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('generate-sample')
-  async generateSample(@Request() req) {
+  async generateSample(@Req() req) {
     const prisma = new PrismaClient();
     try {
       const customer = await prisma.customer.findFirst();

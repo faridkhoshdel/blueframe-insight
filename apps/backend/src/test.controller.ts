@@ -1,12 +1,13 @@
+import { Public } from './common/decorators/public.decorator';
 import { DemoSeederService } from './seed/demo/demo-seeder.service';
-import { Controller, Get } from '@nestjs/common';
 import { PrismaClient, Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
-
+import { Controller, Get } from '@nestjs/common';
 const prisma = new PrismaClient();
 
 @Controller()
 export class TestController {
+  @Public()
   @Get()
   root() {
     return {
@@ -16,6 +17,7 @@ export class TestController {
     };
   }
 
+  @Public()
   @Get('test-db')
   async testDb() {
     try {

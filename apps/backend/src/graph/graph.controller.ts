@@ -1,13 +1,10 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { GraphService } from './graph.service';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from '@prisma/client';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Controller, Get, Param } from '@nestjs/common';
 @ApiTags('Knowledge Graph')
 @Controller('graph')
-@UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.ADMIN)
 export class GraphController {
   constructor(private readonly graphService: GraphService) {}

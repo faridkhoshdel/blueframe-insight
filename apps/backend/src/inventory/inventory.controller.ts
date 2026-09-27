@@ -1,14 +1,11 @@
-import { Controller, Get, Post, Body, Param, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { InventoryService } from './inventory.service';
 import { CreateProductDto, UpdateStockDto } from './dto/inventory.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from '@prisma/client';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
 @ApiTags('Inventory')
 @Controller('inventory')
-@UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.WAREHOUSE_MANAGER, Role.ADMIN)
 export class InventoryController {
   constructor(private readonly inventoryService: InventoryService) {}

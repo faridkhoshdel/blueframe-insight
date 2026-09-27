@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, UseGuards, Request, HttpCode, HttpStatus } from '@nestjs/common';
+import { Public } from '../common/decorators/public.decorator';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
@@ -8,6 +8,7 @@ import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'ثبت‌نام کاربر جدید' })
@@ -15,6 +16,7 @@ export class AuthController {
     return this.authService.register(body.email, body.password, body.name, body.role as any || 'SALES');
   }
 
+  @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'ورود کاربر' })
@@ -23,19 +25,20 @@ export class AuthController {
   }
 
   @Get('me')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'دریافت پروفایل کاربر فعلی' })
-  async getProfile(@Request() req: any) {
+  async getProfile(@Req() req: any) {
     return this.authService.getProfile(req.user.sub);
   }
 
+  @Public()
   @Post('seed-admin')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'ساخت کاربر admin پیش‌فرض' })
   async seedAdmin() {
     return this.authService.seedAdmin();
   }
+  @Public()
   @Post('seed-demo')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'ساخت کاربر demo با role ADMIN' })
@@ -43,6 +46,7 @@ export class AuthController {
     return this.authService.seedDemoUser();
   }
 
+  @Public()
   @Post('seed-all-roles')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'ساخت کاربرانی با همه نقش‌های ۸ گانه' })
@@ -56,6 +60,7 @@ export class AuthController {
 
 import { PrismaClient, Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { Body, Controller, Get, HttpCode, Post, Req } from '@nestjs/common';
 const testPrisma = new PrismaClient();
 
 @Controller()

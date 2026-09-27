@@ -17,6 +17,9 @@ import { RouteModule } from './route/route.module';
 import { DistributorModule } from './distributor/distributor.module';
 import { CustomerAuthModule } from './customer-auth/customer-auth.module';
 import { DiagnosticsModule } from './diagnostics/diagnostics.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { RolesGuard } from './common/guards/roles.guard';
 
 @Module({
   imports: [
@@ -38,6 +41,10 @@ import { DiagnosticsModule } from './diagnostics/diagnostics.module';
     DiagnosticsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
+  ],
 })
 export class AppModule {}
