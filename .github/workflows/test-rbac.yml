@@ -1,0 +1,47 @@
+name: Test RBAC
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test 1 - Public endpoint
+        run: curl -s https://blueframe-backend-demo.onrender.com/ | head -5
+
+      - name: Test 2 - Login + Get token
+        id: login
+        run: |
+          TOKEN=$(curl -s -X POST https://blueframe-backend-demo.onrender.com/auth/login \
+            -H "Content-Type: application/json" \
+            -d '{"email":"demo@blueframe.ir","password":"Demo@123"}' \
+            | python3 -c "import sys,json; print(json.load(sys.stdin).get('accessToken',''))")
+          echo "TOKEN=$TOKEN" >> $GITHUB_OUTPUT
+          echo "Token: ${TOKEN:0:40}..."
+
+      - name: Test 3 - /auth/me with ADMIN
+        run: |
+          curl -s -H "Authorization: Bearer ${{ steps.login.outputs.TOKEN }}" \
+            https://blueframe-backend-demo.onrender.com/auth/me | python3 -m json.tool
+
+      - name: Test 4 - Login DRIVER
+        id: driver
+        run: |
+          TOKEN=$(curl -s -X POST https://blueframe-backend-demo.onrender.com/auth/login \
+            -H "Content-Type: application/json" \
+            -d '{"email":"driver@blueframe.ir","password":"Dr@123"}' \
+            | python3 -c "import sys,json; print(json.load(sys.stdin).get('accessToken',''))")
+          echo "TOKEN=$TOKEN" >> $GITHUB_OUTPUT
+
+      - name: Test 5 - DRIVER → invoices (expect 403)
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "Authorization: Bearer ${{ steps.driver.outputs.TOKEN }}" \
+            https://blueframe-backend-demo.onrender.com/invoices)
+          echo "Status: $STATUS"
+          if [ "$STATUS" = "403" ]; then
+            echo "✅ RBAC کار می‌کند - DRIVER Forbidden شد"
+          else
+            echo "❌ RBAC کار نمی‌کند - Status: $STATUS"
+          fi
