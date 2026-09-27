@@ -9,30 +9,30 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.6.1",
+    "antd": "^5.29.3",
+    "axios": "^1.6.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.1.7",
+    "leaflet": "^1.9.4",
     "lucide-react": "^0.378.0",
     "next": "14.2.35",
     "next-pwa": "^5.6.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-force-graph-2d": "^1.29.1",
-    "recharts": "^3.10.1",
-    "tailwind-merge": "^2.3.0",
-    "antd": "^5.12.0",
-    "@ant-design/icons": "^5.2.6",
-    "leaflet": "^1.9.4",
     "react-leaflet": "^4.2.1",
-    "axios": "^1.6.0"
+    "recharts": "^3.10.1",
+    "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.8",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
     "postcss": "^8",
     "tailwindcss": "^3.4.3",
-    "typescript": "^5",
-    "@types/leaflet": "^1.9.8"
+    "typescript": "^5"
   }
 }

@@ -1,19 +1,23 @@
 "use client";
+
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { API_URL } from '@/lib/api';
-interface User {
+import { getHomePath, Role } from "./authRedirect";
+
+export interface User {
   id: string;
   email: string;
   name: string;
-  role: string;
+  role: Role;
 }
 
 interface AuthContextType {
   user: User | null;
   token: string | null;
-  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  register: (email: string, password: string, name: string, role?: string) => Promise<{ success: boolean; error?: string }>;
+  login: (email: string, password: string) => Promise<{ success: boolean; error?: string; homePath?: string }>;
+  register: (email: string, password: string, name: string, role?: string) => Promise<{ success: boolean; error?: string; homePath?: string }>;
   logout: () => void;
+  hasRole: (...roles: Role[]) => boolean;
   isAuthenticated: boolean;
   isLoading: boolean;
 }
@@ -25,10 +29,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Helper برای دریافت پروفایل
+  const fetchProfile = async (accessToken: string): Promise<User | null> => {
+    try {
+      const res = await fetch(`${API_URL}/auth/me`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      if (!res.ok) return null;
+      const profile = await res.json();
+      return {
+        id: profile.id,
+        email: profile.email,
+        name: profile.name,
+        role: profile.role as Role,
+      };
+    } catch {
+      return null;
+    }
+  };
+
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
     const savedUser = localStorage.getItem("user");
-    
+
     if (savedToken && savedUser) {
       setToken(savedToken);
       try {
@@ -48,42 +71,59 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-      
+
       if (!res.ok) {
         const error = await res.json();
         return { success: false, error: error.message || "ورود ناموفق بود" };
       }
-      
+
       const data = await res.json();
-      localStorage.setItem("token", data.accessToken);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      setToken(data.accessToken);
-      setUser(data.user);
-      return { success: true };
+      const accessToken = data.accessToken;
+
+      // دریافت پروفایل کامل با role
+      const profile = await fetchProfile(accessToken);
+      if (!profile) {
+        return { success: false, error: "خطا در دریافت پروفایل" };
+      }
+
+      localStorage.setItem("token", accessToken);
+      localStorage.setItem("user", JSON.stringify(profile));
+      setToken(accessToken);
+      setUser(profile);
+
+      return { success: true, homePath: getHomePath(profile.role) };
     } catch (e) {
       return { success: false, error: "خطا در ارتباط با سرور" };
     }
   };
 
-  const register = async (email: string, password: string, name: string, role: string = "SALES") => {
+  const register = async (email: string, password: string, name: string, role: string = "SALES") {
     try {
       const res = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, name, role }),
       });
-      
+
       if (!res.ok) {
         const error = await res.json();
         return { success: false, error: error.message || "ثبت‌نام ناموفق بود" };
       }
-      
+
       const data = await res.json();
-      localStorage.setItem("token", data.accessToken);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      setToken(data.accessToken);
-      setUser(data.user);
-      return { success: true };
+      const accessToken = data.accessToken;
+
+      const profile = await fetchProfile(accessToken);
+      if (!profile) {
+        return { success: false, error: "خطا در دریافت پروفایل" };
+      }
+
+      localStorage.setItem("token", accessToken);
+      localStorage.setItem("user", JSON.stringify(profile));
+      setToken(accessToken);
+      setUser(profile);
+
+      return { success: true, homePath: getHomePath(profile.role) };
     } catch (e) {
       return { success: false, error: "خطا در ارتباط با سرور" };
     }
@@ -94,18 +134,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem("user");
     setToken(null);
     setUser(null);
+    window.location.href = "/login";
+  };
+
+  const hasRole = (...roles: Role[]): boolean => {
+    if (!user) return false;
+    if (user.role === "ADMIN") return true;
+    return roles.includes(user.role);
   };
 
   return (
-    <AuthContext.Provider value={{
-      user,
-      token,
-      login,
-      register,
-      logout,
-      isAuthenticated: !!user && !!token,
-      isLoading,
-    }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        login,
+        register,
+        logout,
+        hasRole,
+        isAuthenticated: !!user && !!token,
+        isLoading,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

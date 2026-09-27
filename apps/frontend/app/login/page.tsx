@@ -17,8 +17,8 @@ export default function LoginPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/dashboard");
+    if (isAuthenticated && user) {
+      router.push("/dashboard/executive");
     }
   }, [isAuthenticated, router]);
 
@@ -32,8 +32,8 @@ export default function LoginPage() {
         ? await login(email, password)
         : await register(email, password, name, role);
 
-      if (result.success) {
-        router.push("/dashboard");
+      if (result.success && result.homePath) {
+        router.push(result.homePath);
       } else {
         setError(result.error || "خطا در ورود");
       }
