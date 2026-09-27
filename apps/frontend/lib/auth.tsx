@@ -29,7 +29,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Helper برای دریافت پروفایل
   const fetchProfile = async (accessToken: string): Promise<User | null> => {
     try {
       const res = await fetch(`${API_URL}/auth/me`, {
@@ -80,7 +79,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const data = await res.json();
       const accessToken = data.accessToken;
 
-      // دریافت پروفایل کامل با role
       const profile = await fetchProfile(accessToken);
       if (!profile) {
         return { success: false, error: "خطا در دریافت پروفایل" };
@@ -97,12 +95,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const register = async (email: string, password: string, name: string, role: string = "SALES") {
+  const register = async (email: string, password: string, name: string, role?: string) => {
+    const finalRole = role || "SALES";
     try {
       const res = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, name, role }),
+        body: JSON.stringify({ email, password, name, role: finalRole }),
       });
 
       if (!res.ok) {
