@@ -1,5 +1,5 @@
 import { Public } from '../common/decorators/public.decorator';
-import { Role, PrismaClient } from '@prisma/client';
+import { PrismaClient, Role } from '@prisma/client';
 import { randomUUID } from 'crypto';
 import { InvoiceService } from './invoice.service';
 import { InvoicePdfService } from './invoice-pdf.service';

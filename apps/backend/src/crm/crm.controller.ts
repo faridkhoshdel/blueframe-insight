@@ -2,6 +2,8 @@ import { CrmService } from './crm.service';
 import { AiScoringService } from './ai-scoring.service';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { Role } from '@prisma/client';
+import { Roles } from '../common/decorators/roles.decorator';
 @ApiTags('CRM & Sales')
 @Controller('crm')
 @Roles(Role.SALES_MANAGER, Role.ADMIN)

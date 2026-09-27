@@ -1,4 +1,4 @@
-import { Role, PrismaClient } from '@prisma/client';
+import { PrismaClient, Role } from '@prisma/client';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 @Controller('distributors')
