@@ -1,9 +1,14 @@
-import { Controller, Get, Post, Query, Param } from '@nestjs/common';
+import { Controller, Get, Post, Query, Param, UseGuards } from '@nestjs/common';
 import { AgentsService } from './agents.service';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import { Role } from '@prisma/client';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 @ApiTags('Autonomous Agents')
 @Controller('agents')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles(Role.AI_OPERATOR, Role.ADMIN)
 export class AgentsController {
   constructor(private readonly agentsService: AgentsService) {}
 

@@ -1,10 +1,12 @@
+import { Role, PrismaClient } from '@prisma/client';
 import { Controller, Get, Post, Body, Param, Query, UseGuards, Request, Patch, Res } from '@nestjs/common';
-import type { Response } from 'express';
-import { PrismaClient } from '@prisma/client';
 import { randomUUID } from 'crypto';
 import { InvoiceService } from './invoice.service';
 import { InvoicePdfService } from './invoice-pdf.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import type { Response } from 'express';
 
 @Controller('invoices')
 export class InvoiceController {

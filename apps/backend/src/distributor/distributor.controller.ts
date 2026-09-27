@@ -1,7 +1,8 @@
+import { Role, PrismaClient } from '@prisma/client';
 import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles.decorator';
 @Controller('distributors')
 @UseGuards(JwtAuthGuard)
 export class DistributorController {

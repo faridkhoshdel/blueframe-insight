@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Param, Put, Delete, HttpCode, HttpStatus }
 import { CrmService } from './crm.service';
 import { AiScoringService } from './ai-scoring.service';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-
 @ApiTags('CRM & Sales')
 @Controller('crm')
 export class CrmController {

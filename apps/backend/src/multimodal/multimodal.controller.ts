@@ -1,13 +1,18 @@
-import { Controller, Post, Get, Query, UploadedFile, UseInterceptors, Body } from '@nestjs/common';
+import { Controller, Post, Get, Query, UploadedFile, UseInterceptors, Body, UseGuards } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { Request } from 'express';
 import { MultimodalService } from './multimodal.service';
 import { ApiTags, ApiOperation, ApiConsumes } from '@nestjs/swagger';
-
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import { Role } from '@prisma/client';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 @ApiTags('Multimodal AI')
 @Controller('multimodal')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles(Role.AI_OPERATOR, Role.ADMIN)
 export class MultimodalController {
   constructor(private readonly service: MultimodalService) {}
 
