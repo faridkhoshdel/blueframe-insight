@@ -1,7 +1,5 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
 import { Typography, Row, Col } from "antd";
 import PersianClock from "@/components/PersianClock";
 import PersianCalendar from "@/components/PersianCalendar";

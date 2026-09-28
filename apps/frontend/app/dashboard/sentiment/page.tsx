@@ -1,7 +1,5 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
 import { useState } from "react";
 import { API_URL } from '@/lib/api';
 export default function SentimentPage() {

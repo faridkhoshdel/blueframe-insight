@@ -1,7 +1,5 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
 import { Typography, Button, message } from "antd";
 import { ReloadOutlined, CheckOutlined, SunOutlined, MoonOutlined, CloudOutlined } from "@ant-design/icons";
 import ColorCustomizer from "@/components/ColorCustomizer";

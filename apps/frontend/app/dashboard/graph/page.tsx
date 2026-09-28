@@ -1,6 +1,4 @@
 "use client";
-
-export const dynamic = "force-dynamic";
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { API_URL } from '@/lib/api';
