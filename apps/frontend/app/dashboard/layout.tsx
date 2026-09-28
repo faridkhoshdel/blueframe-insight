@@ -30,6 +30,7 @@ const allMenuItems = [
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, logout, isAuthenticated, isLoading } = useAuth();
+  const menuItems = user?.role ? filterMenuByRole(user.role) : [];
   const router = useRouter();
   const pathname = usePathname();
 
