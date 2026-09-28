@@ -25,7 +25,7 @@ const allMenuItems = [
     { name: "ظاهر و رنگ", href: "/dashboard/appearance", icon: "🎨" },
     { name: "تنظیمات", href: "/dashboard/settings", icon: "⚙️" },
   ];
-  const menuItems = filterMenuByRole(user?.role || null);
+  const menuItems = user?.role ? filterMenuByRole(user.role) : [];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
