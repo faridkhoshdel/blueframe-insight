@@ -1,4 +1,6 @@
 "use client";
+
+export const dynamic = "force-dynamic";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/lib/auth";
 import { usePWA } from "@/lib/pwa";

@@ -1,3 +1,6 @@
+"use client";
+export const dynamic = "force-dynamic";
+
 export default function DashboardPage() {
   const stats = [
     { title: "مجموع بازخوردهای مشتریان", value: "۱۲,۴۵۰", change: "+۱۲٪", color: "text-blueframe" },

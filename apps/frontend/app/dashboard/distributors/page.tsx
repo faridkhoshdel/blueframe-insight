@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { useEffect, useState } from 'react';
 import { Table, Form, Input, message, Typography, Modal, Button as AntButton } from 'antd';
 import { PlusOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons';
