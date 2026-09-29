@@ -13,14 +13,21 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   
-  const { login, register, isAuthenticated, isLoading } = useAuth();
+  const { user, login, register, isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (isAuthenticated && user) {
-      router.push("/dashboard/executive");
+      // Redirect بر اساس نقش کاربر
+      const home = user.role === "DRIVER" ? "/dashboard/routes"
+        : user.role === "WAREHOUSE_MANAGER" ? "/dashboard/inventory"
+        : user.role === "DISTRIBUTOR_MANAGER" ? "/dashboard/distributors"
+        : user.role === "SALES_MANAGER" ? "/dashboard/invoices"
+        : user.role === "AI_OPERATOR" ? "/dashboard/agents"
+        : "/dashboard/executive";
+      router.push(home);
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, user, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -19,7 +19,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
 
   const checkDemo = async () => {
     try {
-      const res = await fetch(`${window.location.origin.includes("localhost") ? "http://localhost:50001" : "https://blueframe-backend.onrender.com"}/demo/info`);
+      const res = await fetch(`${API_URL}/demo/info`);
       const data = await res.json();
       setIsDemo(data.demoMode === true);
       if (data.demoMode) {
