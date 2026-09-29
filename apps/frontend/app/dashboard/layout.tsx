@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -6,43 +7,28 @@ import PersianClock from "@/components/PersianClock";
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth";
+import { filterMenuByRole } from "@/lib/roles";
 
-const allMenuItems = [
-    { name: "خلاصه اجرایی", href: "/dashboard/executive", icon: "📊" },
-    { name: "نمودار دانش", href: "/dashboard/graph", icon: "🕸️" },
-    { name: "شبیه‌ساز", href: "/dashboard/simulator", icon: "🎮" },
-    { name: "انبار و محصولات", href: "/dashboard/inventory", icon: "📦" },
-    { name: "توزیع‌کنندگان", href: "/dashboard/distributors", icon: "🏢" },
-    { name: "مسیرها", href: "/dashboard/routes", icon: "🚚" },
-    { name: "فاکتورها", href: "/dashboard/invoices", icon: "🧾" },
-    { name: "CRM و فروش", href: "/dashboard/sales", icon: "💼" },
-    { name: "AI Agents", href: "/dashboard/agents", icon: "🤖" },
-    { name: "بینش‌های AI", href: "/dashboard/ai-insights", icon: "💡" },
-    { name: "تحلیل احساسات", href: "/dashboard/sentiment", icon: "😊" },
-    { name: "چندوجهی", href: "/dashboard/multimodal", icon: "🎤" },
-    { name: "تحلیل‌ها", href: "/dashboard/analytics", icon: "📈" },
-    { name: "تقویم و ساعت", href: "/dashboard/calendar", icon: "📅" },
-    { name: "ظاهر و رنگ", href: "/dashboard/appearance", icon: "🎨" },
-    { name: "تنظیمات", href: "/dashboard/settings", icon: "⚙️" },
-  ];
-  const menuItems = user?.role ? filterMenuByRole(user.role) : [];
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, logout, isAuthenticated, isLoading } = useAuth();
-  const menuItems = user?.role ? filterMenuByRole(user.role) : [];
   const router = useRouter();
   const pathname = usePathname();
+
+  const menuItems = user?.role ? filterMenuByRole(user.role) : [];
 
   useEffect(() => {
     setSidebarOpen(false);
   }, [pathname]);
+
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       router.push("/login");
     }
   }, [isAuthenticated, isLoading, router]);
-
 
   useEffect(() => {
     if (sidebarOpen) {
@@ -52,7 +38,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }
     return () => { document.body.style.overflow = ""; };
   }, [sidebarOpen]);
-
 
   if (isLoading) {
     return (
@@ -66,19 +51,19 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   if (!isAuthenticated) return null;
+
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]" dir="rtl">
       {/* ===== Grid Layout: دسکتاپ با grid، موبایل با drawer ===== */}
       <div className="min-h-screen md:grid md:grid-cols-[256px_1fr]">
-        
         {/* ===== Sidebar Desktop (Grid Column 1) ===== */}
         <aside className="hidden md:flex md:flex-col bg-[var(--bg-card)] border-l border-[var(--border-color)] sticky top-0 h-screen overflow-y-auto">
           <div className="p-6 border-b border-[var(--border-color)] flex items-center gap-3">
-            <Image 
-              src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png" 
-              alt="Logo" className="rounded-xl" style={{ background: "#1e3a8a", padding: 4 }} 
-              width={40} 
-              height={40} 
+            <Image
+              src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png"
+              alt="Logo" className="rounded-xl" style={{ background: "#1e3a8a", padding: 4 }}
+              width={40}
+              height={40}
             />
             <div>
               <span className="font-bold text-blueframe text-lg block">پنل مدیریت</span>
@@ -89,6 +74,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="px-4 py-2 border-b border-[var(--border-color)] flex justify-center">
             <PersianClock compact />
           </div>
+
           <nav className="flex-1 p-4 space-y-1">
             {menuItems.map((item) => {
               const isActive = pathname === item.href;
@@ -102,9 +88,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                       : "text-[var(--text-secondary)] hover:bg-blueframe/5 hover:text-blueframe"
                   }`}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d={item.icon}/>
-                  </svg>
+                  <span className="text-xl">{item.icon}</span>
                   <span className="text-sm font-medium">{item.name}</span>
                 </Link>
               );
@@ -116,9 +100,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <p className="text-sm font-medium text-[var(--text-primary)]">{user?.name || "کاربر"}</p>
               <p className="text-xs text-[var(--text-secondary)]">{user?.email}</p>
               <p className="text-xs text-blueframe mt-1">👑 {user?.role}</p>
-              <Link href="/" className="mt-2 text-xs text-red-600 hover:text-red-700 font-medium inline-block">
-                خروج از پنل →
-              </Link>
+              <button
+                onClick={() => { logout(); router.push("/login"); }}
+                className="mt-2 text-xs text-red-600 hover:text-red-700 font-medium"
+              >
+                🚪 خروج از پنل
+              </button>
             </div>
           </div>
         </aside>
@@ -128,7 +115,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {/* Mobile Header */}
           <header className="md:hidden bg-[var(--bg-card)] border-b border-[var(--border-color)] px-4 py-3 sticky top-0 z-30 shadow-sm">
             <div className="flex items-center justify-between">
-              <button 
+              <button
                 onClick={() => setSidebarOpen(true)}
                 className="p-2 hover:bg-[var(--bg-hover)] rounded-lg"
                 aria-label="باز کردن منو"
@@ -140,15 +127,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </svg>
               </button>
               <h2 className="text-base font-bold text-[var(--text-primary)]">داشبورد مدیریتی</h2>
-              <ThemeToggle />
-              <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 border" style={{ borderColor: "#1e3a8a", background: "#1e3a8a", padding: 4 }}>
-                <Image
-                  src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png"
-                  alt="blueFrame logo"
-                  width={36}
-                  height={36}
-                  className="w-full h-full object-contain"
-                />
+              <div className="flex items-center gap-2">
+                <ThemeToggle />
+                <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 border" style={{ borderColor: "#1e3a8a", background: "#1e3a8a", padding: 4 }}>
+                  <Image
+                    src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png"
+                    alt="blueFrame logo"
+                    width={36}
+                    height={36}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
               </div>
             </div>
           </header>
@@ -167,13 +156,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* ===== Mobile Drawer (خارج از grid) ===== */}
       {sidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-60 z-40 md:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
-      <aside 
+      <aside
         className={`
           fixed top-0 right-0 bottom-0 w-72 bg-[var(--bg-card)] z-50
           flex flex-col shadow-2xl
@@ -184,18 +173,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       >
         <div className="p-4 border-b border-[var(--border-color)] flex items-center justify-between grad-header">
           <div className="flex items-center gap-3">
-            <Image 
-              src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png" 
+            <Image
+              src="https://faridkhoshdel.ir/wp-content/uploads/2026/06/blueframe.png"
               alt="Logo" className="rounded-xl" style={{ background: "#1e3a8a", padding: 4 }}
-              width={36} 
-              height={36} 
+              width={36}
+              height={36}
             />
             <div>
               <span className="font-bold text-blueframe text-base block">پنل مدیریت</span>
               <span className="text-xs text-[var(--text-secondary)]">Vira</span>
             </div>
           </div>
-          <button 
+          <button
             onClick={() => setSidebarOpen(false)}
             className="p-2 hover:bg-[var(--bg-hover)] rounded-lg"
           >
@@ -220,9 +209,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     : "text-[var(--text-secondary)] hover:bg-blueframe/5"
                 }`}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d={item.icon}/>
-                </svg>
+                <span className="text-xl">{item.icon}</span>
                 <span className="text-sm font-medium">{item.name}</span>
               </Link>
             );
@@ -232,9 +219,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="p-4 border-t border-[var(--border-color)]">
           <div className="px-4 py-3 bg-blueframe/5 rounded-lg">
             <p className="text-sm font-medium text-[var(--text-primary)]">{user?.name || "کاربر"}</p>
-              <p className="text-xs text-[var(--text-secondary)]">{user?.email}</p>
-              <p className="text-xs text-blueframe mt-1">👑 {user?.role}</p>
-            <button onClick={() => { logout(); router.push("/login"); }} className="mt-2 text-xs text-red-600 hover:text-red-700 font-medium">
+            <p className="text-xs text-[var(--text-secondary)]">{user?.email}</p>
+            <p className="text-xs text-blueframe mt-1">👑 {user?.role}</p>
+            <button
+              onClick={() => { logout(); router.push("/login"); }}
+              className="mt-2 text-xs text-red-600 hover:text-red-700 font-medium"
+            >
               🚪 خروج از پنل
             </button>
           </div>
