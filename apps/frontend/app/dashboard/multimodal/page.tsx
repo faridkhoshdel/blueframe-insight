@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { API_URL } from '@/lib/api';
+import { fetchWithAuth } from '@/lib/fetchWithAuth';
 const TYPE_CONFIG = {
   voice: { name: "صوت", icon: "🎙️", color: "red" },
   image: { name: "تصویر", icon: "📸", color: "blue" },
@@ -25,8 +26,9 @@ export default function MultimodalPage() {
 
   const loadHistory = async () => {
     try {
-      const res = await fetch(`${API_URL}/multimodal/all?limit=20`);
-      setHistory(await res.json());
+      const res = await fetchWithAuth(`/multimodal/all?limit=20`);
+      const data = await res.json();
+        setHistory(Array.isArray(data) ? data : []);
     } catch (e) { console.error(e); }
   };
 
@@ -34,7 +36,7 @@ export default function MultimodalPage() {
     if (!text.trim()) { alert("لطفاً متنی وارد کنید"); return; }
     setLoading(true); setResult(null);
     try {
-      const res = await fetch(`${API_URL}/multimodal/text`, {
+      const res = await fetchWithAuth(`/multimodal/text`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text, title: textTitle || "بدون عنوان" }),
@@ -52,7 +54,7 @@ export default function MultimodalPage() {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const res = await fetch(`${API_URL}/multimodal/${type}`, { method: "POST", body: formData });
+      const res = await fetchWithAuth(`/multimodal/${type}`, { method: "POST", body: formData });
       const data = await res.json();
       setResult(data);
       loadHistory();

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { API_URL } from '@/lib/api';
+import { fetchWithAuth } from '@/lib/fetchWithAuth';
 export default function SentimentPage() {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ export default function SentimentPage() {
     setError("");
     setResult(null);
     try {
-      const res = await fetch(`${API_URL}/sentiment/analyze`, {
+      const res = await fetchWithAuth(`/sentiment/analyze`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),

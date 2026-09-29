@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { API_URL } from '@/lib/api';
+import { fetchWithAuth } from '@/lib/fetchWithAuth';
 const BarChart = dynamic(() => import("recharts").then(mod => mod.BarChart), { ssr: false });
 const Bar = dynamic(() => import("recharts").then(mod => mod.Bar), { ssr: false });
 const XAxis = dynamic(() => import("recharts").then(mod => mod.XAxis), { ssr: false });
@@ -32,8 +33,9 @@ export default function SimulatorPage() {
 
   const loadCustomers = async () => {
     try {
-      const res = await fetch(`${API_URL}/crm/customers`);
-      setCustomers(await res.json());
+      const res = await fetchWithAuth(`/crm/customers`);
+      const data = await res.json();
+        setCustomers(Array.isArray(data) ? data : []);
     } catch (e) { console.error(e); }
   };
 
@@ -75,7 +77,7 @@ export default function SimulatorPage() {
   const runComparison = async () => {
     setLoading(true); setCompareResult(null);
     try {
-      const res = await fetch(`${API_URL}/simulator/compare`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ scenarios: compareScenarios }) });
+      const res = await fetchWithAuth(`/simulator/compare`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ scenarios: compareScenarios }) });
       const data = await res.json();
       setCompareResult(data);
       saveToHistory({ type: "compare", result: data });

@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { API_URL } from '@/lib/api';
+import { fetchWithAuth } from '@/lib/fetchWithAuth';
 export default function AIInsightsPage() {
   const [customers, setCustomers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -11,8 +12,9 @@ export default function AIInsightsPage() {
 
   const loadCustomers = async () => {
     try {
-      const res = await fetch(`${API_URL}/crm/customers`);
-      setCustomers(await res.json());
+      const res = await fetchWithAuth(`/crm/customers`);
+      const data = await res.json();
+        setCustomers(Array.isArray(data) ? data : []);
     } catch (e) { console.error(e); }
     finally { setLoading(false); }
   };
@@ -34,7 +36,7 @@ export default function AIInsightsPage() {
   const analyzeAll = async () => {
     setAnalyzing(true);
     try {
-      await fetch(`${API_URL}/crm/ai/analyze-all`, { method: "POST" });
+      await fetchWithAuth(`/crm/ai/analyze-all`, { method: "POST" });
       alert("تحلیل همه مشتریان با موفقیت انجام شد");
       loadCustomers();
     } catch (e) { console.error(e); }

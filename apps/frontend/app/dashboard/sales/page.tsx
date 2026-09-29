@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { API_URL } from '@/lib/api';
+import { fetchWithAuth } from '@/lib/fetchWithAuth';
 const STAGES = [
   { key: "LEAD", name: "Lead اولیه", color: "bg-gray-100 border-gray-300" },
   { key: "CONTACTED", name: "تماس گرفته", color: "bg-blue-50 border-blue-300" },
@@ -31,7 +32,7 @@ export default function SalesPage() {
   useEffect(() => { loadData(); }, []);
 
   const handleCreateDeal = async () => {
-    await fetch(`${API_URL}/crm/deals`, {
+    await fetchWithAuth(`/crm/deals`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newDeal),
@@ -42,7 +43,7 @@ export default function SalesPage() {
   };
 
   const moveDeal = async (dealId: string, newStage: string) => {
-    await fetch(`${API_URL}/crm/deals/${dealId}/stage`, {
+    await fetchWithAuth(`/crm/deals/${dealId}/stage`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ stage: newStage }),

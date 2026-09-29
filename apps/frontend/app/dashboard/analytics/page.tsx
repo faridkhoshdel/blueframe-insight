@@ -6,6 +6,7 @@ LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   ResponsiveContainer, AreaChart, Area
 } from "recharts";
 import { API_URL } from '@/lib/api';
+import { fetchWithAuth } from '@/lib/fetchWithAuth';
 
 const STOCK_COLORS = ["#10B981", "#F59E0B", "#EF4444"];
 
@@ -23,7 +24,7 @@ export default function AnalyticsPage() {
 
   const loadStageData = async () => {
     try {
-      const res = await fetch(`${API_URL}/crm/deals/grouped`);
+      const res = await fetchWithAuth(`/crm/deals/grouped`);
       const data = await res.json();
       const stageNames: Record<string, string> = {
         LEAD: "Lead اولیه",
@@ -44,7 +45,7 @@ export default function AnalyticsPage() {
 
   const loadStockData = async () => {
     try {
-      const res = await fetch(`${API_URL}/inventory/products`);
+      const res = await fetchWithAuth(`/inventory/products`);
       const products = await res.json();
       const inStock = products.filter((p: any) => p.stock > p.minStock * 2).length;
       const warning = products.filter((p: any) => p.stock > p.minStock && p.stock <= p.minStock * 2).length;
@@ -59,7 +60,7 @@ export default function AnalyticsPage() {
 
   const loadTrendData = async () => {
     try {
-      const res = await fetch(`${API_URL}/crm/deals`);
+      const res = await fetchWithAuth(`/crm/deals`);
       const deals = await res.json();
       const months: Record<string, number> = {};
       deals.forEach((deal: any) => {

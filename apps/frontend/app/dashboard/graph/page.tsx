@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { API_URL } from '@/lib/api';
+import { fetchWithAuth } from '@/lib/fetchWithAuth';
 // بارگذاری داینامیک با ssr: false
 const ForceGraph2D = dynamic(
   () => import("react-force-graph-2d").then(mod => mod.default),
@@ -40,7 +41,7 @@ export default function GraphPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${API_URL}/graph/full`);
+      const res = await fetchWithAuth(`/graph/full`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       
@@ -102,7 +103,7 @@ export default function GraphPage() {
     setSelectedNode(node);
     setLoadingNetwork(true);
     try {
-      const res = await fetch(`${API_URL}/graph/customer/${node.id}/network`);
+      const res = await fetchWithAuth(`/graph/customer/${node.id}/network`);
       const data = await res.json();
       setNodeNetwork(data);
     } catch (e) {

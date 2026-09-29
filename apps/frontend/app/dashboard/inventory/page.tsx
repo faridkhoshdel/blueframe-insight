@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { API_URL } from '@/lib/api';
+import { fetchWithAuth } from '@/lib/fetchWithAuth';
 export default function InventoryPage() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -11,8 +12,9 @@ export default function InventoryPage() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch(`${API_URL}/inventory/products`);
-      setProducts(await res.json());
+      const res = await fetchWithAuth(`/inventory/products`);
+      const data = await res.json();
+        setProducts(Array.isArray(data) ? data : []);
     } catch (e) { console.error(e); }
     finally { setLoading(false); }
   };
@@ -20,7 +22,7 @@ export default function InventoryPage() {
   useEffect(() => { fetchProducts(); }, []);
 
   const handleAddProduct = async () => {
-    await fetch(`${API_URL}/inventory/products`, {
+    await fetchWithAuth(`/inventory/products`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newProduct),
@@ -31,7 +33,7 @@ export default function InventoryPage() {
   };
 
   const handleStockUpdate = async (productId: string, type: "IN" | "OUT", qty: number) => {
-    await fetch(`${API_URL}/inventory/movements`, {
+    await fetchWithAuth(`/inventory/movements`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ productId, type, quantity: qty }),

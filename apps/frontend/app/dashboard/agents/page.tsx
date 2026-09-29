@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { API_URL } from '@/lib/api';
+import { fetchWithAuth } from '@/lib/fetchWithAuth';
 const AGENT_CONFIG = {
   "RETENTION": { name: "Retention Agent", icon: "🛡️", color: "red", desc: "حفظ مشتریان در معرض خطر" },
   "NURTURE": { name: "Nurture Agent", icon: "🌱", color: "green", desc: "پرورش Lead های سرد" },
@@ -9,7 +10,7 @@ const AGENT_CONFIG = {
 };
 
 export default function AgentsPage() {
-  const [stats, setStats] = useState(null);
+  const [stats, setStats] = useState<any>(null);
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [runningAgent, setRunningAgent] = useState(null);
