@@ -13,7 +13,7 @@ export default function AgentsPage() {
   const [stats, setStats] = useState<any>(null);
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [runningAgent, setRunningAgent] = useState(null);
+  const [runningAgent, setRunningAgent] = useState<string | null>(null);
   const [filterType, setFilterType] = useState("ALL");
 
   useEffect(() => {
@@ -26,8 +26,8 @@ export default function AgentsPage() {
   const loadData = async () => {
     try {
       const [statsRes, logsRes] = await Promise.all([
-        fetch(`${API_URL}/agents/stats`),
-        fetch(`${API_URL}/agents/logs?limit=30`),
+        fetchWithAuth(`/agents/stats`),
+        fetchWithAuth(`/agents/logs?limit=30`),
       ]);
       setStats(await statsRes.json());
       setLogs(await logsRes.json());
@@ -38,14 +38,14 @@ export default function AgentsPage() {
     setRunningAgent(type);
     try {
       const endpoint = type === "ALL" ? "/agents/run-all" : `/agents/${type.toLowerCase().replace("_", "-")}`;
-      await fetch(`${API_URL}` + endpoint, { method: "POST" });
+      await fetchWithAuth(endpoint, { method: "POST" });
       await loadData();
     } catch (e) { console.error(e); alert("خطا در اجرای Agent"); }
     finally { setRunningAgent(null); }
   };
 
   const filteredLogs = filterType === "ALL" ? logs : logs.filter(l => l.agentType === filterType);
-  const formatTime = (dateStr) => new Date(dateStr).toLocaleString("fa-IR", { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "short" });
+  const formatTime = (dateStr: string) => new Date(dateStr).toLocaleString("fa-IR", { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "short" });
 
   return (
     <div className="w-full max-w-7xl mx-auto space-y-4 sm:space-y-6">
@@ -77,7 +77,7 @@ export default function AgentsPage() {
           </div>
           <div className="bg-[var(--bg-card)] p-3 sm:p-4 rounded-xl shadow-soft border">
             <p className="text-xs text-[var(--text-secondary)]">انواع فعال</p>
-            <p className="text-2xl sm:text-3xl font-bold text-purple-600">{stats.byAgent.length}</p>
+            <p className="text-2xl sm:text-3xl font-bold text-purple-600">{Array.isArray(stats?.byAgent) ? stats.byAgent.length : 0}</p>
           </div>
           <div className="grad-card grad-blueframe p-3 sm:p-4 rounded-xl">
             <p className="text-xs text-blueframe">وضعیت</p>
@@ -89,7 +89,7 @@ export default function AgentsPage() {
       {/* Agent Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         {Object.entries(AGENT_CONFIG).map(([type, config]) => {
-          const agentStats = stats?.byAgent.find(b => b.type === type);
+          const agentStats = Array.isArray(stats?.byAgent) ? stats.byAgent.find((b: any) => b.type === type) : null;
           const count = agentStats?.count || 0;
           const isRunning = runningAgent === type;
           
