@@ -4,19 +4,35 @@ import Link from "next/link";
 import Image from "next/image";
 import ThemeToggle from "@/components/ThemeToggle";
 import PersianClock from "@/components/PersianClock";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth";
-import { filterMenuByRole } from "@/lib/roles";
-
+import { filterMenuByRole, MENU_ITEMS } from "@/lib/roles";
 
 export default function DashboardLayoutClient({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { user, logout, isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
-  const menuItems = user?.role ? filterMenuByRole(user.role) : [];
+  // SSR protection
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // MenuItems با useMemo و fallback قوی
+  const menuItems = useMemo(() => {
+    if (!user || !user.role) {
+      return [];
+    }
+    try {
+      return filterMenuByRole(user.role);
+    } catch (e) {
+      console.error("filterMenuByRole error:", e);
+      return [];
+    }
+  }, [user]);
 
   useEffect(() => {
     setSidebarOpen(false);
@@ -36,6 +52,18 @@ export default function DashboardLayoutClient({ children }: { children: React.Re
     }
     return () => { document.body.style.overflow = ""; };
   }, [sidebarOpen]);
+
+  // Early return during SSR to prevent hydration errors
+  if (!mounted) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg-primary)" }}>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto mb-3" style={{ borderColor: "var(--accent-color)" }}></div>
+          <p className="text-sm" style={{ color: "var(--text-secondary)" }}>در حال بارگذاری...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
