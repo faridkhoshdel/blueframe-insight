@@ -16,6 +16,7 @@ import { InvoiceModule } from './invoice/invoice.module';
 import { RouteModule } from './route/route.module';
 import { DistributorModule } from './distributor/distributor.module';
 import { CustomerAuthModule } from './customer-auth/customer-auth.module';
+import { DemoModule } from './demo/demo.module';
 import { DiagnosticsModule } from './diagnostics/diagnostics.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
@@ -38,6 +39,7 @@ import { RolesGuard } from './common/guards/roles.guard';
     RouteModule,
     DistributorModule,
     CustomerAuthModule,
+    DemoModule,
     DiagnosticsModule,
   ],
   controllers: [AppController],
